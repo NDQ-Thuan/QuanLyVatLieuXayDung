@@ -2,16 +2,25 @@ package component;
 
 import customTable.TableCustom;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import model.KhoHangDAO;
+import model.KhoHang;
 
 public class PanelWarehouse extends javax.swing.JPanel {
 
-    private DefaultTableModel model;
+    private DefaultTableModel modelTblProduct;
 
     private Connection connection;
+    private KhoHangDAO khoHangDAO;
 
     public PanelWarehouse() {
         initComponents();
+        modelTblProduct = (DefaultTableModel) tblProduct.getModel();
+
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
     }
 
@@ -29,7 +38,6 @@ public class PanelWarehouse extends javax.swing.JPanel {
         lblAddress = new javax.swing.JLabel();
         lblSDT = new javax.swing.JLabel();
 
-        tblProduct.setAutoCreateRowSorter(true);
         tblProduct.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,6 +126,25 @@ public class PanelWarehouse extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void getConnection(Connection connection) {
+        this.connection = connection;
+        khoHangDAO = new KhoHangDAO(this.connection);
+
+        loadDataToCboSupplier();
+    }
+
+    public void loadDataToCboSupplier() {
+        try {
+            List<KhoHang> khoHangList = khoHangDAO.findAll();
+
+            for (KhoHang kh : khoHangList) {
+                cboWarehouse.addItem(kh.getDiaChi());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;

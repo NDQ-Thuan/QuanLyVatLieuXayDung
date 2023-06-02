@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import model.HoaDon;
 import model.HoaDonChiTietDAO;
 import model.HoaDonDAO;
-import model.KhachHang;
 import model.KhachHangDAO;
 import model.KhoHang;
 import model.KhoHangDAO;
@@ -61,6 +60,7 @@ public final class PanelOrder extends javax.swing.JPanel {
         btnOldCustomer = new javax.swing.JButton();
         lblCustomerPhone = new javax.swing.JLabel();
         lblCustomerAddress = new javax.swing.JLabel();
+        btnOldCustomer1 = new javax.swing.JButton();
         lblTrangThai = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
 
@@ -81,6 +81,9 @@ public final class PanelOrder extends javax.swing.JPanel {
 
         lblType.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblType.setText("LOẠI HÓA ĐƠN");
+
+        cboType.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        cboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập", "Xuất" }));
 
         lblCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCustomer.setText("KHÁCH HÀNG");
@@ -109,7 +112,6 @@ public final class PanelOrder extends javax.swing.JPanel {
         lblOrderID7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOrderID7.setText("ĐƠN HÀNG CHI TIẾT");
 
-        tblOrder.setAutoCreateRowSorter(true);
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -139,7 +141,7 @@ public final class PanelOrder extends javax.swing.JPanel {
         btnEdit.setBackground(new java.awt.Color(0, 51, 153));
         btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(242, 242, 242));
-        btnEdit.setText("EDIT");
+        btnEdit.setText("SAVE");
 
         btnDelete.setBackground(new java.awt.Color(204, 51, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -154,7 +156,7 @@ public final class PanelOrder extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(153, 0, 153));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(242, 242, 242));
-        jButton2.setText("THÊM SẢN PHẨM");
+        jButton2.setText("MENU SẢN PHẨM");
 
         pnlThongTinKhachHang.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -174,6 +176,11 @@ public final class PanelOrder extends javax.swing.JPanel {
 
         lblCustomerAddress.setText("Địa chỉ");
 
+        btnOldCustomer1.setBackground(new java.awt.Color(0, 204, 255));
+        btnOldCustomer1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOldCustomer1.setForeground(new java.awt.Color(242, 242, 242));
+        btnOldCustomer1.setText("SỬA THÔNG TIN");
+
         javax.swing.GroupLayout pnlThongTinKhachHangLayout = new javax.swing.GroupLayout(pnlThongTinKhachHang);
         pnlThongTinKhachHang.setLayout(pnlThongTinKhachHangLayout);
         pnlThongTinKhachHangLayout.setHorizontalGroup(
@@ -187,7 +194,8 @@ public final class PanelOrder extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOldCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                    .addComponent(btnOldCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(btnOldCustomer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlThongTinKhachHangLayout.setVerticalGroup(
@@ -198,11 +206,13 @@ public final class PanelOrder extends javax.swing.JPanel {
                     .addComponent(lblCustomerName)
                     .addComponent(btnNewCustomer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCustomerPhone)
-                .addGap(4, 4, 4)
+                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCustomerPhone)
+                    .addComponent(btnOldCustomer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOldCustomer)
-                    .addComponent(lblCustomerAddress))
+                    .addComponent(lblCustomerAddress)
+                    .addComponent(btnOldCustomer1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -283,16 +293,16 @@ public final class PanelOrder extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(cboWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(21, 21, 21)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnClear)
@@ -335,6 +345,12 @@ public final class PanelOrder extends javax.swing.JPanel {
 
                 modelTblOrder.addRow(new Object[]{id, tenKho, tenKhach, ngayLap, loaiHD, trangThai});
             }
+
+            List<KhoHang> khoHangList = khoHangDAO.findAll();
+
+            for (KhoHang kh : khoHangList) {
+                cboWarehouse.addItem(kh.getDiaChi());
+            }
         } catch (SQLException ex) {
         }
     }
@@ -345,6 +361,7 @@ public final class PanelOrder extends javax.swing.JPanel {
     public javax.swing.JButton btnEdit;
     public javax.swing.JButton btnNewCustomer;
     public javax.swing.JButton btnOldCustomer;
+    public javax.swing.JButton btnOldCustomer1;
     public javax.swing.JComboBox<String> cboType;
     public javax.swing.JComboBox<String> cboWarehouse;
     public javax.swing.JButton jButton2;

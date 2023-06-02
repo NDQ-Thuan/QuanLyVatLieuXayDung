@@ -191,6 +191,11 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_LogOut.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_LogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblMenu_LogOut.setOpaque(true);
+        lblMenu_LogOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblMenu_LogOutMousePressed(evt);
+            }
+        });
 
         lblMenu_Order.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Order.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -287,6 +292,12 @@ public class MainMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
+    private void lblMenu_LogOutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu_LogOutMousePressed
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblMenu_LogOutMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -300,13 +311,6 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new MainMenu().setVisible(true);
         });
-
-        Scanner sc = new Scanner(System.in);
-        String cmd = sc.nextLine();
-
-        if (cmd.toLowerCase().equals("confirm order")) {
-            System.out.println("Thuan");
-        }
     }
 
     public void connectAllPanelToSQL() {
@@ -319,7 +323,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         panelDashboard.getConnection(connection);
         panelSupplier.getConnection(connection);
-        //panelWarehouse.getConnection(connection);
+        panelWarehouse.getConnection(connection);
         panelProduct.getConnection(connection);
         panelOrder.getConnection(connection);
     }

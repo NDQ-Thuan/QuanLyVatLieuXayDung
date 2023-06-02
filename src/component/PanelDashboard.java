@@ -58,6 +58,7 @@ public class PanelDashboard extends javax.swing.JPanel {
         lbl_UniqueBuyer_Ammount = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPendingOrder = new javax.swing.JTable();
+        lblDHCG = new javax.swing.JLabel();
 
         pnl_Dashboard_Grid.setLayout(new java.awt.GridLayout(1, 0, 30, 3));
 
@@ -80,7 +81,7 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         lbl_Revenue_Percent.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_Revenue_Percent.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_Revenue_Percent.setText("Tăng X%");
+        lbl_Revenue_Percent.setText("Tăng 5.4%");
 
         javax.swing.GroupLayout pnl_RevenueLayout = new javax.swing.GroupLayout(pnl_Revenue);
         pnl_Revenue.setLayout(pnl_RevenueLayout);
@@ -194,7 +195,7 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         lbl_UniqueBuyer_Percent.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_UniqueBuyer_Percent.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_UniqueBuyer_Percent.setText("Tăng xxx%");
+        lbl_UniqueBuyer_Percent.setText("Giảm 14.7%");
 
         lbl_UniqueBuyer_SoLuong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_UniqueBuyer_SoLuong.setForeground(new java.awt.Color(255, 255, 255));
@@ -241,7 +242,6 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         pnl_Dashboard_Grid.add(pnl_UniqueBuyer);
 
-        tblPendingOrder.setAutoCreateRowSorter(true);
         tblPendingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -266,9 +266,9 @@ public class PanelDashboard extends javax.swing.JPanel {
         tblPendingOrder.setShowHorizontalLines(true);
         tblPendingOrder.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPendingOrder);
-        if (tblPendingOrder.getColumnModel().getColumnCount() > 0) {
-            tblPendingOrder.getColumnModel().getColumn(0).setCellRenderer(null);
-        }
+
+        lblDHCG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDHCG.setText("ĐƠN HÀNG CHƯA GIAO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -276,17 +276,21 @@ public class PanelDashboard extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1))
+                    .addComponent(lblDHCG, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblDHCG)
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -320,6 +324,7 @@ public class PanelDashboard extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDHCG;
     public javax.swing.JLabel lbl_PendingOrder_Ammount;
     private javax.swing.JLabel lbl_PendingOrder_DaGiao;
     private javax.swing.JLabel lbl_PendingOrder_DeliveredAmmount;

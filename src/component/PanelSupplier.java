@@ -17,7 +17,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
 
     public PanelSupplier() {
         initComponents();
-        modelTblSupplier = (DefaultTableModel) tblSuppProduct.getModel();
+        modelTblSupplier = (DefaultTableModel) tblSuppliers.getModel();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
     }
@@ -66,7 +66,6 @@ public final class PanelSupplier extends javax.swing.JPanel {
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("SẢN PHẨM CUNG CẤP");
 
-        tblSuppProduct.setAutoCreateRowSorter(true);
         tblSuppProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -97,7 +96,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
         btnEdit.setBackground(new java.awt.Color(0, 0, 153));
         btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(242, 242, 242));
-        btnEdit.setText("EDIT");
+        btnEdit.setText("SAVE");
 
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -129,11 +128,11 @@ public final class PanelSupplier extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnClear)
-                        .addGap(26, 26, 26)
+                        .addGap(23, 23, 23)
                         .addComponent(btnAddSupplier)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addComponent(btnEdit)
-                        .addGap(30, 30, 30)
+                        .addGap(24, 24, 24)
                         .addComponent(btnDelete))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblAddress)
@@ -173,7 +172,6 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 .addGap(12, 12, 12))
         );
 
-        tblSuppliers.setAutoCreateRowSorter(true);
         tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -204,7 +202,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

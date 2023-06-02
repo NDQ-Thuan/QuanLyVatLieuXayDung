@@ -79,7 +79,6 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tblProduct">
           <Properties>
-            <Property name="autoCreateRowSorter" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="13" style="0"/>
             </Property>
