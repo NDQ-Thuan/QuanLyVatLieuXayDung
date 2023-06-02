@@ -1,17 +1,25 @@
 package component;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.HoaDon;
+import model.HoaDonDAO;
+import model.KhachHangDAO;
+import model.NhaCungCap;
 
 public class PanelDashboard extends javax.swing.JPanel {
 
-    DefaultTableModel model;
+    private DefaultTableModel modelTblPendingOrder;
+
+    private Connection connection;
+    private HoaDonDAO hoaDonDAO;
+    private KhachHangDAO khachHangDAO;
 
     public PanelDashboard() {
         initComponents();
-        lbl_PendingOrder_Icon.requestFocus();
-
-        model = (DefaultTableModel) tblPendingOrder.getModel();
-        model.setRowCount(0);
+        modelTblPendingOrder = (DefaultTableModel) tblPendingOrder.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -223,25 +231,27 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         pnl_Dashboard_Grid.add(pnl_UniqueBuyer);
 
+        tblPendingOrder.setAutoCreateRowSorter(true);
         tblPendingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "MÃ HĐ", "KHÁCH HÀNG", "TRẠNG THÁI"
+                "MÃ HĐ", "KHÁCH HÀNG", "NGÀY LẬP", "LOẠI HĐ", "TRẠNG THÁI"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblPendingOrder.setFocusable(false);
         jScrollPane1.setViewportView(tblPendingOrder);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -265,8 +275,33 @@ public class PanelDashboard extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addNewRow(String str) {
+    public void getConnection(Connection connection) {
+        this.connection = connection;
+        hoaDonDAO = new HoaDonDAO(this.connection);
+        khachHangDAO = new KhachHangDAO(this.connection);
+
+        loadDataToTblPendingOrder();
     }
+
+    public void loadDataToTblPendingOrder() {
+        try {
+            modelTblPendingOrder.setRowCount(0);
+
+            List<HoaDon> hoaDonList = hoaDonDAO.findExportPendingOrder();
+
+            for (HoaDon hd : hoaDonList) {
+                int id = hd.getMaHd();
+                String tenKhach = khachHangDAO.getTenKhachByID(hd.getMaKhach());
+                String ngayLap = hd.getNgayLapHoaDon();
+                String loaiHD = hd.getLoaiHoaDon();
+                String trangThai = hd.getTrangThai();
+
+                modelTblPendingOrder.addRow(new Object[]{id, tenKhach, ngayLap, loaiHD, trangThai});
+            }
+        } catch (SQLException ex) {
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lbl_PendingOrder_Ammount;

@@ -1,19 +1,27 @@
 package swing;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterContrastIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneLightContrastIJTheme;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.DataTest;
 
 public class MainMenu extends javax.swing.JFrame {
 
     JLabel[] lblMenuList;
     CardLayout cardLayout;
+
+    private Connection connection;
 
     public MainMenu() {
         initComponents();
@@ -60,6 +68,8 @@ public class MainMenu extends javax.swing.JFrame {
         pnlCardLayout.add(panelDashboard, "cardDashboard");
         pnlCardLayout.add(panelSupplier, "cardSupplier");
         pnlCardLayout.add(panelWarehouse, "cardWarehouse");
+
+        panelProduct.setName(""); // NOI18N
         pnlCardLayout.add(panelProduct, "cardProduct");
         pnlCardLayout.add(panelOrder, "cardOrder");
 
@@ -272,6 +282,9 @@ public class MainMenu extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         addMouseEffectForPnlMenu();
         lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
+
+        connectAllPanelToSQL();
+
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -279,7 +292,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatMaterialLighterContrastIJTheme());
+            UIManager.setLookAndFeel(new FlatAtomOneLightContrastIJTheme());
         } catch (UnsupportedLookAndFeelException e) {
         }
 
@@ -294,6 +307,21 @@ public class MainMenu extends javax.swing.JFrame {
         if (cmd.toLowerCase().equals("confirm order")) {
             System.out.println("Thuan");
         }
+    }
+
+    public void connectAllPanelToSQL() {
+        String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung";
+        try {
+            this.connection = DriverManager.getConnection(url, "sa", "123");
+        } catch (SQLException ex) {
+            Logger.getLogger(DataTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        panelDashboard.getConnection(connection);
+        panelSupplier.getConnection(connection);
+        //panelWarehouse.getConnection(connection);
+        panelProduct.getConnection(connection);
+        panelOrder.getConnection(connection);
     }
 
     public void addMouseEffectForPnlMenu() {
@@ -311,6 +339,7 @@ public class MainMenu extends javax.swing.JFrame {
             });
         }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblInfo_Company;
     private javax.swing.JLabel lblInfo_Img;

@@ -1,19 +1,16 @@
 package component;
 
+import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;
-import model.ModelOrder;
-import model.ModelWarehouse;
 
 public class PanelWarehouse extends javax.swing.JPanel {
 
-    private ModelWarehouse modelWarehouse;
     private DefaultTableModel model;
+
+    private Connection connection;
 
     public PanelWarehouse() {
         initComponents();
-
-        modelWarehouse = new ModelWarehouse(tblProduct);
-        this.model = modelWarehouse.model;
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +27,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
         lblAddress = new javax.swing.JLabel();
         lblSDT = new javax.swing.JLabel();
 
+        tblProduct.setAutoCreateRowSorter(true);
         tblProduct.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,6 +48,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblProduct.setFocusable(false);
         tblProduct.setRowHeight(30);
         jScrollPane2.setViewportView(tblProduct);
 

@@ -1,25 +1,32 @@
 package component;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.ModelDetail;
-import model.ModelOrder;
+import model.HoaDon;
+import model.HoaDonChiTietDAO;
+import model.HoaDonDAO;
+import model.KhachHang;
+import model.KhachHangDAO;
+import model.KhoHang;
+import model.KhoHangDAO;
+import model.SanPhamDAO;
 
-public class PanelOrder extends javax.swing.JPanel {
+public final class PanelOrder extends javax.swing.JPanel {
 
-    private ModelOrder modelOrder;
-    private ModelDetail modelDetail;
-    private DefaultTableModel model;
+    private DefaultTableModel modelTblOrder;
+
+    private Connection connection;
+    private HoaDonDAO hoaDonDAO;
+    private HoaDonChiTietDAO hoaDonChiTietDAO;
+    private KhachHangDAO khachHangDAO;
+    private SanPhamDAO sanPhamDAO;
+    private KhoHangDAO khoHangDAO;
 
     public PanelOrder() {
         initComponents();
-
-        modelOrder = new ModelOrder();
-        this.model = modelOrder.model;
-
-        modelDetail = new ModelDetail(tblDetail);
-        this.model = modelDetail.model;
-
-        modelOrder.loadDataToTable(tblOrder);
+        modelTblOrder = (DefaultTableModel) tblOrder.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -99,6 +106,7 @@ public class PanelOrder extends javax.swing.JPanel {
         lblOrderID7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOrderID7.setText("ĐƠN HÀNG CHI TIẾT");
 
+        tblOrder.setAutoCreateRowSorter(true);
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -118,16 +126,12 @@ public class PanelOrder extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblOrder.setFocusable(false);
         jScrollPane1.setViewportView(tblOrder);
 
         btnClear.setBackground(new java.awt.Color(242, 242, 242));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnClear.setText("CLEAR");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
 
         btnEdit.setBackground(new java.awt.Color(0, 51, 153));
         btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -143,11 +147,6 @@ public class PanelOrder extends javax.swing.JPanel {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
         btnAdd.setText("ADD");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
 
         jButton2.setBackground(new java.awt.Color(153, 0, 153));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -180,9 +179,8 @@ public class PanelOrder extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblCustomerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                    .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                        .addComponent(lblCustomerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(lblCustomerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -275,12 +273,13 @@ public class PanelOrder extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblDate, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDate)))
+                                .addComponent(txtDate))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,14 +304,37 @@ public class PanelOrder extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnClearActionPerformed
+    public void getConnection(Connection connection) {
+        this.connection = connection;
+        hoaDonDAO = new HoaDonDAO(this.connection);
+        hoaDonChiTietDAO = new HoaDonChiTietDAO(this.connection);
+        khachHangDAO = new KhachHangDAO(this.connection);
+        sanPhamDAO = new SanPhamDAO(this.connection);
+        khoHangDAO = new KhoHangDAO(this.connection);
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
+        loadDataToTblOrder();
+    }
 
+    public void loadDataToTblOrder() {
+        try {
+            modelTblOrder.setRowCount(0);
+
+            List<HoaDon> hoaDonList = hoaDonDAO.findAll();
+
+            for (HoaDon hd : hoaDonList) {
+                KhoHang kho = khoHangDAO.findById(hd.getMaKho());
+                int id = hd.getMaHd();
+                String tenKho = kho.getDiaChi();
+                String tenKhach = khachHangDAO.getTenKhachByID(hd.getMaKhach());
+                String ngayLap = hd.getNgayLapHoaDon();
+                String loaiHD = hd.getLoaiHoaDon();
+                String trangThai = hd.getTrangThai();
+
+                modelTblOrder.addRow(new Object[]{id, tenKho, tenKhach, ngayLap, loaiHD, trangThai});
+            }
+        } catch (SQLException ex) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnClear;

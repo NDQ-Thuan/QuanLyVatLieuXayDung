@@ -1,20 +1,25 @@
 package component;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.ModelProduct;
-import model.ModelSuppProduct;
-import model.ModelSupplier;
+import model.LoaiHang;
+import model.LoaiHangDAO;
+import model.SanPham;
+import model.SanPhamDAO;
 
-public class PanelProduct extends javax.swing.JPanel {
+public final class PanelProduct extends javax.swing.JPanel {
 
-    private DefaultTableModel model;
-    private ModelProduct modelProduct;
+    private DefaultTableModel modelTblProduct;
+
+    private Connection connection;
+    private SanPhamDAO sanPhamDAO;
+    private LoaiHangDAO loaiHangDAO;
 
     public PanelProduct() {
         initComponents();
-
-        modelProduct = new ModelProduct(tblSuppliers);
-        this.model = modelProduct.model;
+        modelTblProduct = (DefaultTableModel) tblProduct.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +45,7 @@ public class PanelProduct extends javax.swing.JPanel {
         cboSupplier = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblSuppliers = new javax.swing.JTable();
+        tblProduct = new javax.swing.JTable();
 
         pnlProductInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -85,6 +90,7 @@ public class PanelProduct extends javax.swing.JPanel {
         lblSuppProduct1.setText("LƯU TRỮ TẠI KHO");
 
         listWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        listWarehouse.setFocusable(false);
         jScrollPane1.setViewportView(listWarehouse);
 
         cboType.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -165,7 +171,7 @@ public class PanelProduct extends javax.swing.JPanel {
                 .addGap(10, 10, 10))
         );
 
-        tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -184,7 +190,8 @@ public class PanelProduct extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblSuppliers);
+        tblProduct.setFocusable(false);
+        jScrollPane2.setViewportView(tblProduct);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -207,6 +214,31 @@ public class PanelProduct extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void getConnection(Connection connection) {
+        this.connection = connection;
+        sanPhamDAO = new SanPhamDAO(this.connection);
+        loaiHangDAO = new LoaiHangDAO(this.connection);
+        loadDataToTblProduct();
+    }
+
+    public void loadDataToTblProduct() {
+        try {
+            modelTblProduct.setRowCount(0);
+            List<SanPham> spList = sanPhamDAO.findAll();
+
+            for (SanPham sp : spList) {
+                LoaiHang loaiHang = loaiHangDAO.findById(sp.getMaLh());
+                int id = sp.getMaSp();
+                String tensp = sp.getTenSp();
+                String tenlh = loaiHang.getTenLoai();
+                String dvt = loaiHang.getDvt();
+                int gia = sp.getGia();
+
+                modelTblProduct.addRow(new Object[]{id, tensp, tenlh, dvt, gia});
+            }
+        } catch (SQLException ex) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnClear;
@@ -224,7 +256,7 @@ public class PanelProduct extends javax.swing.JPanel {
     private javax.swing.JLabel lblSuppProduct1;
     private javax.swing.JList<String> listWarehouse;
     private javax.swing.JPanel pnlProductInfo;
-    private javax.swing.JTable tblSuppliers;
+    private javax.swing.JTable tblProduct;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtPhone1;

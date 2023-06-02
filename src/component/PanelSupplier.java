@@ -1,24 +1,22 @@
 package component;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.ModelSuppProduct;
-import model.ModelSupplier;
+import model.NhaCungCap;
+import model.NhaCungCapDAO;
 
-public class PanelSupplier extends javax.swing.JPanel {
+public final class PanelSupplier extends javax.swing.JPanel {
 
-    private ModelSupplier modelSupplier;
-    private DefaultTableModel model;
-    private ModelSuppProduct modelSuppProduct;
+    private DefaultTableModel modelTblSupplier;
+
+    private Connection connection;
+    private NhaCungCapDAO nccDAO;
 
     public PanelSupplier() {
         initComponents();
-
-        modelSupplier = new ModelSupplier(tblSuppliers);
-        this.model = modelSupplier.model;
-
-        modelSuppProduct = new ModelSuppProduct(tblSuppProduct);
-        this.model = modelSuppProduct.model;
-
+        modelTblSupplier = (DefaultTableModel) tblSuppProduct.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -65,6 +63,7 @@ public class PanelSupplier extends javax.swing.JPanel {
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("SẢN PHẨM CUNG CẤP");
 
+        tblSuppProduct.setAutoCreateRowSorter(true);
         tblSuppProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -84,6 +83,7 @@ public class PanelSupplier extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblSuppProduct.setFocusable(false);
         jScrollPane3.setViewportView(tblSuppProduct);
 
         btnAddSupplier.setBackground(new java.awt.Color(0, 153, 0));
@@ -170,6 +170,7 @@ public class PanelSupplier extends javax.swing.JPanel {
                 .addGap(12, 12, 12))
         );
 
+        tblSuppliers.setAutoCreateRowSorter(true);
         tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -189,6 +190,7 @@ public class PanelSupplier extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblSuppliers.setFocusable(false);
         jScrollPane2.setViewportView(tblSuppliers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -212,6 +214,30 @@ public class PanelSupplier extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void getConnection(Connection connection) {
+        this.connection = connection;
+        nccDAO = new NhaCungCapDAO(this.connection);
+
+        loadDataToTblSupplier();
+    }
+
+    public void loadDataToTblSupplier() {
+        try {
+            modelTblSupplier.setRowCount(0);
+
+            List<NhaCungCap> nccList = nccDAO.findAll();
+
+            for (NhaCungCap ncc : nccList) {
+                int id = ncc.getMaNCC();
+                String tenncc = ncc.getTenNCC();
+                String diachi = ncc.getDiaChi();
+                String sdt = ncc.getSdt();
+
+                modelTblSupplier.addRow(new Object[]{id, tenncc, diachi, sdt});
+            }
+        } catch (SQLException ex) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnClear;

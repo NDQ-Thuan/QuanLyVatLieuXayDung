@@ -175,14 +175,14 @@ GO
 INSERT INTO KHOHANG (DIACHI)
 VALUES
     (N'Kho Hồ Chí Minh 1'),
+	(N'Kho Hồ Chí Minh 2'),
     (N'Kho Hà Nội 1'),
+	(N'Kho Hà Nội 2'),
     (N'Kho Đà Nẵng'),
     (N'Kho Nghệ An'),
     (N'Kho Cần Thơ'),
     (N'Kho Huế'),
     (N'Kho Bình Dương'),
-    (N'Kho Hồ Chí Minh 2'),
-    (N'Kho Hà Nội 2'),
     (N'Kho Thái Nguyên');
 GO
 
@@ -357,3 +357,16 @@ END;
 GO
 
 
+
+
+
+ALTER TABLE HOADON
+ALTER COLUMN NGAYLAPHOADON VARCHAR(10);
+UPDATE HOADON
+SET NGAYLAPHOADON = FORMAT(CONVERT(DATE, NGAYLAPHOADON), 'dd/MM/yyyy');
+ALTER TABLE HOADON
+ALTER COLUMN NGAYLAPHOADON DATE;
+
+
+--UPDATE HOADON
+--SET NGAYLAPHOADON = CONVERT(VARCHAR(10), CONVERT(DATE, NGAYLAPHOADON), 103);
