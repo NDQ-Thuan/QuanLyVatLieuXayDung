@@ -38,7 +38,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane2" min="-2" pref="920" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="920" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="407" max="32767" attributes="0"/>
           </Group>
@@ -63,14 +63,14 @@
                   <Component id="btnDelete" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="361" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="361" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>

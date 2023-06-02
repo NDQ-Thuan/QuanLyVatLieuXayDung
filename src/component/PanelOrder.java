@@ -1,5 +1,6 @@
 package component;
 
+import customTable.TableCustom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,6 +28,8 @@ public final class PanelOrder extends javax.swing.JPanel {
     public PanelOrder() {
         initComponents();
         modelTblOrder = (DefaultTableModel) tblOrder.getModel();
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
+        TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")

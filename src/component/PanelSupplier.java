@@ -1,5 +1,6 @@
 package component;
 
+import customTable.TableCustom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,8 @@ public final class PanelSupplier extends javax.swing.JPanel {
     public PanelSupplier() {
         initComponents();
         modelTblSupplier = (DefaultTableModel) tblSuppProduct.getModel();
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
+        TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +36,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
         lblPhone = new javax.swing.JLabel();
         txtPhone = new javax.swing.JTextField();
         lblSuppProduct = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         tblSuppProduct = new javax.swing.JTable();
         btnAddSupplier = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -84,7 +87,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
             }
         });
         tblSuppProduct.setFocusable(false);
-        jScrollPane3.setViewportView(tblSuppProduct);
+        jScrollPane1.setViewportView(tblSuppProduct);
 
         btnAddSupplier.setBackground(new java.awt.Color(0, 153, 0));
         btnAddSupplier.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -122,7 +125,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                             .addComponent(txtID)
                             .addComponent(txtName)
                             .addComponent(txtPhone)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnClear)
@@ -160,7 +163,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(lblSuppProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,8 +247,8 @@ public final class PanelSupplier extends javax.swing.JPanel {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhone;

@@ -4,15 +4,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.HoaDon;
 import model.HoaDonDAO;
 import model.KhachHangDAO;
-import model.NhaCungCap;
+import customTable.TableCustom;
 
 public class PanelDashboard extends javax.swing.JPanel {
 
     private DefaultTableModel modelTblPendingOrder;
-
+    private TableColumnModel columnModelTblPendingOrder;
     private Connection connection;
     private HoaDonDAO hoaDonDAO;
     private KhachHangDAO khachHangDAO;
@@ -20,6 +21,15 @@ public class PanelDashboard extends javax.swing.JPanel {
     public PanelDashboard() {
         initComponents();
         modelTblPendingOrder = (DefaultTableModel) tblPendingOrder.getModel();
+        columnModelTblPendingOrder = tblPendingOrder.getColumnModel();
+
+        columnModelTblPendingOrder.getColumn(0).setPreferredWidth(30);
+        columnModelTblPendingOrder.getColumn(1).setPreferredWidth(200);
+        columnModelTblPendingOrder.getColumn(2).setPreferredWidth(200);
+        columnModelTblPendingOrder.getColumn(3).setPreferredWidth(90);
+        columnModelTblPendingOrder.getColumn(4).setPreferredWidth(50);
+
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")
@@ -252,7 +262,13 @@ public class PanelDashboard extends javax.swing.JPanel {
             }
         });
         tblPendingOrder.setFocusable(false);
+        tblPendingOrder.setShowGrid(false);
+        tblPendingOrder.setShowHorizontalLines(true);
+        tblPendingOrder.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPendingOrder);
+        if (tblPendingOrder.getColumnModel().getColumnCount() > 0) {
+            tblPendingOrder.getColumnModel().getColumn(0).setCellRenderer(null);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

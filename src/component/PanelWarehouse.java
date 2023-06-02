@@ -1,5 +1,6 @@
 package component;
 
+import customTable.TableCustom;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,13 +12,14 @@ public class PanelWarehouse extends javax.swing.JPanel {
 
     public PanelWarehouse() {
         initComponents();
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
         cboWarehouse = new javax.swing.JComboBox<>();
         lblLienLac = new javax.swing.JLabel();
@@ -50,7 +52,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
         });
         tblProduct.setFocusable(false);
         tblProduct.setRowHeight(30);
-        jScrollPane2.setViewportView(tblProduct);
+        jScrollPane1.setViewportView(tblProduct);
 
         cboWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -92,7 +94,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(407, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,7 +113,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
                     .addComponent(btnAdd)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -120,7 +122,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JComboBox<String> cboWarehouse;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblLienLac;

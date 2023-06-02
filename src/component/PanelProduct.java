@@ -1,5 +1,6 @@
 package component;
 
+import customTable.TableCustom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,7 @@ public final class PanelProduct extends javax.swing.JPanel {
     public PanelProduct() {
         initComponents();
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
     }
 
     @SuppressWarnings("unchecked")
@@ -39,12 +41,12 @@ public final class PanelProduct extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         txtPhone1 = new javax.swing.JTextField();
         lblSuppProduct1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         listWarehouse = new javax.swing.JList<>();
         cboType = new javax.swing.JComboBox<>();
         cboSupplier = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
 
         pnlProductInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -91,7 +93,7 @@ public final class PanelProduct extends javax.swing.JPanel {
 
         listWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         listWarehouse.setFocusable(false);
-        jScrollPane1.setViewportView(listWarehouse);
+        jScrollPane2.setViewportView(listWarehouse);
 
         cboType.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
@@ -121,7 +123,7 @@ public final class PanelProduct extends javax.swing.JPanel {
                             .addComponent(txtPhone1)
                             .addComponent(cboType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -161,7 +163,7 @@ public final class PanelProduct extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(lblSuppProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +193,7 @@ public final class PanelProduct extends javax.swing.JPanel {
             }
         });
         tblProduct.setFocusable(false);
-        jScrollPane2.setViewportView(tblProduct);
+        jScrollPane1.setViewportView(tblProduct);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,7 +203,7 @@ public final class PanelProduct extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(pnlProductInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -209,7 +211,7 @@ public final class PanelProduct extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlProductInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
