@@ -9,6 +9,10 @@ import model.HoaDon;
 import model.HoaDonDAO;
 import model.KhachHangDAO;
 import customTable.TableCustom;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import model.KhachHang;
 
 public class PanelDashboard extends javax.swing.JPanel {
 
@@ -42,14 +46,14 @@ public class PanelDashboard extends javax.swing.JPanel {
         lbl_RevenueName = new javax.swing.JLabel();
         lbl_Revenue_Currency = new javax.swing.JLabel();
         lbl_Revenue_Money = new javax.swing.JLabel();
-        lbl_Revenue_Percent = new javax.swing.JLabel();
+        lbl_Revenue_LastTwoMonth = new javax.swing.JLabel();
         pnl_PendingOrder = new javax.swing.JPanel();
         lbl_PendingOrder_Icon = new javax.swing.JLabel();
         lbl_PendingOrder_Name = new javax.swing.JLabel();
         lbl_PendingOrder_SoLuong = new javax.swing.JLabel();
         lbl_PendingOrder_Ammount = new javax.swing.JLabel();
-        lbl_PendingOrder_DaGiao = new javax.swing.JLabel();
-        lbl_PendingOrder_DeliveredAmmount = new javax.swing.JLabel();
+        lbl_PendingOrder_DaHuy = new javax.swing.JLabel();
+        lbl_PendingOrder_CancelledAmmount = new javax.swing.JLabel();
         pnl_UniqueBuyer = new javax.swing.JPanel();
         lbl_UniqueBuyer_Icon = new javax.swing.JLabel();
         lbl_UniqueBuyer_Name = new javax.swing.JLabel();
@@ -69,7 +73,7 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         lbl_RevenueName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_RevenueName.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_RevenueName.setText("Doanh Số Bán Hàng");
+        lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng x)");
 
         lbl_Revenue_Currency.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_Revenue_Currency.setForeground(new java.awt.Color(255, 255, 255));
@@ -79,9 +83,9 @@ public class PanelDashboard extends javax.swing.JPanel {
         lbl_Revenue_Money.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Revenue_Money.setText("000.000");
 
-        lbl_Revenue_Percent.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_Revenue_Percent.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_Revenue_Percent.setText("Tăng 5.4%");
+        lbl_Revenue_LastTwoMonth.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_Revenue_LastTwoMonth.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_Revenue_LastTwoMonth.setText("Tháng x: VNĐ ");
 
         javax.swing.GroupLayout pnl_RevenueLayout = new javax.swing.GroupLayout(pnl_Revenue);
         pnl_Revenue.setLayout(pnl_RevenueLayout);
@@ -94,7 +98,7 @@ public class PanelDashboard extends javax.swing.JPanel {
                         .addComponent(lbl_Revenue_Currency)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_Revenue_Money, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lbl_Revenue_Percent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_Revenue_LastTwoMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_RevenueName, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                     .addComponent(lbl_Revenue_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
@@ -111,7 +115,7 @@ public class PanelDashboard extends javax.swing.JPanel {
                     .addComponent(lbl_Revenue_Currency)
                     .addComponent(lbl_Revenue_Money))
                 .addGap(10, 10, 10)
-                .addComponent(lbl_Revenue_Percent)
+                .addComponent(lbl_Revenue_LastTwoMonth)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -124,7 +128,7 @@ public class PanelDashboard extends javax.swing.JPanel {
 
         lbl_PendingOrder_Name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_PendingOrder_Name.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PendingOrder_Name.setText("Đơn hàng chưa giao");
+        lbl_PendingOrder_Name.setText("Đơn Xuất Kho Chưa Giao");
 
         lbl_PendingOrder_SoLuong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_PendingOrder_SoLuong.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,13 +138,13 @@ public class PanelDashboard extends javax.swing.JPanel {
         lbl_PendingOrder_Ammount.setForeground(new java.awt.Color(255, 255, 255));
         lbl_PendingOrder_Ammount.setText("X");
 
-        lbl_PendingOrder_DaGiao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_PendingOrder_DaGiao.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PendingOrder_DaGiao.setText("Đã giao:");
+        lbl_PendingOrder_DaHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_PendingOrder_DaHuy.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_PendingOrder_DaHuy.setText("Đơn xuất kho bị hủy:");
 
-        lbl_PendingOrder_DeliveredAmmount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_PendingOrder_DeliveredAmmount.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PendingOrder_DeliveredAmmount.setText("X");
+        lbl_PendingOrder_CancelledAmmount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_PendingOrder_CancelledAmmount.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_PendingOrder_CancelledAmmount.setText("X");
 
         javax.swing.GroupLayout pnl_PendingOrderLayout = new javax.swing.GroupLayout(pnl_PendingOrder);
         pnl_PendingOrder.setLayout(pnl_PendingOrderLayout);
@@ -150,18 +154,17 @@ public class PanelDashboard extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(pnl_PendingOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
+                        .addComponent(lbl_PendingOrder_DaHuy)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_PendingOrder_CancelledAmmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
                         .addComponent(lbl_PendingOrder_SoLuong)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_PendingOrder_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                     .addComponent(lbl_PendingOrder_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
                         .addComponent(lbl_PendingOrder_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(53, 53, 53))
-                    .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
-                        .addComponent(lbl_PendingOrder_DaGiao)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbl_PendingOrder_DeliveredAmmount)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(53, 53, 53)))
                 .addGap(20, 20, 20))
         );
         pnl_PendingOrderLayout.setVerticalGroup(
@@ -177,8 +180,8 @@ public class PanelDashboard extends javax.swing.JPanel {
                     .addComponent(lbl_PendingOrder_Ammount))
                 .addGap(10, 10, 10)
                 .addGroup(pnl_PendingOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_PendingOrder_DaGiao)
-                    .addComponent(lbl_PendingOrder_DeliveredAmmount))
+                    .addComponent(lbl_PendingOrder_DaHuy)
+                    .addComponent(lbl_PendingOrder_CancelledAmmount))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -214,15 +217,12 @@ public class PanelDashboard extends javax.swing.JPanel {
                 .addGroup(pnl_UniqueBuyerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_UniqueBuyerLayout.createSequentialGroup()
                         .addComponent(lbl_UniqueBuyer_SoLuong)
-                        .addGap(20, 20, 20)
-                        .addComponent(lbl_UniqueBuyer_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(pnl_UniqueBuyerLayout.createSequentialGroup()
-                        .addGroup(pnl_UniqueBuyerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_UniqueBuyer_Percent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_UniqueBuyer_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_UniqueBuyer_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_UniqueBuyer_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_UniqueBuyer_Percent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_UniqueBuyer_Name, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(lbl_UniqueBuyer_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         pnl_UniqueBuyerLayout.setVerticalGroup(
             pnl_UniqueBuyerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,12 +295,14 @@ public class PanelDashboard extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void getConnection(Connection connection) {
+    public void getConnection(Connection connection) throws SQLException {
         this.connection = connection;
         hoaDonDAO = new HoaDonDAO(this.connection);
         khachHangDAO = new KhachHangDAO(this.connection);
 
         loadDataToTblPendingOrder();
+        loadDataRevenuePanel();
+        loadDataOrderPanel();
     }
 
     public void loadDataToTblPendingOrder() {
@@ -318,24 +320,60 @@ public class PanelDashboard extends javax.swing.JPanel {
 
                 modelTblPendingOrder.addRow(new Object[]{id, tenKhach, ngayLap, loaiHD, trangThai});
             }
+
+            List<KhachHang> khList = khachHangDAO.findUniqueCustomer();
+            lbl_UniqueBuyer_Ammount.setText(khList.size() + "");
         } catch (SQLException ex) {
         }
+    }
+
+    public String formatMoneyString(int money) {
+        double number = money;
+
+        NumberFormat numberFormat = new DecimalFormat("#,###");
+
+        return numberFormat.format(number);
+    }
+
+    public void loadDataRevenuePanel() throws SQLException {
+        LocalDate currentDate = LocalDate.now();
+        int lastMonth = currentDate.getMonthValue() - 1;
+        int lastTwoMonth = currentDate.getMonthValue() - 2;
+
+        int revenueLastMonth = hoaDonDAO.totalRevenueByMonth(lastMonth);
+        int revenueLastTwoMonth = hoaDonDAO.totalRevenueByMonth(lastTwoMonth);
+
+        lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng " + lastMonth + ")");
+
+        String tongTienThangTruoc = formatMoneyString(revenueLastMonth);
+        lbl_Revenue_Money.setText(tongTienThangTruoc);
+
+        String tongTienHaiThangTruoc = formatMoneyString(revenueLastTwoMonth);
+        lbl_Revenue_LastTwoMonth.setText("Tháng " + lastTwoMonth + ": VNĐ " + tongTienHaiThangTruoc);
+    }
+
+    public void loadDataOrderPanel() {
+        List<HoaDon> hoaDonList = hoaDonDAO.findExportPendingOrder();
+        lbl_PendingOrder_Ammount.setText(hoaDonList.size() + "");
+
+        List<HoaDon> cancelledHoaDonList = hoaDonDAO.findCancelledOrder();
+        lbl_PendingOrder_CancelledAmmount.setText(cancelledHoaDonList.size() + "");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDHCG;
     public javax.swing.JLabel lbl_PendingOrder_Ammount;
-    private javax.swing.JLabel lbl_PendingOrder_DaGiao;
-    private javax.swing.JLabel lbl_PendingOrder_DeliveredAmmount;
+    private javax.swing.JLabel lbl_PendingOrder_CancelledAmmount;
+    private javax.swing.JLabel lbl_PendingOrder_DaHuy;
     private javax.swing.JLabel lbl_PendingOrder_Icon;
     private javax.swing.JLabel lbl_PendingOrder_Name;
     private javax.swing.JLabel lbl_PendingOrder_SoLuong;
     private javax.swing.JLabel lbl_RevenueName;
     private javax.swing.JLabel lbl_Revenue_Currency;
     private javax.swing.JLabel lbl_Revenue_Icon;
+    public javax.swing.JLabel lbl_Revenue_LastTwoMonth;
     public javax.swing.JLabel lbl_Revenue_Money;
-    public javax.swing.JLabel lbl_Revenue_Percent;
     public javax.swing.JLabel lbl_UniqueBuyer_Ammount;
     private javax.swing.JLabel lbl_UniqueBuyer_Icon;
     private javax.swing.JLabel lbl_UniqueBuyer_Name;

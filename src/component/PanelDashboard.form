@@ -70,7 +70,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lbl_Revenue_Money" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="lbl_Revenue_Percent" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lbl_Revenue_LastTwoMonth" alignment="0" max="32767" attributes="0"/>
                           <Component id="lbl_RevenueName" alignment="0" pref="246" max="32767" attributes="0"/>
                           <Component id="lbl_Revenue_Icon" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -91,7 +91,7 @@
                           <Component id="lbl_Revenue_Money" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="lbl_Revenue_Percent" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_Revenue_LastTwoMonth" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="15" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -116,7 +116,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Doanh S&#x1ed1; B&#xe1;n H&#xe0;ng"/>
+                <Property name="text" type="java.lang.String" value="Doanh S&#x1ed1; B&#xe1;n H&#xe0;ng 2023 (Th&#xe1;ng x)"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbl_Revenue_Currency">
@@ -144,7 +144,7 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_Revenue_Percent">
+            <Component class="javax.swing.JLabel" name="lbl_Revenue_LastTwoMonth">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -152,7 +152,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="T&#x103;ng 5.4%"/>
+                <Property name="text" type="java.lang.String" value="Th&#xe1;ng x: VN&#x110; "/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -177,6 +177,11 @@
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
+                              <Component id="lbl_PendingOrder_DaHuy" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lbl_PendingOrder_CancelledAmmount" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="lbl_PendingOrder_SoLuong" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lbl_PendingOrder_Ammount" pref="172" max="32767" attributes="0"/>
@@ -185,12 +190,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lbl_PendingOrder_Icon" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbl_PendingOrder_DaGiao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lbl_PendingOrder_DeliveredAmmount" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -211,8 +210,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_PendingOrder_DaGiao" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbl_PendingOrder_DeliveredAmmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_PendingOrder_DaHuy" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_PendingOrder_CancelledAmmount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="15" max="32767" attributes="0"/>
                   </Group>
@@ -238,7 +237,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x110;&#x1a1;n h&#xe0;ng ch&#x1b0;a giao"/>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1a1;n Xu&#x1ea5;t Kho Ch&#x1b0;a Giao"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbl_PendingOrder_SoLuong">
@@ -266,7 +265,7 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_PendingOrder_DaGiao">
+            <Component class="javax.swing.JLabel" name="lbl_PendingOrder_DaHuy">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -274,10 +273,10 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x110;&#xe3; giao:"/>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1a1;n xu&#x1ea5;t kho b&#x1ecb; h&#x1ee7;y:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_PendingOrder_DeliveredAmmount">
+            <Component class="javax.swing.JLabel" name="lbl_PendingOrder_CancelledAmmount">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -305,19 +304,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lbl_UniqueBuyer_SoLuong" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="lbl_UniqueBuyer_Ammount" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lbl_UniqueBuyer_Ammount" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lbl_UniqueBuyer_Percent" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lbl_UniqueBuyer_Name" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lbl_UniqueBuyer_Icon" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lbl_UniqueBuyer_Percent" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lbl_UniqueBuyer_Name" alignment="0" pref="246" max="32767" attributes="0"/>
+                          <Component id="lbl_UniqueBuyer_Icon" alignment="0" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

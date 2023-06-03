@@ -9,6 +9,12 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.KhoHangDAO;
 import model.KhoHang;
+import model.KhoHangChiTiet;
+import model.KhoHangChiTietDAO;
+import model.LoaiHang;
+import model.LoaiHangDAO;
+import model.SanPham;
+import model.SanPhamDAO;
 
 public class PanelWarehouse extends javax.swing.JPanel {
 
@@ -16,6 +22,9 @@ public class PanelWarehouse extends javax.swing.JPanel {
 
     private Connection connection;
     private KhoHangDAO khoHangDAO;
+    private KhoHangChiTietDAO khctDAO;
+    private SanPhamDAO spDAO;
+    private LoaiHangDAO lhDAO;
 
     public PanelWarehouse() {
         initComponents();
@@ -36,7 +45,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         lblDiaChi = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
-        lblSDT = new javax.swing.JLabel();
+        lblPhone = new javax.swing.JLabel();
 
         tblProduct.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
@@ -63,6 +72,11 @@ public class PanelWarehouse extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblProduct);
 
         cboWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cboWarehouse.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboWarehouseItemStateChanged(evt);
+            }
+        });
 
         lblLienLac.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblLienLac.setText("LIÊN LẠC:");
@@ -97,7 +111,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblLienLac)
                         .addGap(18, 18, 18)
-                        .addComponent(lblSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -112,7 +126,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblLienLac))
                     .addComponent(lblAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
@@ -126,9 +140,17 @@ public class PanelWarehouse extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cboWarehouseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboWarehouseItemStateChanged
+        String name = (String) cboWarehouse.getSelectedItem();
+        loadDataToTblAndFormByTenKho(name);
+    }//GEN-LAST:event_cboWarehouseItemStateChanged
+
     public void getConnection(Connection connection) {
         this.connection = connection;
         khoHangDAO = new KhoHangDAO(this.connection);
+        khctDAO = new KhoHangChiTietDAO(this.connection);
+        spDAO = new SanPhamDAO(this.connection);
+        lhDAO = new LoaiHangDAO(this.connection);
 
         loadDataToCboSupplier();
     }
@@ -138,7 +160,36 @@ public class PanelWarehouse extends javax.swing.JPanel {
             List<KhoHang> khoHangList = khoHangDAO.findAll();
 
             for (KhoHang kh : khoHangList) {
-                cboWarehouse.addItem(kh.getDiaChi());
+                cboWarehouse.addItem(kh.getTenKho());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void loadDataToTblAndFormByTenKho(String tenKho) {
+        try {
+            modelTblProduct.setRowCount(0);
+
+            int maKho = khoHangDAO.findIdByName(tenKho);
+            KhoHang kho = khoHangDAO.findById(maKho);
+            lblAddress.setText(kho.getDiaChi());
+            lblPhone.setText(kho.getSdtQuanLy());
+
+            List<KhoHangChiTiet> khctList = khctDAO.findByMaKho(maKho);
+
+            for (KhoHangChiTiet khct : khctList) {
+                SanPham sp = spDAO.findById(khct.getMaSp());
+                LoaiHang lh = lhDAO.findById(sp.getMaLh());
+
+                int maSp = sp.getMaSp();
+                String tenSp = sp.getTenSp();
+                String dvt = lh.getDvt();
+                int gia = sp.getGia();
+                int soLuong = khct.getSoLuong();
+
+                modelTblProduct.addRow(new Object[]{maSp, tenSp, dvt, gia, soLuong});
             }
 
         } catch (SQLException ex) {
@@ -153,7 +204,7 @@ public class PanelWarehouse extends javax.swing.JPanel {
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblLienLac;
-    private javax.swing.JLabel lblSDT;
+    private javax.swing.JLabel lblPhone;
     private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables
 }

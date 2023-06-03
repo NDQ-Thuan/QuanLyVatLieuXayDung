@@ -197,7 +197,7 @@
                   <Table columnCount="4" rowCount="4">
                     <Column editable="true" title="M&#xc3; SP" type="java.lang.Object"/>
                     <Column editable="false" title="T&#xca;N SP" type="java.lang.Object"/>
-                    <Column editable="false" title="KHO L&#x1af;U TR&#x1eee;" type="java.lang.Object"/>
+                    <Column editable="false" title="KHO H&#xc0;NG" type="java.lang.Object"/>
                     <Column editable="false" title="S&#x1ed0; L&#x1af;&#x1ee2;NG" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -331,6 +331,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSuppliersMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

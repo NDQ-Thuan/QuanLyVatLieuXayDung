@@ -94,4 +94,29 @@ public class SanPhamDAO {
 
         return sanPhamList;
     }
+
+    public List<SanPham> findByNCC(int maNCC) throws SQLException {
+        List<SanPham> sanPhamList = new ArrayList<>();
+
+        String query = "SELECT * FROM SANPHAM WHERE MANCC = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, maNCC);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int maSp = resultSet.getInt("MASP");
+                    int maLh = resultSet.getInt("MALH");
+                    int maNcc = resultSet.getInt("MANCC");
+                    String tenSp = resultSet.getString("TENSP");
+                    int gia = resultSet.getInt("GIA");
+
+                    sanPhamList.add(new SanPham(maSp, maLh, maNcc, tenSp, gia));
+                }
+            }
+        }
+
+        return sanPhamList;
+    }
+
 }

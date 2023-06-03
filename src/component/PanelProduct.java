@@ -4,19 +4,32 @@ import customTable.TableCustom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+import model.KhoHang;
+import model.KhoHangChiTiet;
+import model.KhoHangChiTietDAO;
+import model.KhoHangDAO;
 import model.LoaiHang;
 import model.LoaiHangDAO;
+import model.NhaCungCap;
+import model.NhaCungCapDAO;
 import model.SanPham;
 import model.SanPhamDAO;
 
 public final class PanelProduct extends javax.swing.JPanel {
 
+    private int index = -1;
     private DefaultTableModel modelTblProduct;
 
     private Connection connection;
     private SanPhamDAO sanPhamDAO;
     private LoaiHangDAO loaiHangDAO;
+    private KhoHangDAO khoDAO;
+    private KhoHangChiTietDAO khctDAO;
+    private NhaCungCapDAO nccDAO;
 
     public PanelProduct() {
         initComponents();
@@ -34,12 +47,12 @@ public final class PanelProduct extends javax.swing.JPanel {
         lblName = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
         lblPhone = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
+        txtDVT = new javax.swing.JTextField();
         lblSuppProduct = new javax.swing.JLabel();
         btnAddSupplier = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        txtPhone1 = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         lblSuppProduct1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listWarehouse = new javax.swing.JList<>();
@@ -66,7 +79,7 @@ public final class PanelProduct extends javax.swing.JPanel {
         lblPhone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPhone.setText("ĐƠN VỊ TÍNH");
 
-        txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtDVT.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("GIÁ");
@@ -86,12 +99,13 @@ public final class PanelProduct extends javax.swing.JPanel {
         btnDelete.setForeground(new java.awt.Color(242, 242, 242));
         btnDelete.setText("DELETE");
 
-        txtPhone1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtPrice.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         lblSuppProduct1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct1.setText("LƯU TRỮ TẠI KHO");
 
         listWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        listWarehouse.setFixedCellHeight(30);
         listWarehouse.setFocusable(false);
         jScrollPane2.setViewportView(listWarehouse);
 
@@ -119,8 +133,8 @@ public final class PanelProduct extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtID)
-                            .addComponent(txtPhone)
-                            .addComponent(txtPhone1)
+                            .addComponent(txtDVT)
+                            .addComponent(txtPrice)
                             .addComponent(cboType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
@@ -155,10 +169,10 @@ public final class PanelProduct extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPhone))
+                    .addComponent(txtDVT))
                 .addGap(20, 20, 20)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPhone1)
+                    .addComponent(txtPrice)
                     .addComponent(lblSuppProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(lblSuppProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,6 +207,11 @@ public final class PanelProduct extends javax.swing.JPanel {
             }
         });
         tblProduct.setFocusable(false);
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblProductMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduct);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -216,11 +235,21 @@ public final class PanelProduct extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMousePressed
+        int index = tblProduct.getSelectedRow();
+        int maSp = (int) modelTblProduct.getValueAt(index, 0);
+        writeForn(maSp);
+    }//GEN-LAST:event_tblProductMousePressed
+
     public void getConnection(Connection connection) {
         this.connection = connection;
         sanPhamDAO = new SanPhamDAO(this.connection);
         loaiHangDAO = new LoaiHangDAO(this.connection);
+        khoDAO = new KhoHangDAO(this.connection);
+        khctDAO = new KhoHangChiTietDAO(this.connection);
+        nccDAO = new NhaCungCapDAO(this.connection);
         loadDataToTblProduct();
+        loadDataToForm();
     }
 
     public void loadDataToTblProduct() {
@@ -241,6 +270,51 @@ public final class PanelProduct extends javax.swing.JPanel {
         } catch (SQLException ex) {
         }
     }
+
+    public void loadDataToForm() {
+        try {
+            List<LoaiHang> lhList = loaiHangDAO.findAll();
+            for (LoaiHang lh : lhList) {
+                cboType.addItem(lh.getTenLoai());
+            }
+
+            List<NhaCungCap> nccList = nccDAO.findAll();
+            for (NhaCungCap ncc : nccList) {
+                cboSupplier.addItem(ncc.getTenNCC());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void writeForn(int maSp) {
+        try {
+            SanPham sp = sanPhamDAO.findById(maSp);
+            NhaCungCap ncc = nccDAO.findById(sp.getMaNcc());
+            LoaiHang lh = loaiHangDAO.findById(sp.getMaLh());
+
+            txtID.setText(sp.getMaSp() + "");
+            cboType.setSelectedItem(lh.getTenLoai());
+            cboSupplier.setSelectedItem(ncc.getTenNCC());
+            txtDVT.setText(lh.getDvt());
+            txtPrice.setText(sp.getGia() + "");
+
+            DefaultListModel modelListWarehouse = new DefaultListModel();
+            List<KhoHangChiTiet> khctList = khctDAO.findAllByMaSP(maSp);
+
+            for (KhoHangChiTiet khct : khctList) {
+                KhoHang kho = khoDAO.findById(khct.getMaKho());
+                modelListWarehouse.addElement(kho.getTenKho() + "   -   Số lượng: " + khct.getSoLuong());
+            }
+
+            listWarehouse.setModel(modelListWarehouse);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnClear;
@@ -259,8 +333,8 @@ public final class PanelProduct extends javax.swing.JPanel {
     private javax.swing.JList<String> listWarehouse;
     private javax.swing.JPanel pnlProductInfo;
     private javax.swing.JTable tblProduct;
+    private javax.swing.JTextField txtDVT;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtPhone1;
+    private javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
 }

@@ -106,4 +106,30 @@ public class KhachHangDAO {
 
         return null;
     }
+
+    public List<KhachHang> findUniqueCustomer() throws SQLException {
+        List<KhachHang> khachHangList = new ArrayList<>();
+
+        String query = """
+                       SELECT MAKHACH, TENKHACH, DIACHI, SDT
+                       FROM KHACHHANG
+                       WHERE MAKHACH IN (
+                           SELECT MAKHACH
+                           FROM HOADON
+                           GROUP BY MAKHACH
+                           HAVING COUNT(*) = 1);""";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maKhach = resultSet.getInt("MAKHACH");
+                String tenKhach = resultSet.getString("TENKHACH");
+                String diaChi = resultSet.getString("DIACHI");
+                String sdt = resultSet.getString("SDT");
+
+                khachHangList.add(new KhachHang(maKhach, tenKhach, diaChi, sdt));
+            }
+        }
+
+        return khachHangList;
+    }
 }

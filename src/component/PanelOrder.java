@@ -63,6 +63,7 @@ public final class PanelOrder extends javax.swing.JPanel {
         btnOldCustomer1 = new javax.swing.JButton();
         lblTrangThai = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
+        btnAdd1 = new javax.swing.JButton();
 
         lblOrderID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOrderID.setText("MÃ HÓA ĐƠN");
@@ -206,9 +207,9 @@ public final class PanelOrder extends javax.swing.JPanel {
                     .addComponent(lblCustomerName)
                     .addComponent(btnNewCustomer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCustomerPhone)
-                    .addComponent(btnOldCustomer))
+                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOldCustomer)
+                    .addComponent(lblCustomerPhone))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCustomerAddress)
@@ -220,6 +221,11 @@ public final class PanelOrder extends javax.swing.JPanel {
 
         lblStatus.setText("Đang tạo");
 
+        btnAdd1.setBackground(new java.awt.Color(0, 153, 51));
+        btnAdd1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAdd1.setForeground(new java.awt.Color(242, 242, 242));
+        btnAdd1.setText("FILTER");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,17 +233,14 @@ public final class PanelOrder extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(btnAdd1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -303,17 +306,19 @@ public final class PanelOrder extends javax.swing.JPanel {
                     .addComponent(lblTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnClear)
-                        .addGap(78, 78, 78)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnAdd1)
+                        .addGap(36, 36, 36)
                         .addComponent(btnAdd)
-                        .addGap(50, 50, 50)
+                        .addGap(36, 36, 36)
                         .addComponent(btnEdit)
-                        .addGap(50, 50, 50)
+                        .addGap(36, 36, 36)
                         .addComponent(btnDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(13, 13, 13))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -349,13 +354,14 @@ public final class PanelOrder extends javax.swing.JPanel {
             List<KhoHang> khoHangList = khoHangDAO.findAll();
 
             for (KhoHang kh : khoHangList) {
-                cboWarehouse.addItem(kh.getDiaChi());
+                cboWarehouse.addItem(kh.getTenKho());
             }
         } catch (SQLException ex) {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
+    public javax.swing.JButton btnAdd1;
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnDelete;
     public javax.swing.JButton btnEdit;

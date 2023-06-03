@@ -31,7 +31,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="lblLienLac" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblSDT" min="-2" pref="250" max="-2" attributes="0"/>
+                      <Component id="lblPhone" min="-2" pref="250" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="btnAdd" min="-2" max="-2" attributes="0"/>
@@ -51,7 +51,7 @@
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="lblSDT" alignment="3" max="32767" attributes="0"/>
+                      <Component id="lblPhone" alignment="3" max="32767" attributes="0"/>
                       <Component id="lblLienLac" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="lblAddress" alignment="0" max="32767" attributes="0"/>
@@ -138,6 +138,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboWarehouseItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -188,7 +191,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblAddress">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblSDT">
+    <Component class="javax.swing.JLabel" name="lblPhone">
     </Component>
   </SubComponents>
 </Form>

@@ -3,17 +3,26 @@ package model;
 public class KhoHang {
 
     private int maKho;
+    private String tenKho;
     private String diaChi;
     private String sdtQuanLy;
 
-    // Constructor
-    public KhoHang(int maKho, String diaChi, String sdtQuanLy) {
+    public KhoHang(int maKho, String tenKho, String diaChi, String sdtQuanLy) {
         this.maKho = maKho;
+        this.tenKho = tenKho;
         this.diaChi = diaChi;
         this.sdtQuanLy = sdtQuanLy;
     }
 
     // Getters and setters
+    public String getTenKho() {
+        return tenKho;
+    }
+
+    public void setTenKho(String tenKho) {
+        this.tenKho = tenKho;
+    }
+
     public int getMaKho() {
         return maKho;
     }

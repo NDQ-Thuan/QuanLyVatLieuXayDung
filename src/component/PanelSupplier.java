@@ -4,20 +4,34 @@ import customTable.TableCustom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import model.KhoHang;
+import model.KhoHangChiTiet;
+import model.KhoHangChiTietDAO;
+import model.KhoHangDAO;
 import model.NhaCungCap;
 import model.NhaCungCapDAO;
+import model.SanPham;
+import model.SanPhamDAO;
 
 public final class PanelSupplier extends javax.swing.JPanel {
 
+    private int index = -1;
     private DefaultTableModel modelTblSupplier;
+    private DefaultTableModel modelTblSuppProduct;
 
     private Connection connection;
     private NhaCungCapDAO nccDAO;
+    private SanPhamDAO spDAO;
+    private KhoHangDAO khoHangDAO;
+    private KhoHangChiTietDAO khctDAO;
 
     public PanelSupplier() {
         initComponents();
         modelTblSupplier = (DefaultTableModel) tblSuppliers.getModel();
+        modelTblSuppProduct = (DefaultTableModel) tblSuppProduct.getModel();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
     }
@@ -74,7 +88,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "MÃ SP", "TÊN SP", "KHO LƯU TRỮ", "SỐ LƯỢNG"
+                "MÃ SP", "TÊN SP", "KHO HÀNG", "SỐ LƯỢNG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -192,6 +206,11 @@ public final class PanelSupplier extends javax.swing.JPanel {
             }
         });
         tblSuppliers.setFocusable(false);
+        tblSuppliers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblSuppliersMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblSuppliers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -215,9 +234,23 @@ public final class PanelSupplier extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblSuppliersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuppliersMousePressed
+        index = tblSuppliers.getSelectedRow();
+        int id = (int) modelTblSupplier.getValueAt(index, 0);
+
+        try {
+            writeForm(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblSuppliersMousePressed
+
     public void getConnection(Connection connection) {
         this.connection = connection;
         nccDAO = new NhaCungCapDAO(this.connection);
+        spDAO = new SanPhamDAO(this.connection);
+        khoHangDAO = new KhoHangDAO(this.connection);
+        khctDAO = new KhoHangChiTietDAO(this.connection);
 
         loadDataToTblSupplier();
     }
@@ -238,6 +271,36 @@ public final class PanelSupplier extends javax.swing.JPanel {
             }
         } catch (SQLException ex) {
         }
+    }
+
+    public void loadSuppliedProductByNCC(int id_ncc) throws SQLException {
+        modelTblSuppProduct.setRowCount(0);
+
+        List<SanPham> spList = spDAO.findByNCC(id_ncc);
+
+        List<KhoHangChiTiet> khctList = khctDAO.findAllBySanPhamList(spList);
+
+        for (KhoHangChiTiet khct : khctList) {
+            KhoHang kho = khoHangDAO.findById(khct.getMaKho());
+            SanPham sp = spDAO.findById(khct.getMaSp());
+
+            int maSp = sp.getMaSp();
+            String tenSp = sp.getTenSp();
+            String tenKhoHang = kho.getTenKho();
+            int soLuongSp = khct.getSoLuong();
+
+            modelTblSuppProduct.addRow(new Object[]{maSp, tenSp, tenKhoHang, soLuongSp});
+        }
+    }
+
+    public void writeForm(int id) throws SQLException {
+        NhaCungCap ncc = nccDAO.findById(id);
+        txtID.setText(ncc.getMaNCC() + "");
+        txtName.setText(ncc.getTenNCC());
+        txtAddress.setText(ncc.getDiaChi());
+        txtPhone.setText(ncc.getSdt());
+
+        loadSuppliedProductByNCC(ncc.getMaNCC());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;

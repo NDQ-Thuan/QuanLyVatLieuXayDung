@@ -70,4 +70,49 @@ public class KhoHangChiTietDAO {
 
         return khoHangChiTietList;
     }
+
+    public List<KhoHangChiTiet> findAllByMaSP(int maSp) throws SQLException {
+        List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
+
+        String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, maSp);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int maKho = resultSet.getInt("MAKHO");
+                    int soLuong = resultSet.getInt("SOLUONG");
+
+                    khoHangChiTietList.add(new KhoHangChiTiet(maKho, maSp, soLuong));
+                }
+            }
+        }
+
+        return khoHangChiTietList;
+    }
+
+    public List<KhoHangChiTiet> findAllBySanPhamList(List<SanPham> spList) throws SQLException {
+        List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
+
+        String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            for (SanPham sp : spList) {
+                statement.setInt(1, sp.getMaSp());
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int maSp = resultSet.getInt("MASP");
+                        int maKho = resultSet.getInt("MAKHO");
+                        int soLuong = resultSet.getInt("SOLUONG");
+
+                        khoHangChiTietList.add(new KhoHangChiTiet(maKho, maSp, soLuong));
+                    }
+                }
+            }
+        }
+
+        return khoHangChiTietList;
+    }
+
 }

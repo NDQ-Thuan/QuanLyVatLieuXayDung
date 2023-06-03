@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -285,10 +284,14 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu_OrderMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        addMouseEffectForPnlMenu();
-        lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
+        try {
+            addMouseEffectForPnlMenu();
+            lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
 
-        connectAllPanelToSQL();
+            connectAllPanelToSQL();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -313,7 +316,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
     }
 
-    public void connectAllPanelToSQL() {
+    public void connectAllPanelToSQL() throws SQLException {
         String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung";
         try {
             this.connection = DriverManager.getConnection(url, "sa", "123");
@@ -339,7 +342,6 @@ public class MainMenu extends javax.swing.JFrame {
                     JLabel lbl = (JLabel) e.getSource();
                     lbl.setBackground(new Color(0, 0, 55));
                 }
-
             });
         }
     }

@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class HoaDonDAO {
 
@@ -58,14 +60,14 @@ public class HoaDonDAO {
     public List<HoaDon> findAll() {
         List<HoaDon> hoaDonList = new ArrayList<>();
 
-        String query = "SELECT * FROM HOADON";
+        String query = "SELECT * FROM HOADON ORDER BY NGAYLAPHOADON DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = resultSet.getString("NGAYLAPHOADON");
+                String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -87,7 +89,7 @@ public class HoaDonDAO {
                 if (resultSet.next()) {
                     int maKhach = resultSet.getInt("MAKHACH");
                     int maKho = resultSet.getInt("MAKHO");
-                    String ngayLapHoaDon = resultSet.getString("NGAYLAPHOADON");
+                    String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
                     String loaiHoaDon = resultSet.getString("LOAIHOADON");
                     String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -101,14 +103,18 @@ public class HoaDonDAO {
     public List<HoaDon> findExportPendingOrder() {
         List<HoaDon> hoaDonList = new ArrayList<>();
 
-        String query = "SELECT * FROM HOADON WHERE TRANGTHAI LIKE 'Pending' AND LOAIHOADON LIKE N'Xuất'";
+        String query = """
+                SELECT * FROM HOADON
+                WHERE TRANGTHAI LIKE 'Pending'
+                AND LOAIHOADON LIKE N'Xuất'
+                ORDER BY NGAYLAPHOADON DESC""";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = resultSet.getString("NGAYLAPHOADON");
+                String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -118,5 +124,73 @@ public class HoaDonDAO {
         }
 
         return hoaDonList;
+    }
+
+    public List<HoaDon> findCancelledOrder() {
+        List<HoaDon> hoaDonList = new ArrayList<>();
+
+        String query = "SELECT * FROM HOADON WHERE TRANGTHAI LIKE 'Cancelled' AND LOAIHOADON LIKE N'Xuất'";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maHd = resultSet.getInt("MAHD");
+                int maKhach = resultSet.getInt("MAKHACH");
+                int maKho = resultSet.getInt("MAKHO");
+                String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
+                String loaiHoaDon = resultSet.getString("LOAIHOADON");
+                String trangThai = resultSet.getString("TRANGTHAI");
+
+                hoaDonList.add(new HoaDon(maHd, maKhach, maKho, ngayLapHoaDon, loaiHoaDon, trangThai));
+            }
+        } catch (SQLException ex) {
+        }
+
+        return hoaDonList;
+    }
+
+    public int totalRevenueByMonth(int month) throws SQLException {
+        String query = """
+                       SELECT SUM(sanpham.GIA * hoadonchitiet.SOLUONG) AS TotalAmount
+                       FROM HOADON
+                       JOIN HOADONCHITIET ON hoadon.MAHD = hoadonchitiet.MAHD
+                       JOIN SANPHAM ON hoadonchitiet.MASP = sanpham.MASP
+                       WHERE MONTH(hoadon.NGAYLAPHOADON) = ?
+                       AND YEAR(hoadon.NGAYLAPHOADON) = YEAR(GETDATE())
+                       AND hoadon.LOAIHOADON LIKE N'Xuất' AND hoadon.TRANGTHAI LIKE 'Delivered'""";
+
+        int total = 0;
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, month);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    total = resultSet.getInt("TotalAmount");
+                }
+            }
+        }
+        return total;
+    }
+
+    public String formatDate(String dateFromSQL) {
+        String dateStringFromSQL = dateFromSQL;
+
+        // Create a SimpleDateFormat instance to parse the SQL date string
+        DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String europeanDateString = "";
+        try {
+            // Parse the SQL date string into a Date object
+            Date date = sqlDateFormat.parse(dateStringFromSQL);
+
+            // Create a SimpleDateFormat instance with the desired European date format
+            DateFormat europeanDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            // Format the date into the European date string
+            europeanDateString = europeanDateFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return europeanDateString;
     }
 }

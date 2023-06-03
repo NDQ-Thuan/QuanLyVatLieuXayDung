@@ -58,10 +58,11 @@ public class KhoHangDAO {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    String tenKho = resultSet.getString("TENKHOHANG");
                     String diaChi = resultSet.getString("DIACHI");
                     String sdtQuanLy = resultSet.getString("SDTQUANLY");
 
-                    return new KhoHang(maKho, diaChi, sdtQuanLy);
+                    return new KhoHang(maKho, tenKho, diaChi, sdtQuanLy);
                 }
             }
         }
@@ -77,13 +78,28 @@ public class KhoHangDAO {
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maKho = resultSet.getInt("MAKHO");
+                String tenKho = resultSet.getString("TENKHOHANG");
                 String diaChi = resultSet.getString("DIACHI");
                 String sdtQuanLy = resultSet.getString("SDTQUANLY");
 
-                khoHangList.add(new KhoHang(maKho, diaChi, sdtQuanLy));
+                khoHangList.add(new KhoHang(maKho, tenKho, diaChi, sdtQuanLy));
             }
         }
 
         return khoHangList;
+    }
+
+    public int findIdByName(String tenKho) throws SQLException {
+        String query = "SELECT * FROM KHOHANG WHERE TENKHOHANG LIKE N'" + tenKho + "'";
+
+        int maKho = 0;
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                maKho = resultSet.getInt("MAKHO");
+            }
+        }
+
+        return maKho;
     }
 }
