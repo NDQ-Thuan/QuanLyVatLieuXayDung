@@ -16,7 +16,7 @@ import model.LoaiHangDAO;
 import model.SanPham;
 import model.SanPhamDAO;
 
-public class PanelWarehouse extends javax.swing.JPanel {
+public class PanelWarehouse extends ConnectionPanel {
 
     private DefaultTableModel modelTblProduct;
 
@@ -50,17 +50,17 @@ public class PanelWarehouse extends javax.swing.JPanel {
         tblProduct.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "MÃ SP", "TÊN SP", "ĐVT", "GIÁ", "SỐ LƯỢNG"
+                "MÃ SP", "TÊN SP", "LOẠI HÀNG", "ĐVT", "GIÁ", "SỐ LƯỢNG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -185,11 +185,12 @@ public class PanelWarehouse extends javax.swing.JPanel {
 
                 int maSp = sp.getMaSp();
                 String tenSp = sp.getTenSp();
+                String tenLoaiHang = lh.getTenLoai();
                 String dvt = lh.getDvt();
                 int gia = sp.getGia();
                 int soLuong = khct.getSoLuong();
 
-                modelTblProduct.addRow(new Object[]{maSp, tenSp, dvt, gia, soLuong});
+                modelTblProduct.addRow(new Object[]{maSp, tenSp, tenLoaiHang, dvt, gia, soLuong});
             }
 
         } catch (SQLException ex) {

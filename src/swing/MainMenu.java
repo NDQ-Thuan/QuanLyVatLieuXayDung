@@ -1,6 +1,7 @@
 package swing;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneLightContrastIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
+import component.ConnectionPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -8,17 +9,19 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import model.DataTest;
 
 public class MainMenu extends javax.swing.JFrame {
 
     JLabel[] lblMenuList;
     CardLayout cardLayout;
+
+    ConnectionPanel[] componentPanel;
 
     private Connection connection;
 
@@ -26,6 +29,8 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
 
         setLocationRelativeTo(null);
+
+        componentPanel = new ConnectionPanel[]{panelDashboard, panelSupplier, panelWarehouse, panelProduct, panelOrder};
 
         lblMenuList = new JLabel[]{lblMenu_Dashboard, lblMenu_Warehouse, lblMenu_Product, lblMenu_Supplier, lblMenu_LogOut, lblMenu_Order};
 
@@ -284,15 +289,10 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu_OrderMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            addMouseEffectForPnlMenu();
-            lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
+        addMouseEffectForPnlMenu();
+        lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
 
-            connectAllPanelToSQL();
-        } catch (SQLException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        connectAllPanelToSQL();
     }//GEN-LAST:event_formWindowOpened
 
     private void lblMenu_LogOutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu_LogOutMousePressed
@@ -301,12 +301,9 @@ public class MainMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblMenu_LogOutMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatAtomOneLightContrastIJTheme());
+            UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
         } catch (UnsupportedLookAndFeelException e) {
         }
 
@@ -316,19 +313,18 @@ public class MainMenu extends javax.swing.JFrame {
         });
     }
 
-    public void connectAllPanelToSQL() throws SQLException {
-        String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung";
+    public void connectAllPanelToSQL() {
         try {
-            this.connection = DriverManager.getConnection(url, "sa", "123");
-        } catch (SQLException ex) {
-            Logger.getLogger(DataTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung";
 
-        panelDashboard.getConnection(connection);
-        panelSupplier.getConnection(connection);
-        panelWarehouse.getConnection(connection);
-        panelProduct.getConnection(connection);
-        panelOrder.getConnection(connection);
+            this.connection = DriverManager.getConnection(url, "sa", "123");
+
+            for (ConnectionPanel conPnl : componentPanel) {
+                conPnl.getConnection(connection);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void addMouseEffectForPnlMenu() {

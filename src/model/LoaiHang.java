@@ -7,6 +7,9 @@ public class LoaiHang {
     private String dvt;
 
     // Constructor
+    public LoaiHang() {
+    }
+
     public LoaiHang(int maLh, String tenLoai, String dvt) {
         this.maLh = maLh;
         this.tenLoai = tenLoai;

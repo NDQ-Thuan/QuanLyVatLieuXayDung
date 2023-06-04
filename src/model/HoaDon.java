@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Date;
-
 public class HoaDon {
 
     private int maHd;
@@ -12,6 +10,9 @@ public class HoaDon {
     private String trangThai;
 
     // Constructor
+    public HoaDon() {
+    }
+
     public HoaDon(int maHd, int maKhach, int maKho, String ngayLapHoaDon, String loaiHoaDon, String trangThai) {
         this.maHd = maHd;
         this.maKhach = maKhach;

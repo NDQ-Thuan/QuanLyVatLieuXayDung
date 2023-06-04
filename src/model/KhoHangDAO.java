@@ -73,7 +73,7 @@ public class KhoHangDAO {
     public List<KhoHang> findAll() throws SQLException {
         List<KhoHang> khoHangList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHOHANG";
+        String query = "SELECT * FROM KHOHANG ORDER BY MAKHO ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {

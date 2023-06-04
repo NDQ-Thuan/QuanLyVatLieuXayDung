@@ -7,6 +7,9 @@ public class KhoHang {
     private String diaChi;
     private String sdtQuanLy;
 
+    public KhoHang() {
+    }
+
     public KhoHang(int maKho, String tenKho, String diaChi, String sdtQuanLy) {
         this.maKho = maKho;
         this.tenKho = tenKho;

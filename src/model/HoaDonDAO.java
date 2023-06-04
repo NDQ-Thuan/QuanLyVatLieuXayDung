@@ -184,7 +184,7 @@ public class HoaDonDAO {
             Date date = sqlDateFormat.parse(dateStringFromSQL);
 
             // Create a SimpleDateFormat instance with the desired European date format
-            DateFormat europeanDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat europeanDateFormat = new SimpleDateFormat("dd - MM - yyyy");
 
             // Format the date into the European date string
             europeanDateString = europeanDateFormat.format(date);

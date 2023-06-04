@@ -8,6 +8,9 @@ public class KhachHang {
     private String sdt;
 
     // Constructor
+    public KhachHang() {
+    }
+
     public KhachHang(int maKhach, String tenKhach, String diaChi, String sdt) {
         this.maKhach = maKhach;
         this.tenKhach = tenKhach;

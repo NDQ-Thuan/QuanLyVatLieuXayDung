@@ -7,6 +7,9 @@ public class KhoHangChiTiet {
     private int soLuong;
 
     // Constructor
+    public KhoHangChiTiet() {
+    }
+
     public KhoHangChiTiet(int maKho, int maSp, int soLuong) {
         this.maKho = maKho;
         this.maSp = maSp;

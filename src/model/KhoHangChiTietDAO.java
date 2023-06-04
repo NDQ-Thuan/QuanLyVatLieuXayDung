@@ -53,7 +53,7 @@ public class KhoHangChiTietDAO {
     public List<KhoHangChiTiet> findByMaKho(int maKho) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ?";
+        String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ? ORDER BY MASP ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maKho);
@@ -74,7 +74,7 @@ public class KhoHangChiTietDAO {
     public List<KhoHangChiTiet> findAllByMaSP(int maSp) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ?";
+        String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ? ORDER BY MAKHO ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maSp);
@@ -95,7 +95,7 @@ public class KhoHangChiTietDAO {
     public List<KhoHangChiTiet> findAllBySanPhamList(List<SanPham> spList) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ?";
+        String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ? ORDER BY MASP ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             for (SanPham sp : spList) {

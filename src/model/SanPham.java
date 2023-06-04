@@ -9,6 +9,9 @@ public class SanPham {
     private int gia;
 
     // Constructor
+    public SanPham() {
+    }
+
     public SanPham(int maSp, int maLh, int maNcc, String tenSp, int gia) {
         this.maSp = maSp;
         this.maLh = maLh;

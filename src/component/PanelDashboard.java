@@ -12,9 +12,11 @@ import customTable.TableCustom;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.KhachHang;
 
-public class PanelDashboard extends javax.swing.JPanel {
+public class PanelDashboard extends ConnectionPanel {
 
     private DefaultTableModel modelTblPendingOrder;
     private TableColumnModel columnModelTblPendingOrder;
@@ -295,7 +297,7 @@ public class PanelDashboard extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void getConnection(Connection connection) throws SQLException {
+    public void getConnection(Connection connection) {
         this.connection = connection;
         hoaDonDAO = new HoaDonDAO(this.connection);
         khachHangDAO = new KhachHangDAO(this.connection);
@@ -335,21 +337,25 @@ public class PanelDashboard extends javax.swing.JPanel {
         return numberFormat.format(number);
     }
 
-    public void loadDataRevenuePanel() throws SQLException {
-        LocalDate currentDate = LocalDate.now();
-        int lastMonth = currentDate.getMonthValue() - 1;
-        int lastTwoMonth = currentDate.getMonthValue() - 2;
+    public void loadDataRevenuePanel() {
+        try {
+            LocalDate currentDate = LocalDate.now();
+            int lastMonth = currentDate.getMonthValue() - 1;
+            int lastTwoMonth = currentDate.getMonthValue() - 2;
 
-        int revenueLastMonth = hoaDonDAO.totalRevenueByMonth(lastMonth);
-        int revenueLastTwoMonth = hoaDonDAO.totalRevenueByMonth(lastTwoMonth);
+            int revenueLastMonth = hoaDonDAO.totalRevenueByMonth(lastMonth);
+            int revenueLastTwoMonth = hoaDonDAO.totalRevenueByMonth(lastTwoMonth);
 
-        lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng " + lastMonth + ")");
+            lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng " + lastMonth + ")");
 
-        String tongTienThangTruoc = formatMoneyString(revenueLastMonth);
-        lbl_Revenue_Money.setText(tongTienThangTruoc);
+            String tongTienThangTruoc = formatMoneyString(revenueLastMonth);
+            lbl_Revenue_Money.setText(tongTienThangTruoc);
 
-        String tongTienHaiThangTruoc = formatMoneyString(revenueLastTwoMonth);
-        lbl_Revenue_LastTwoMonth.setText("Tháng " + lastTwoMonth + ": VNĐ " + tongTienHaiThangTruoc);
+            String tongTienHaiThangTruoc = formatMoneyString(revenueLastTwoMonth);
+            lbl_Revenue_LastTwoMonth.setText("Tháng " + lastTwoMonth + ": VNĐ " + tongTienHaiThangTruoc);
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void loadDataOrderPanel() {

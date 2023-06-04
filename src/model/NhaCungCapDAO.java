@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NhaCungCapDAO {
 
@@ -75,7 +77,7 @@ public class NhaCungCapDAO {
     public List<NhaCungCap> findAll() throws SQLException {
         List<NhaCungCap> nhaCungCapList = new ArrayList<>();
 
-        String query = "SELECT * FROM NHACUNGCAP";
+        String query = "SELECT * FROM NHACUNGCAP ORDER BY MANCC ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {

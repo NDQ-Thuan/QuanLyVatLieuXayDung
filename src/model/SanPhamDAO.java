@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SanPhamDAO {
 
@@ -55,7 +57,7 @@ public class SanPhamDAO {
     }
 
     public SanPham findById(int maSp) throws SQLException {
-        String query = "SELECT * FROM SANPHAM WHERE MASP = ?";
+        String query = "SELECT * FROM SANPHAM WHERE MASP = ? ORDER BY MASP ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maSp);
@@ -75,10 +77,10 @@ public class SanPhamDAO {
         return null;
     }
 
-    public List<SanPham> findAll() throws SQLException {
+    public List<SanPham> findAll() {
         List<SanPham> sanPhamList = new ArrayList<>();
 
-        String query = "SELECT * FROM SANPHAM";
+        String query = "SELECT * FROM SANPHAM ORDER BY MASP ASC";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -90,6 +92,8 @@ public class SanPhamDAO {
 
                 sanPhamList.add(new SanPham(maSp, maLh, maNcc, tenSp, gia));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return sanPhamList;
@@ -104,7 +108,7 @@ public class SanPhamDAO {
             statement.setInt(1, maNCC);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     int maSp = resultSet.getInt("MASP");
                     int maLh = resultSet.getInt("MALH");
                     int maNcc = resultSet.getInt("MANCC");

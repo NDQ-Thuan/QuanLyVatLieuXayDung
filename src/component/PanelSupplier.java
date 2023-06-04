@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhoHang;
 import model.KhoHangChiTiet;
@@ -16,7 +17,7 @@ import model.NhaCungCapDAO;
 import model.SanPham;
 import model.SanPhamDAO;
 
-public final class PanelSupplier extends javax.swing.JPanel {
+public final class PanelSupplier extends ConnectionPanel {
 
     private int index = -1;
     private DefaultTableModel modelTblSupplier;
@@ -53,7 +54,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSuppProduct = new javax.swing.JTable();
         btnAddSupplier = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -65,6 +66,9 @@ public final class PanelSupplier extends javax.swing.JPanel {
         lblSuppID.setText("MÃ NHÀ CUNG CẤP");
 
         txtID.setEditable(false);
+        txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtID.setText("Mã số sẽ được tự động tạo");
+        txtID.setFocusable(false);
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblName.setText("TÊN NHÀ CUNG CẤP");
@@ -72,27 +76,23 @@ public final class PanelSupplier extends javax.swing.JPanel {
         lblAddress.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAddress.setText("ĐỊA CHỈ");
 
-        txtAddress.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-
         lblPhone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPhone.setText("SỐ ĐIỆN THOẠI");
 
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("SẢN PHẨM CUNG CẤP");
 
+        tblSuppProduct.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         tblSuppProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "MÃ SP", "TÊN SP", "KHO HÀNG", "SỐ LƯỢNG"
+                "MÃ SP", "TÊN SP"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,19 +106,48 @@ public final class PanelSupplier extends javax.swing.JPanel {
         btnAddSupplier.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddSupplier.setForeground(new java.awt.Color(242, 242, 242));
         btnAddSupplier.setText("ADD");
+        btnAddSupplier.setFocusable(false);
+        btnAddSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSupplierActionPerformed(evt);
+            }
+        });
 
-        btnEdit.setBackground(new java.awt.Color(0, 0, 153));
-        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(242, 242, 242));
-        btnEdit.setText("SAVE");
+        btnSave.setBackground(new java.awt.Color(0, 0, 153));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(242, 242, 242));
+        btnSave.setText("SAVE");
+        btnSave.setEnabled(false);
+        btnSave.setFocusable(false);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(242, 242, 242));
         btnDelete.setText("DELETE");
+        btnDelete.setEnabled(false);
+        btnDelete.setFocusable(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
+        btnClear.setBackground(new java.awt.Color(255, 255, 255));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("CLEAR");
+        btnClear.setFocusable(false);
+        btnClear.setSelected(true);
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,7 +174,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addComponent(btnAddSupplier)
                         .addGap(24, 24, 24)
-                        .addComponent(btnEdit)
+                        .addComponent(btnSave)
                         .addGap(24, 24, 24)
                         .addComponent(btnDelete))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -180,7 +209,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
@@ -188,10 +217,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
 
         tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "MÃ NCC", "TÊN", "ĐỊA CHỈ", "SDT"
@@ -238,12 +264,50 @@ public final class PanelSupplier extends javax.swing.JPanel {
         index = tblSuppliers.getSelectedRow();
         int id = (int) modelTblSupplier.getValueAt(index, 0);
 
-        try {
-            writeForm(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        writeForm(id);
     }//GEN-LAST:event_tblSuppliersMousePressed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        updateSupplier();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        deleteSupplier();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
+        addSupplier();
+    }//GEN-LAST:event_btnAddSupplierActionPerformed
+
+    public void errorMessage(String str) {
+        JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public int confirmUpdateDialog() {
+        return JOptionPane.showConfirmDialog(null, "Tiếp tục cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+
+    public int confirmDeleteDialog() {
+        return JOptionPane.showConfirmDialog(null, "Tiếp tục xóa thông tin?"
+                + "\nThao tác này sẽ xóa thông tin sản phẩm đang được cung cấp"
+                + "\nbởi nhà cung cấp này và những hóa đơn chứa sản phẩm đó!!!", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+
+    public void buttonsWhenAddInfo() {
+        btnAddSupplier.setEnabled(true);
+        btnSave.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+
+    public void buttonsWhenEditInfo() {
+        btnAddSupplier.setEnabled(false);
+        btnSave.setEnabled(true);
+        btnDelete.setEnabled(true);
+    }
 
     public void getConnection(Connection connection) {
         this.connection = connection;
@@ -258,9 +322,7 @@ public final class PanelSupplier extends javax.swing.JPanel {
     public void loadDataToTblSupplier() {
         try {
             modelTblSupplier.setRowCount(0);
-
             List<NhaCungCap> nccList = nccDAO.findAll();
-
             for (NhaCungCap ncc : nccList) {
                 int id = ncc.getMaNCC();
                 String tenncc = ncc.getTenNCC();
@@ -270,43 +332,158 @@ public final class PanelSupplier extends javax.swing.JPanel {
                 modelTblSupplier.addRow(new Object[]{id, tenncc, diachi, sdt});
             }
         } catch (SQLException ex) {
+            Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void loadSuppliedProductByNCC(int id_ncc) throws SQLException {
+    public void loadSuppliedProductByNCC(int id_ncc) {
+        try {
+            modelTblSuppProduct.setRowCount(0);
+
+            List<SanPham> spList = spDAO.findByNCC(id_ncc);
+
+            for (SanPham sp : spList) {
+                int maSp = sp.getMaSp();
+                String tenSp = sp.getTenSp();
+
+                modelTblSuppProduct.addRow(new Object[]{maSp, tenSp});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void resetPanelData() {
+        clearForm();
+        loadDataToTblSupplier();
+
+        if (index != -1) {
+            tblSuppliers.setRowSelectionInterval(index, index);
+            writeForm((int) modelTblSupplier.getValueAt(index, 0));
+        }
+    }
+
+    public void clearForm() {
+        tblSuppliers.clearSelection();
+
         modelTblSuppProduct.setRowCount(0);
 
-        List<SanPham> spList = spDAO.findByNCC(id_ncc);
+        txtID.setText("Mã số sẽ được tự động tạo");
+        txtName.setText("");
+        txtPhone.setText("");
+        txtAddress.setText("");
 
-        List<KhoHangChiTiet> khctList = khctDAO.findAllBySanPhamList(spList);
+        buttonsWhenAddInfo();
+    }
 
-        for (KhoHangChiTiet khct : khctList) {
-            KhoHang kho = khoHangDAO.findById(khct.getMaKho());
-            SanPham sp = spDAO.findById(khct.getMaSp());
+    public void writeForm(int id) {
+        try {
+            NhaCungCap ncc = nccDAO.findById(id);
+            txtID.setText(ncc.getMaNCC() + "");
+            txtName.setText(ncc.getTenNCC());
+            txtAddress.setText(ncc.getDiaChi());
+            txtPhone.setText(ncc.getSdt());
 
-            int maSp = sp.getMaSp();
-            String tenSp = sp.getTenSp();
-            String tenKhoHang = kho.getTenKho();
-            int soLuongSp = khct.getSoLuong();
+            loadSuppliedProductByNCC(ncc.getMaNCC());
 
-            modelTblSuppProduct.addRow(new Object[]{maSp, tenSp, tenKhoHang, soLuongSp});
+            buttonsWhenEditInfo();
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void writeForm(int id) throws SQLException {
-        NhaCungCap ncc = nccDAO.findById(id);
-        txtID.setText(ncc.getMaNCC() + "");
-        txtName.setText(ncc.getTenNCC());
-        txtAddress.setText(ncc.getDiaChi());
-        txtPhone.setText(ncc.getSdt());
+    public NhaCungCap readForm() {
+        int maNCC = -1;
 
-        loadSuppliedProductByNCC(ncc.getMaNCC());
+        try {
+            maNCC = Integer.parseInt(txtID.getText());
+        } catch (NumberFormatException e) {
+        }
+
+        String tenNCC = txtName.getText().trim();
+        String diaChi = txtAddress.getText().trim();
+        String sdt = txtPhone.getText().trim();
+
+        if (maNCC == -1) {
+            return new NhaCungCap(tenNCC, diaChi, sdt);
+        }
+
+        return new NhaCungCap(maNCC, tenNCC, diaChi, sdt);
+    }
+
+    public boolean validateInfo() {
+        String phone = txtPhone.getText().trim();
+        String phoneRegex = "\\d{8,12}";
+
+        if (txtName.getText().isBlank() || txtAddress.getText().isBlank() || phone.isBlank()) {
+            errorMessage("Vui lòng không để trống thông tin của nhà cung cấp!");
+            return false;
+        }
+
+        if (!phone.matches(phoneRegex)) {
+            errorMessage("Số điện thoại không hợp lệ\nXin vui lòng nhập lại!!!");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void addSupplier() {
+        if (validateInfo()) {
+            NhaCungCap ncc = readForm();
+
+            try {
+                nccDAO.insert(ncc);
+                index = tblSuppliers.getRowCount();
+                resetPanelData();
+
+                JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp mới thành công!");
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void updateSupplier() {
+        if (validateInfo()) {
+            try {
+                int maNCC = (int) modelTblSupplier.getValueAt(index, 0);
+                NhaCungCap old_NCC = nccDAO.findById(maNCC);
+
+                NhaCungCap new_NCC = readForm();
+
+                if (!old_NCC.equals(new_NCC)) {
+                    if (confirmUpdateDialog() == JOptionPane.YES_OPTION) {
+                        nccDAO.update(new_NCC);
+                        resetPanelData();
+                        JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void deleteSupplier() {
+        int maNCC = (int) modelTblSupplier.getValueAt(index, 0);
+
+        if (confirmDeleteDialog() == JOptionPane.YES_OPTION) {
+            try {
+                nccDAO.delete(maNCC);
+                index = -1;
+                resetPanelData();
+                JOptionPane.showMessageDialog(null, "Xóa thông tin thành công!");
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSave;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

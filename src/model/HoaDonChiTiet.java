@@ -7,6 +7,9 @@ public class HoaDonChiTiet {
     private int soLuong;
 
     // Constructor
+    public HoaDonChiTiet() {
+    }
+
     public HoaDonChiTiet(int maSp, int maHd, int soLuong) {
         this.maSp = maSp;
         this.maHd = maHd;

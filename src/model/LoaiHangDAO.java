@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoaiHangDAO {
 
@@ -69,10 +71,10 @@ public class LoaiHangDAO {
         return null;
     }
 
-    public List<LoaiHang> findAll() throws SQLException {
+    public List<LoaiHang> findAll() {
         List<LoaiHang> loaiHangList = new ArrayList<>();
 
-        String query = "SELECT * FROM LOAIHANG";
+        String query = "SELECT * FROM LOAIHANG ORDER BY MALH";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -82,6 +84,8 @@ public class LoaiHangDAO {
 
                 loaiHangList.add(new LoaiHang(maLh, tenLoai, dvt));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return loaiHangList;
