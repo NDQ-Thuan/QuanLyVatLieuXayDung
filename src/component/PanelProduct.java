@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhoHang;
 import model.KhoHangChiTiet;
@@ -52,8 +52,8 @@ public final class PanelProduct extends ConnectionPanel {
         lblPhone = new javax.swing.JLabel();
         txtDVT = new javax.swing.JTextField();
         lblSuppProduct = new javax.swing.JLabel();
-        btnAddSupplier = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         txtPrice = new javax.swing.JTextField();
         lblSuppProduct1 = new javax.swing.JLabel();
@@ -62,6 +62,8 @@ public final class PanelProduct extends ConnectionPanel {
         btnClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblWarehouse = new javax.swing.JTable();
+        lblProductName = new javax.swing.JLabel();
+        txtProductName = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
 
@@ -90,22 +92,24 @@ public final class PanelProduct extends ConnectionPanel {
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("GIÁ");
 
-        btnAddSupplier.setBackground(new java.awt.Color(0, 153, 0));
-        btnAddSupplier.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAddSupplier.setForeground(new java.awt.Color(242, 242, 242));
-        btnAddSupplier.setText("ADD");
-        btnAddSupplier.setFocusable(false);
+        btnAdd.setBackground(new java.awt.Color(0, 153, 0));
+        btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(242, 242, 242));
+        btnAdd.setText("ADD");
+        btnAdd.setFocusable(false);
 
-        btnEdit.setBackground(new java.awt.Color(0, 0, 153));
-        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(242, 242, 242));
-        btnEdit.setText("EDIT");
-        btnEdit.setFocusable(false);
+        btnSave.setBackground(new java.awt.Color(0, 0, 153));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(242, 242, 242));
+        btnSave.setText("EDIT");
+        btnSave.setEnabled(false);
+        btnSave.setFocusable(false);
 
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(242, 242, 242));
         btnDelete.setText("DELETE");
+        btnDelete.setEnabled(false);
         btnDelete.setFocusable(false);
 
         txtPrice.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -119,11 +123,13 @@ public final class PanelProduct extends ConnectionPanel {
         cboSupplier.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         cboSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
+        btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("CLEAR");
         btnClear.setFocusable(false);
 
-        tblWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblWarehouse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -142,6 +148,12 @@ public final class PanelProduct extends ConnectionPanel {
         });
         jScrollPane2.setViewportView(tblWarehouse);
 
+        lblProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblProductName.setText("TÊN SẢN PHẨM");
+
+        txtProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtProductName.setFocusable(false);
+
         javax.swing.GroupLayout pnlProductInfoLayout = new javax.swing.GroupLayout(pnlProductInfo);
         pnlProductInfo.setLayout(pnlProductInfoLayout);
         pnlProductInfoLayout.setHorizontalGroup(
@@ -155,21 +167,23 @@ public final class PanelProduct extends ConnectionPanel {
                             .addComponent(lblSuppID)
                             .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSuppProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblSuppProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblProductName))
                         .addGap(18, 18, 18)
                         .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtID)
                             .addComponent(txtDVT)
                             .addComponent(txtPrice)
                             .addComponent(cboType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtProductName)))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(btnAddSupplier)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnEdit)
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(btnAdd)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnSave)
+                        .addGap(30, 30, 30)
                         .addComponent(btnDelete))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
@@ -184,30 +198,34 @@ public final class PanelProduct extends ConnectionPanel {
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuppID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtID))
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(lblProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProductName))
+                .addGap(15, 15, 15)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
+                .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDVT))
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrice)
                     .addComponent(lblSuppProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(15, 15, 15)
                 .addComponent(lblSuppProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
@@ -264,6 +282,33 @@ public final class PanelProduct extends ConnectionPanel {
         writeForm(maSp);
     }//GEN-LAST:event_tblProductMousePressed
 
+    public void errorMessage(String str) {
+        JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public int customConfirmDialog(String str) {
+        return JOptionPane.showConfirmDialog(null, str, "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+
+    public int confirmDeleteDialog() {
+        return JOptionPane.showConfirmDialog(null, "Tiếp tục xóa thông tin?"
+                + "\nThao tác này sẽ xóa thông tin sản phẩm đang được cung cấp"
+                + "\nvà những hóa đơn chứa sản phẩm đó!!!", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    }
+
+    public void buttonsWhenAddInfo() {
+        btnAdd.setEnabled(true);
+        btnSave.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+
+    public void buttonsWhenEditInfo() {
+        btnAdd.setEnabled(false);
+        btnSave.setEnabled(true);
+        btnDelete.setEnabled(true);
+    }
+
+    @Override
     public void getConnection(Connection connection) {
         this.connection = connection;
         sanPhamDAO = new SanPhamDAO(this.connection);
@@ -273,6 +318,10 @@ public final class PanelProduct extends ConnectionPanel {
         nccDAO = new NhaCungCapDAO(this.connection);
         loadDataToTblProduct();
         loadDataToForm();
+    }
+
+    @Override
+    public void disableButtonOnUserRole() {
     }
 
     public void loadDataToTblProduct() {
@@ -309,6 +358,10 @@ public final class PanelProduct extends ConnectionPanel {
         }
     }
 
+    public void clearForm() {
+
+    }
+
     public void writeForm(int maSp) {
         try {
             SanPham sp = sanPhamDAO.findById(maSp);
@@ -316,6 +369,7 @@ public final class PanelProduct extends ConnectionPanel {
             LoaiHang lh = loaiHangDAO.findById(sp.getMaLh());
 
             txtID.setText(sp.getMaSp() + "");
+            txtProductName.setText(sp.getTenSp());
             cboType.setSelectedItem(lh.getTenLoai());
             cboSupplier.setSelectedItem(ncc.getTenNCC());
             txtDVT.setText(lh.getDvt());
@@ -336,11 +390,15 @@ public final class PanelProduct extends ConnectionPanel {
         }
 
     }
+//
+//    public Product readForm() {
+//    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddSupplier;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cboSupplier;
     private javax.swing.JComboBox<String> cboType;
     private javax.swing.JScrollPane jScrollPane1;
@@ -348,6 +406,7 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhone;
+    private javax.swing.JLabel lblProductName;
     private javax.swing.JLabel lblSuppID;
     private javax.swing.JLabel lblSuppProduct;
     private javax.swing.JLabel lblSuppProduct1;
@@ -357,5 +416,6 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JTextField txtDVT;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtProductName;
     // End of variables declaration//GEN-END:variables
 }

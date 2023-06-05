@@ -297,6 +297,7 @@ public class PanelDashboard extends ConnectionPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
     public void getConnection(Connection connection) {
         this.connection = connection;
         hoaDonDAO = new HoaDonDAO(this.connection);
@@ -305,6 +306,10 @@ public class PanelDashboard extends ConnectionPanel {
         loadDataToTblPendingOrder();
         loadDataRevenuePanel();
         loadDataOrderPanel();
+    }
+
+    @Override
+    public void disableButtonOnUserRole() {
     }
 
     public void loadDataToTblPendingOrder() {

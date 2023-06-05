@@ -8,8 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.KhoHang;
-import model.KhoHangChiTiet;
 import model.KhoHangChiTietDAO;
 import model.KhoHangDAO;
 import model.NhaCungCap;
@@ -82,7 +80,7 @@ public final class PanelSupplier extends ConnectionPanel {
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct.setText("SẢN PHẨM CUNG CẤP");
 
-        tblSuppProduct.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tblSuppProduct.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblSuppProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -287,8 +285,8 @@ public final class PanelSupplier extends ConnectionPanel {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
     }
 
-    public int confirmUpdateDialog() {
-        return JOptionPane.showConfirmDialog(null, "Tiếp tục cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    public int customConfirmDialog(String str) {
+        return JOptionPane.showConfirmDialog(null, str, "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
     public int confirmDeleteDialog() {
@@ -309,6 +307,7 @@ public final class PanelSupplier extends ConnectionPanel {
         btnDelete.setEnabled(true);
     }
 
+    @Override
     public void getConnection(Connection connection) {
         this.connection = connection;
         nccDAO = new NhaCungCapDAO(this.connection);
@@ -317,6 +316,10 @@ public final class PanelSupplier extends ConnectionPanel {
         khctDAO = new KhoHangChiTietDAO(this.connection);
 
         loadDataToTblSupplier();
+    }
+
+    @Override
+    public void disableButtonOnUserRole() {
     }
 
     public void loadDataToTblSupplier() {
@@ -430,16 +433,17 @@ public final class PanelSupplier extends ConnectionPanel {
 
     public void addSupplier() {
         if (validateInfo()) {
-            NhaCungCap ncc = readForm();
+            if (customConfirmDialog("Tiếp tục thêm nhà cung cấp này?") == JOptionPane.YES_OPTION) {
+                NhaCungCap ncc = readForm();
+                try {
+                    nccDAO.insert(ncc);
+                    index = tblSuppliers.getRowCount();
+                    resetPanelData();
 
-            try {
-                nccDAO.insert(ncc);
-                index = tblSuppliers.getRowCount();
-                resetPanelData();
-
-                JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp mới thành công!");
-            } catch (SQLException ex) {
-                Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp mới thành công!");
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -453,7 +457,7 @@ public final class PanelSupplier extends ConnectionPanel {
                 NhaCungCap new_NCC = readForm();
 
                 if (!old_NCC.equals(new_NCC)) {
-                    if (confirmUpdateDialog() == JOptionPane.YES_OPTION) {
+                    if (customConfirmDialog("Tiếp tục cập nhật thông tin?") == JOptionPane.YES_OPTION) {
                         nccDAO.update(new_NCC);
                         resetPanelData();
                         JOptionPane.showMessageDialog(null, "Cập nhật thành công!");

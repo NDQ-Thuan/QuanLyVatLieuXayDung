@@ -145,6 +145,7 @@ public class PanelWarehouse extends ConnectionPanel {
         loadDataToTblAndFormByTenKho(name);
     }//GEN-LAST:event_cboWarehouseItemStateChanged
 
+    @Override
     public void getConnection(Connection connection) {
         this.connection = connection;
         khoHangDAO = new KhoHangDAO(this.connection);
@@ -153,6 +154,11 @@ public class PanelWarehouse extends ConnectionPanel {
         lhDAO = new LoaiHangDAO(this.connection);
 
         loadDataToCboSupplier();
+    }
+
+    @Override
+    public void disableButtonOnUserRole() {
+
     }
 
     public void loadDataToCboSupplier() {

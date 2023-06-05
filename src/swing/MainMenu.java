@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -18,10 +17,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MainMenu extends javax.swing.JFrame {
 
-    JLabel[] lblMenuList;
-    CardLayout cardLayout;
+    private JLabel[] lblMenuList;
+    private CardLayout cardLayout;
 
-    ConnectionPanel[] componentPanel;
+    private ConnectionPanel[] componentPanel;
 
     private Connection connection;
 
