@@ -98,6 +98,8 @@ public final class PanelSupplier extends ConnectionPanel {
             }
         });
         tblSuppProduct.setFocusable(false);
+        tblSuppProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblSuppProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblSuppProduct);
 
         btnAddSupplier.setBackground(new java.awt.Color(0, 153, 0));
@@ -230,6 +232,8 @@ public final class PanelSupplier extends ConnectionPanel {
             }
         });
         tblSuppliers.setFocusable(false);
+        tblSuppliers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblSuppliers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblSuppliers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tblSuppliersMousePressed(evt);

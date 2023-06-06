@@ -67,13 +67,13 @@ public final class PanelOrder extends ConnectionPanel {
         pnlThongTinKhachHang = new javax.swing.JPanel();
         lblCustomerName = new javax.swing.JLabel();
         btnOldCustomer = new javax.swing.JButton();
-        btnOldCustomer1 = new javax.swing.JButton();
         txtCustomerName = new javax.swing.JTextField();
         lblCustomerPhone = new javax.swing.JLabel();
         txtCustomerPhone = new javax.swing.JTextField();
         lblCustomerAddress = new javax.swing.JLabel();
         txtCustomerAddress = new javax.swing.JTextField();
         btnOldCustomer2 = new javax.swing.JButton();
+        lblCustomerID = new javax.swing.JLabel();
         lblTrangThai = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         btnAdd1 = new javax.swing.JButton();
@@ -83,6 +83,7 @@ public final class PanelOrder extends ConnectionPanel {
 
         txtID.setEditable(false);
         txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
 
         lblWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblWarehouse.setText("KHO LẤY HÀNG");
@@ -117,6 +118,8 @@ public final class PanelOrder extends ConnectionPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tblDetail);
 
         lblOrderDetail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -142,6 +145,8 @@ public final class PanelOrder extends ConnectionPanel {
             }
         });
         tblOrder.setFocusable(false);
+        tblOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tblOrderMousePressed(evt);
@@ -172,6 +177,11 @@ public final class PanelOrder extends ConnectionPanel {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(242, 242, 242));
         jButton2.setText("MENU SẢN PHẨM");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         pnlThongTinKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "KHÁCH HÀNG", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 10))); // NOI18N
 
@@ -182,11 +192,11 @@ public final class PanelOrder extends ConnectionPanel {
         btnOldCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnOldCustomer.setForeground(new java.awt.Color(242, 242, 242));
         btnOldCustomer.setText("KHÁCH HÀNG CŨ");
-
-        btnOldCustomer1.setBackground(new java.awt.Color(0, 51, 204));
-        btnOldCustomer1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnOldCustomer1.setForeground(new java.awt.Color(242, 242, 242));
-        btnOldCustomer1.setText("SỬA THÔNG TIN");
+        btnOldCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOldCustomerActionPerformed(evt);
+            }
+        });
 
         txtCustomerName.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
 
@@ -205,6 +215,10 @@ public final class PanelOrder extends ConnectionPanel {
         btnOldCustomer2.setForeground(new java.awt.Color(242, 242, 242));
         btnOldCustomer2.setText("XÓA THÔNG TIN");
 
+        lblCustomerID.setBackground(new java.awt.Color(255, 255, 255));
+        lblCustomerID.setFont(new java.awt.Font("Segoe UI", 0, 1)); // NOI18N
+        lblCustomerID.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout pnlThongTinKhachHangLayout = new javax.swing.GroupLayout(pnlThongTinKhachHang);
         pnlThongTinKhachHang.setLayout(pnlThongTinKhachHangLayout);
         pnlThongTinKhachHangLayout.setHorizontalGroup(
@@ -217,14 +231,14 @@ public final class PanelOrder extends ConnectionPanel {
                     .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCustomerAddress)
+                    .addComponent(txtCustomerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                     .addComponent(txtCustomerName)
                     .addComponent(txtCustomerPhone))
                 .addGap(18, 18, 18)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnOldCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOldCustomer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOldCustomer2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(btnOldCustomer2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(lblCustomerID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlThongTinKhachHangLayout.setVerticalGroup(
@@ -239,7 +253,7 @@ public final class PanelOrder extends ConnectionPanel {
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCustomerPhone)
                     .addComponent(txtCustomerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOldCustomer1))
+                    .addComponent(lblCustomerID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCustomerAddress)
@@ -253,9 +267,9 @@ public final class PanelOrder extends ConnectionPanel {
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStatus.setText("Đang tạo");
 
-        btnAdd1.setBackground(new java.awt.Color(0, 153, 51));
+        btnAdd1.setBackground(new java.awt.Color(255, 255, 0));
         btnAdd1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnAdd1.setForeground(new java.awt.Color(242, 242, 242));
+        btnAdd1.setForeground(new java.awt.Color(0, 0, 0));
         btnAdd1.setText("FILTER");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -356,6 +370,16 @@ public final class PanelOrder extends ConnectionPanel {
         writeForm(maHD);
     }//GEN-LAST:event_tblOrderMousePressed
 
+    private void btnOldCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOldCustomerActionPerformed
+        PopUpCustomer popUpCustomer = new PopUpCustomer(this);
+        popUpCustomer.setVisible(true);
+    }//GEN-LAST:event_btnOldCustomerActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PopUpProductMenu popUpProductMenu = new PopUpProductMenu(this);
+        popUpProductMenu.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     @Override
     public void getConnection(Connection connection) {
         this.connection = connection;
@@ -371,6 +395,10 @@ public final class PanelOrder extends ConnectionPanel {
 
     @Override
     public void disableButtonOnUserRole() {
+    }
+
+    public Connection getPnlConnection() {
+        return this.connection;
     }
 
     public void loadDataToTblOrder() {
@@ -433,6 +461,28 @@ public final class PanelOrder extends ConnectionPanel {
             Logger.getLogger(PanelOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int getCurrentWarehouseID() {
+        int maKho = 0;
+
+        try {
+            maKho = khoHangDAO.findIdByName((String) cboWarehouse.getSelectedItem());
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maKho;
+    }
+
+    public void addCustomerInfo(KhachHang khach) {
+        txtCustomerName.setText(khach.getTenKhach());
+        txtCustomerPhone.setText(khach.getSdt());
+        txtCustomerAddress.setText(khach.getDiaChi());
+    }
+
+    public void addDetailProduct(SanPham sp, int soLuong) {
+        modelTblDetail.addRow(new Object[]{sp.getMaSp(), sp.getTenSp(), soLuong});
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnAdd1;
@@ -440,7 +490,6 @@ public final class PanelOrder extends ConnectionPanel {
     public javax.swing.JButton btnDelete;
     public javax.swing.JButton btnEdit;
     public javax.swing.JButton btnOldCustomer;
-    public javax.swing.JButton btnOldCustomer1;
     public javax.swing.JButton btnOldCustomer2;
     public javax.swing.JComboBox<String> cboType;
     public javax.swing.JComboBox<String> cboWarehouse;
@@ -448,6 +497,7 @@ public final class PanelOrder extends ConnectionPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblCustomerAddress;
+    private javax.swing.JLabel lblCustomerID;
     public javax.swing.JLabel lblCustomerName;
     public javax.swing.JLabel lblCustomerPhone;
     private javax.swing.JLabel lblDate;

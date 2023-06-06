@@ -246,10 +246,7 @@ public class PanelDashboard extends ConnectionPanel {
 
         tblPendingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "MÃ HĐ", "KHÁCH HÀNG", "NGÀY LẬP", "LOẠI HĐ", "TRẠNG THÁI"
@@ -264,7 +261,9 @@ public class PanelDashboard extends ConnectionPanel {
             }
         });
         tblPendingOrder.setFocusable(false);
-        tblPendingOrder.setShowGrid(false);
+        tblPendingOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPendingOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPendingOrder.setShowGrid(true);
         tblPendingOrder.setShowHorizontalLines(true);
         tblPendingOrder.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPendingOrder);

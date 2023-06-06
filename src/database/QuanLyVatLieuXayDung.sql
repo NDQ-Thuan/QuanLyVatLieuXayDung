@@ -20,7 +20,8 @@ CREATE TABLE KHACHHANG (
     MAKHACH INT IDENTITY(1,1) PRIMARY KEY,
     TENKHACH NVARCHAR(50) NOT NULL,
     DIACHI NVARCHAR(100) NOT NULL,
-    SDT VARCHAR(15) NOT NULL
+    SDT VARCHAR(15) NOT NULL,
+	DELETE_FLAG BIT NULL, -- Soft delete flag
 );
 GO
 
@@ -45,9 +46,10 @@ GO
 CREATE TABLE SANPHAM (
     MASP INT IDENTITY(1,1) PRIMARY KEY,
     MALH INT NOT NULL,
-    MANCC INT NOT NULL,
+    MANCC INT NULL,
 	TENSP NVARCHAR(50) NOT NULL,
     GIA INT NOT NULL,
+	DELETE_FLAG BIT NULL, -- Soft delete flag
     FOREIGN KEY (MALH) REFERENCES LOAIHANG(MALH),
     FOREIGN KEY (MANCC) REFERENCES NHACUNGCAP(MANCC)
 );
@@ -57,7 +59,7 @@ GO
 CREATE TABLE KHOHANG (
     MAKHO INT IDENTITY(1,1) PRIMARY KEY,
 	TENKHOHANG NVARCHAR(50) NOT NULL,
-    DIACHI NVARCHAR(200) NULL,
+    DIACHI NVARCHAR(200) NOT NULL,
 	SDTQUANLY VARCHAR(15) NULL,
 );
 GO
@@ -498,67 +500,67 @@ INSERT INTO HOADON (MAKHACH,MAKHO, NGAYLAPHOADON, LOAIHOADON, TRANGTHAI)
 VALUES
 	(1,9, '2023-01-01', N'Nhập', 'Pending'),
     (2,10, '2023-01-11', N'Xuất', 'Pending'),
-    (3,1, '2023-01-21', N'Nhập', 'Delivered'),
+    (3,1, '2023-01-21', N'Nhập', 'Success'),
     (4,2, '2023-01-02', N'Xuất', 'Cancelled'),
     (5,3, '2023-01-12', N'Nhập', 'Returned'),
     (6,4, '2023-01-22', N'Xuất', 'Pending'),
     (7,5, '2023-01-03', N'Nhập', 'Delivering'),
-    (8,6, '2023-01-13', N'Xuất', 'Delivered'),
+    (8,6, '2023-01-13', N'Xuất', 'Success'),
     (9,7, '2023-01-23', N'Nhập', 'Cancelled'),
     (10,8, '2023-1-30', N'Xuất', 'Returned'),
 
     (11,10, '2023-02-04', N'Nhập', 'Pending'),
     (12,9, '2023-02-14', N'Xuất', 'Delivering'),
-    (13,8, '2023-02-24', N'Nhập', 'Delivered'),
+    (13,8, '2023-02-24', N'Nhập', 'Success'),
     (14,7, '2023-02-05', N'Xuất', 'Cancelled'),
     (15,6, '2023-02-15', N'Nhập', 'Returned'),
     (16,5, '2023-02-25', N'Xuất', 'Pending'),
     (17,4, '2023-02-06', N'Nhập', 'Delivering'),
-    (18,3, '2023-02-16', N'Xuất', 'Delivered'),
+    (18,3, '2023-02-16', N'Xuất', 'Success'),
     (19,2, '2023-02-26', N'Nhập', 'Cancelled'),
     (20,1, '2023-02-28', N'Xuất', 'Returned'),
 
     (20,3,'2023-03-07', N'Nhập', 'Pending'),
     (19,5, '2023-03-17', N'Xuất', 'Delivering'),
-    (18,7, '2023-03-27', N'Nhập', 'Delivered'),
+    (18,7, '2023-03-27', N'Nhập', 'Success'),
     (17,9, '2023-03-08', N'Xuất', 'Cancelled'),
     (16,1, '2023-03-18', N'Nhập', 'Returned'),
     (15,2, '2023-03-28', N'Xuất', 'Returned'),
     (14,4, '2023-03-09', N'Nhập', 'Delivering'),
-    (13,6, '2023-03-19', N'Xuất', 'Delivered'),
+    (13,6, '2023-03-19', N'Xuất', 'Success'),
     (12,8, '2023-03-29', N'Nhập', 'Cancelled'),
     (11,10, '2023-03-30', N'Xuất', 'Pending'),
 
     (10,5, '2023-04-03', N'Nhập', 'Pending'),
     (9,7, '2023-04-03', N'Xuất', 'Delivering'),
-    (8,9, '2023-04-12', N'Nhập', 'Delivered'),
+    (8,9, '2023-04-12', N'Nhập', 'Success'),
     (7,10, '2023-04-15', N'Xuất', 'Pending'),
     (6,1, '2023-04-17', N'Nhập', 'Returned'),
     (5,2, '2023-04-19', N'Xuất', 'Cancelled'),
     (4,3, '2023-04-25', N'Nhập', 'Delivering'),
-    (3,8, '2023-04-27', N'Xuất', 'Delivered'),
+    (3,8, '2023-04-27', N'Xuất', 'Success'),
     (2,6, '2023-04-29', N'Nhập', 'Cancelled'),
     (1,4, '2023-04-30', N'Xuất', 'Returned'),
 
     (2,1, '2023-05-01', N'Nhập', 'Pending'),
     (4,3, '2023-05-03', N'Xuất', 'Delivering'),
-    (6,4, '2023-05-07', N'Xuất', 'Delivered'),
-    (8,5, '2023-05-10', N'Xuất', 'Delivered'),
+    (6,4, '2023-05-07', N'Xuất', 'Success'),
+    (8,5, '2023-05-10', N'Xuất', 'Success'),
     (10,2, '2023-05-14', N'Nhập', 'Returned'),
     (12,6, '2023-05-18', N'Xuất', 'Delivering'),
     (14,10, '2023-05-19', N'Nhập', 'Delivering'),
     (16,8, '2023-05-20', N'Xuất', 'Pending'),
     (18,7, '2023-05-22', N'Nhập', 'Cancelled'),
-    (20,8, '2023-05-25', N'Xuất', 'Delivered'),
+    (20,8, '2023-05-25', N'Xuất', 'Success'),
 
     (1,9, '2023-06-02', N'Nhập', 'Pending'),
     (3,8, '2023-06-03', N'Xuất', 'Pending'),
-    (5,7, '2023-06-04', N'Nhập', 'Delivered'),
+    (5,7, '2023-06-04', N'Nhập', 'Success'),
     (7,6, '2023-06-05', N'Xuất', 'Pending'),
     (9,5, '2023-06-05', N'Nhập', 'Returned'),
     (11,4, '2023-06-07', N'Xuất', 'Pending'),
     (13,3, '2023-06-07', N'Nhập', 'Delivering'),
-    (15,2, '2023-06-09', N'Xuất', 'Delivered'),
+    (15,2, '2023-06-09', N'Xuất', 'Success'),
     (17,10, '2023-06-10', N'Nhập', 'Cancelled'),
     (19,1, '2023-06-15', N'Xuất', 'Pending');
 
@@ -757,8 +759,6 @@ ON HOADON
 INSTEAD OF DELETE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     -- Delete related HOADONCHITIET rows
     DELETE FROM HOADONCHITIET
     WHERE MAHD IN (SELECT MAHD FROM deleted);
@@ -771,18 +771,14 @@ GO
 
 
 -- TRIGGER DELETE KHACHHANG
-CREATE TRIGGER trg_KHACHHANG_Delete
+CREATE OR ALTER TRIGGER trg_KHACHHANG_Delete
 ON KHACHHANG
 INSTEAD OF DELETE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    -- Delete related HOADON rows
     DELETE FROM HOADON
     WHERE MAKHACH IN (SELECT MAKHACH FROM deleted);
 
-    -- Delete the KHACHHANG row
     DELETE FROM KHACHHANG
     WHERE MAKHACH IN (SELECT MAKHACH FROM deleted);
 END;
@@ -790,42 +786,55 @@ GO
 
 
 -- TRIGGER DELETE SANPHAM
-CREATE TRIGGER trg_SANPHAM_Delete
+CREATE OR ALTER TRIGGER trg_SANPHAM_Delete
 ON SANPHAM
 INSTEAD OF DELETE
 AS
 BEGIN
-    SET NOCOUNT ON;
+	UPDATE SANPHAM
+	SET DELETE_FLAG = 1
+	WHERE MASP IN 
+		(SELECT MASP FROM deleted 
+			WHERE MASP IN 
+				(SELECT MASP 
+				FROM HOADONCHITIET hc JOIN HOADON hd 
+				ON hc.MAHD = hd.MAHD
+				WHERE TRANGTHAI LIKE 'Pending' 
+				OR TRANGTHAI LIKE 'Delivering')
+		);
 
-    -- Delete related HOADONCHITIET rows
-    DELETE FROM HOADONCHITIET
-    WHERE MASP IN (SELECT MASP FROM deleted);
+	DECLARE @delFlag BIT;
 
-    -- Delete related KHOHANGCHITIET rows
-    DELETE FROM KHOHANGCHITIET
-    WHERE MASP IN (SELECT MASP FROM deleted);
+	SELECT @delFlag = DELETE_FLAG
+	FROM deleted;
 
-	-- Delete the SANPHAM row
-	DELETE FROM SANPHAM
-    WHERE MASP IN (SELECT MASP FROM deleted);
+	IF @delFlag IS NULL
+	BEGIN
+		DELETE FROM HOADONCHITIET
+		WHERE MASP IN (SELECT MASP FROM deleted);
+
+		DELETE FROM KHOHANGCHITIET
+		WHERE MASP IN (SELECT MASP FROM deleted);
+
+		-- Delete the SANPHAM row
+		DELETE FROM SANPHAM
+		WHERE MASP IN (SELECT MASP FROM deleted);
+	END
 END;
 GO
 
 
 -- TRIGGER DELETE NHACUNGCAP
-CREATE TRIGGER trg_NHACUNGCAP_Delete
+CREATE OR ALTER TRIGGER trg_NHACUNGCAP_Delete
 ON NHACUNGCAP
 INSTEAD OF DELETE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    -- Delete related SANPHAM rows
-    DELETE FROM SANPHAM
+    UPDATE SANPHAM
+	SET MANCC = NULL
     WHERE MANCC IN (SELECT MANCC FROM deleted);
 
 
-    -- Delete the NHACUNGCAP row
     DELETE FROM NHACUNGCAP
     WHERE MANCC IN (SELECT MANCC FROM deleted);
 END;
@@ -862,9 +871,7 @@ GO
 CREATE OR ALTER PROCEDURE UpdateHOADONCHITIET
 AS
 BEGIN
-    SET NOCOUNT ON;
-    
-    -- Update the existing rows with combined SOLUONG
+     -- Update the existing rows with combined SOLUONG
     UPDATE hc1
     SET hc1.SOLUONG = hc1.SOLUONG + hc2.SOLUONG
     FROM HOADONCHITIET hc1
@@ -888,7 +895,7 @@ BEGIN
     ) dup ON hc.MASP = dup.MASP AND hc.MAHD = dup.MAHD
     WHERE hc.SOLUONG < dup.MaxSOLUONG;
 
-	-- Delete duplicate rows except for the one with the smaller ID
+	-- Delete duplicate rows except for the one with the same ID
 	DELETE hc
     FROM HOADONCHITIET hc
     INNER JOIN (
@@ -907,9 +914,7 @@ GO
 -- PRODEDURE KHOHANGCHITIET
 CREATE OR ALTER PROCEDURE UpdateKHOHANGCHITIET
 AS
-BEGIN
-    SET NOCOUNT ON;
-    
+BEGIN   
     -- Update the existing rows with combined SOLUONG
     UPDATE kc1
     SET kc1.SOLUONG = kc1.SOLUONG + kc2.SOLUONG
@@ -939,11 +944,6 @@ EXEC UpdateKHOHANGCHITIET;
 GO
 
 
-
-
-
 /*
 EXEC sp_MSforeachtable @command1 = "DROP TABLE ?"
 */
-
-SELECT * FROM SANPHAM WHERE MANCC = 1

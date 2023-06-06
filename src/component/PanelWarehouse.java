@@ -69,6 +69,8 @@ public class PanelWarehouse extends ConnectionPanel {
         });
         tblProduct.setFocusable(false);
         tblProduct.setRowHeight(30);
+        tblProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblProduct);
 
         cboWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

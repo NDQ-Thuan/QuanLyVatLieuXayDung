@@ -146,6 +146,8 @@ public final class PanelProduct extends ConnectionPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblWarehouse.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblWarehouse.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tblWarehouse);
 
         lblProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -248,6 +250,8 @@ public final class PanelProduct extends ConnectionPanel {
             }
         });
         tblProduct.setFocusable(false);
+        tblProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tblProductMousePressed(evt);
