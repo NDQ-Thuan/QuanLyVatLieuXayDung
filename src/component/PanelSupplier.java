@@ -53,7 +53,7 @@ public final class PanelSupplier extends ConnectionPanel {
         tblSuppProduct = new javax.swing.JTable();
         btnAddSupplier = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        btnFlag = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSuppliers = new javax.swing.JTable();
@@ -125,15 +125,15 @@ public final class PanelSupplier extends ConnectionPanel {
             }
         });
 
-        btnDelete.setBackground(new java.awt.Color(204, 0, 0));
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(242, 242, 242));
-        btnDelete.setText("DELETE");
-        btnDelete.setEnabled(false);
-        btnDelete.setFocusable(false);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnFlag.setBackground(new java.awt.Color(204, 0, 0));
+        btnFlag.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFlag.setForeground(new java.awt.Color(242, 242, 242));
+        btnFlag.setText("FLAG");
+        btnFlag.setEnabled(false);
+        btnFlag.setFocusable(false);
+        btnFlag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnFlagActionPerformed(evt);
             }
         });
 
@@ -176,7 +176,7 @@ public final class PanelSupplier extends ConnectionPanel {
                         .addGap(24, 24, 24)
                         .addComponent(btnSave)
                         .addGap(24, 24, 24)
-                        .addComponent(btnDelete))
+                        .addComponent(btnFlag))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblAddress)
                         .addGap(18, 18, 18)
@@ -210,7 +210,7 @@ public final class PanelSupplier extends ConnectionPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
@@ -277,9 +277,9 @@ public final class PanelSupplier extends ConnectionPanel {
         updateSupplier();
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        deleteSupplier();
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    private void btnFlagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlagActionPerformed
+        flagSupplier();
+    }//GEN-LAST:event_btnFlagActionPerformed
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
         addSupplier();
@@ -293,22 +293,21 @@ public final class PanelSupplier extends ConnectionPanel {
         return JOptionPane.showConfirmDialog(null, str, "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
-    public int confirmDeleteDialog() {
-        return JOptionPane.showConfirmDialog(null, "Tiếp tục xóa thông tin?"
-                + "\nThao tác này sẽ xóa thông tin sản phẩm đang được cung cấp"
-                + "\nbởi nhà cung cấp này và những hóa đơn chứa sản phẩm đó!!!", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    public int confirmFlagDialog() {
+        return JOptionPane.showConfirmDialog(null, "Tiếp tục đánh dấu nhà cung cấp?",
+                 "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
     public void buttonsWhenAddInfo() {
         btnAddSupplier.setEnabled(true);
         btnSave.setEnabled(false);
-        btnDelete.setEnabled(false);
+        btnFlag.setEnabled(false);
     }
 
     public void buttonsWhenEditInfo() {
         btnAddSupplier.setEnabled(false);
         btnSave.setEnabled(true);
-        btnDelete.setEnabled(true);
+        btnFlag.setEnabled(true);
     }
 
     @Override
@@ -473,15 +472,15 @@ public final class PanelSupplier extends ConnectionPanel {
         }
     }
 
-    public void deleteSupplier() {
+    public void flagSupplier() {
         int maNCC = (int) modelTblSupplier.getValueAt(index, 0);
 
-        if (confirmDeleteDialog() == JOptionPane.YES_OPTION) {
+        if (confirmFlagDialog() == JOptionPane.YES_OPTION) {
             try {
-                nccDAO.delete(maNCC);
+                nccDAO.flag(maNCC);
                 index = -1;
                 resetPanelData();
-                JOptionPane.showMessageDialog(null, "Xóa thông tin thành công!");
+                JOptionPane.showMessageDialog(null, "Ngừng hoạt động thành công!");
             } catch (SQLException ex) {
                 Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -490,7 +489,7 @@ public final class PanelSupplier extends ConnectionPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSupplier;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnFlag;
     private javax.swing.JButton btnSave;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

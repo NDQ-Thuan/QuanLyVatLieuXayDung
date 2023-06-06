@@ -54,7 +54,7 @@ public final class PanelProduct extends ConnectionPanel {
         lblSuppProduct = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        btnFlag = new javax.swing.JButton();
         txtPrice = new javax.swing.JTextField();
         lblSuppProduct1 = new javax.swing.JLabel();
         cboType = new javax.swing.JComboBox<>();
@@ -105,12 +105,17 @@ public final class PanelProduct extends ConnectionPanel {
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
 
-        btnDelete.setBackground(new java.awt.Color(204, 0, 0));
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(242, 242, 242));
-        btnDelete.setText("DELETE");
-        btnDelete.setEnabled(false);
-        btnDelete.setFocusable(false);
+        btnFlag.setBackground(new java.awt.Color(204, 0, 0));
+        btnFlag.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFlag.setForeground(new java.awt.Color(242, 242, 242));
+        btnFlag.setText("FLAG");
+        btnFlag.setEnabled(false);
+        btnFlag.setFocusable(false);
+        btnFlag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFlagActionPerformed(evt);
+            }
+        });
 
         txtPrice.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
@@ -186,7 +191,7 @@ public final class PanelProduct extends ConnectionPanel {
                         .addGap(30, 30, 30)
                         .addComponent(btnSave)
                         .addGap(30, 30, 30)
-                        .addComponent(btnDelete))
+                        .addComponent(btnFlag))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -228,7 +233,7 @@ public final class PanelProduct extends ConnectionPanel {
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
@@ -286,6 +291,10 @@ public final class PanelProduct extends ConnectionPanel {
         writeForm(maSp);
     }//GEN-LAST:event_tblProductMousePressed
 
+    private void btnFlagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFlagActionPerformed
+
     public void errorMessage(String str) {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
     }
@@ -303,13 +312,13 @@ public final class PanelProduct extends ConnectionPanel {
     public void buttonsWhenAddInfo() {
         btnAdd.setEnabled(true);
         btnSave.setEnabled(false);
-        btnDelete.setEnabled(false);
+        btnFlag.setEnabled(false);
     }
 
     public void buttonsWhenEditInfo() {
         btnAdd.setEnabled(false);
         btnSave.setEnabled(true);
-        btnDelete.setEnabled(true);
+        btnFlag.setEnabled(true);
     }
 
     @Override
@@ -401,7 +410,7 @@ public final class PanelProduct extends ConnectionPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnFlag;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cboSupplier;
     private javax.swing.JComboBox<String> cboType;

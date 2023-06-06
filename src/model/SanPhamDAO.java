@@ -46,8 +46,8 @@ public class SanPhamDAO {
         }
     }
 
-    public void delete(int maSp) throws SQLException {
-        String query = "DELETE FROM SANPHAM WHERE MASP = ?";
+    public void flag(int maSp) throws SQLException {
+        String query = "UPDATE SANPHAM SET FLAG = 1 WHERE MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maSp);

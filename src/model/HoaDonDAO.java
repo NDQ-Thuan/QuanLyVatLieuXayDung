@@ -156,7 +156,7 @@ public class HoaDonDAO {
                        JOIN SANPHAM ON hoadonchitiet.MASP = sanpham.MASP
                        WHERE MONTH(hoadon.NGAYLAPHOADON) = ?
                        AND YEAR(hoadon.NGAYLAPHOADON) = YEAR(GETDATE())
-                       AND hoadon.LOAIHOADON LIKE N'Xuất' AND hoadon.TRANGTHAI LIKE 'Delivered'""";
+                       AND hoadon.LOAIHOADON LIKE N'Xuất' AND hoadon.TRANGTHAI LIKE 'Success'""";
 
         int total = 0;
 

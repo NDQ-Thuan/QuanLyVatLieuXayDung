@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class NhaCungCapDAO {
 
@@ -44,8 +42,8 @@ public class NhaCungCapDAO {
         }
     }
 
-    public void delete(int maNCC) throws SQLException {
-        String query = "DELETE FROM NHACUNGCAP WHERE MANCC = ?";
+    public void flag(int maNCC) throws SQLException {
+        String query = "UPDATE NHACUNGCAP SET FLAG = 1 WHERE MANCC = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maNCC);

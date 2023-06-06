@@ -42,8 +42,8 @@ public class KhachHangDAO {
         }
     }
 
-    public void delete(int maKhach) throws SQLException {
-        String query = "DELETE FROM KHACHHANG WHERE MAKHACH = ?";
+    public void flag(int maKhach) throws SQLException {
+        String query = "UPDATE KHACHHANG SET FLAG = 1 WHERE MAKHACH = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maKhach);

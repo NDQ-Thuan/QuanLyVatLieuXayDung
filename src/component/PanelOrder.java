@@ -61,9 +61,8 @@ public final class PanelOrder extends ConnectionPanel {
         tblOrder = new javax.swing.JTable();
         btnClear = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnProductMenu = new javax.swing.JButton();
         pnlThongTinKhachHang = new javax.swing.JPanel();
         lblCustomerName = new javax.swing.JLabel();
         btnOldCustomer = new javax.swing.JButton();
@@ -163,23 +162,18 @@ public final class PanelOrder extends ConnectionPanel {
         btnEdit.setForeground(new java.awt.Color(242, 242, 242));
         btnEdit.setText("SAVE");
 
-        btnDelete.setBackground(new java.awt.Color(204, 51, 0));
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(242, 242, 242));
-        btnDelete.setText("DELETE");
-
         btnAdd.setBackground(new java.awt.Color(0, 153, 51));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
         btnAdd.setText("ADD");
 
-        jButton2.setBackground(new java.awt.Color(153, 0, 153));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(242, 242, 242));
-        jButton2.setText("MENU SẢN PHẨM");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnProductMenu.setBackground(new java.awt.Color(153, 0, 153));
+        btnProductMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnProductMenu.setForeground(new java.awt.Color(242, 242, 242));
+        btnProductMenu.setText("MENU SẢN PHẨM");
+        btnProductMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnProductMenuActionPerformed(evt);
             }
         });
 
@@ -284,8 +278,7 @@ public final class PanelOrder extends ConnectionPanel {
                             .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                            .addComponent(btnAdd1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnAdd1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
@@ -316,7 +309,7 @@ public final class PanelOrder extends ConnectionPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblOrderDetail)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2))
+                                .addComponent(btnProductMenu))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(30, 30, 30))
         );
@@ -329,7 +322,7 @@ public final class PanelOrder extends ConnectionPanel {
                     .addComponent(lblOrderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblType, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnProductMenu))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -350,15 +343,13 @@ public final class PanelOrder extends ConnectionPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnClear)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnAdd1)
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdd)
-                        .addGap(35, 35, 35)
+                        .addGap(50, 50, 50)
                         .addComponent(btnEdit)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addComponent(btnAdd1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -375,10 +366,10 @@ public final class PanelOrder extends ConnectionPanel {
         popUpCustomer.setVisible(true);
     }//GEN-LAST:event_btnOldCustomerActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnProductMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductMenuActionPerformed
         PopUpProductMenu popUpProductMenu = new PopUpProductMenu(this);
         popUpProductMenu.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnProductMenuActionPerformed
 
     @Override
     public void getConnection(Connection connection) {
@@ -487,13 +478,12 @@ public final class PanelOrder extends ConnectionPanel {
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnAdd1;
     public javax.swing.JButton btnClear;
-    public javax.swing.JButton btnDelete;
     public javax.swing.JButton btnEdit;
     public javax.swing.JButton btnOldCustomer;
     public javax.swing.JButton btnOldCustomer2;
+    public javax.swing.JButton btnProductMenu;
     public javax.swing.JComboBox<String> cboType;
     public javax.swing.JComboBox<String> cboWarehouse;
-    public javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblCustomerAddress;
