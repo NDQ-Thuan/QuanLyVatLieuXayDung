@@ -53,7 +53,9 @@ public class KhoHangChiTietDAO {
     public List<KhoHangChiTiet> findByMaKho(int maKho) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ? ORDER BY MASP ASC";
+        String query = """
+            SELECT * FROM KHOHANGCHITIET khct JOIN SANPHAM sp ON khct.MASP = sp.MASP
+            WHERE MAKHO = ? ORDER BY FLAG ASC, khct.MASP""";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maKho);

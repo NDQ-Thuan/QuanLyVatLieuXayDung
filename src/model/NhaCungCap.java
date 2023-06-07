@@ -8,6 +8,7 @@ public class NhaCungCap {
     private String tenNCC;
     private String diaChi;
     private String sdt;
+    private boolean flag = false;
 
     // Constructor
     public NhaCungCap() {
@@ -59,6 +60,14 @@ public class NhaCungCap {
         this.sdt = sdt;
     }
 
+    public boolean isFlagged() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -78,6 +87,9 @@ public class NhaCungCap {
         }
         final NhaCungCap other = (NhaCungCap) obj;
         if (this.maNCC != other.maNCC) {
+            return false;
+        }
+        if (this.flag != other.flag) {
             return false;
         }
         if (!Objects.equals(this.tenNCC, other.tenNCC)) {

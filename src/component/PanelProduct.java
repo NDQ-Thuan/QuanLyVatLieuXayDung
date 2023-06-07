@@ -1,11 +1,15 @@
 package component;
 
 import customTable.TableCustom;
+import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhoHang;
@@ -18,6 +22,7 @@ import model.NhaCungCap;
 import model.NhaCungCapDAO;
 import model.SanPham;
 import model.SanPhamDAO;
+import swing.MainMenu;
 
 public final class PanelProduct extends ConnectionPanel {
 
@@ -25,7 +30,6 @@ public final class PanelProduct extends ConnectionPanel {
     private DefaultTableModel modelTblProduct;
     private DefaultTableModel modelTblWarehouse;
 
-    private Connection connection;
     private SanPhamDAO sanPhamDAO;
     private LoaiHangDAO loaiHangDAO;
     private KhoHangDAO khoDAO;
@@ -36,6 +40,7 @@ public final class PanelProduct extends ConnectionPanel {
         initComponents();
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
         modelTblWarehouse = (DefaultTableModel) tblWarehouse.getModel();
+
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
     }
@@ -64,8 +69,10 @@ public final class PanelProduct extends ConnectionPanel {
         tblWarehouse = new javax.swing.JTable();
         lblProductName = new javax.swing.JLabel();
         txtProductName = new javax.swing.JTextField();
+        lblFlag = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
 
         pnlProductInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -74,6 +81,7 @@ public final class PanelProduct extends ConnectionPanel {
 
         txtID.setEditable(false);
         txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
         txtID.setFocusable(false);
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -86,7 +94,7 @@ public final class PanelProduct extends ConnectionPanel {
         lblPhone.setText("ĐƠN VỊ TÍNH");
 
         txtDVT.setEditable(false);
-        txtDVT.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtDVT.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtDVT.setFocusable(false);
 
         lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -97,13 +105,23 @@ public final class PanelProduct extends ConnectionPanel {
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
         btnAdd.setText("ADD");
         btnAdd.setFocusable(false);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnSave.setBackground(new java.awt.Color(0, 0, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(242, 242, 242));
-        btnSave.setText("EDIT");
+        btnSave.setText("SAVE");
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnFlag.setBackground(new java.awt.Color(204, 0, 0));
         btnFlag.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -117,22 +135,32 @@ public final class PanelProduct extends ConnectionPanel {
             }
         });
 
-        txtPrice.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPriceKeyTyped(evt);
+            }
+        });
 
         lblSuppProduct1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblSuppProduct1.setText("LƯU TRỮ TẠI KHO");
 
         cboType.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        cboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-
-        cboSupplier.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        cboSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTypeActionPerformed(evt);
+            }
+        });
 
         btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("CLEAR");
         btnClear.setFocusable(false);
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         tblWarehouse.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblWarehouse.setModel(new javax.swing.table.DefaultTableModel(
@@ -159,7 +187,8 @@ public final class PanelProduct extends ConnectionPanel {
         lblProductName.setText("TÊN SẢN PHẨM");
 
         txtProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtProductName.setFocusable(false);
+
+        lblFlag.setForeground(new java.awt.Color(204, 0, 0));
 
         javax.swing.GroupLayout pnlProductInfoLayout = new javax.swing.GroupLayout(pnlProductInfo);
         pnlProductInfo.setLayout(pnlProductInfoLayout);
@@ -190,11 +219,12 @@ public final class PanelProduct extends ConnectionPanel {
                         .addComponent(btnAdd)
                         .addGap(30, 30, 30)
                         .addComponent(btnSave)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnFlag))
+                        .addGap(26, 26, 26)
+                        .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblFlag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -225,9 +255,14 @@ public final class PanelProduct extends ConnectionPanel {
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrice)
                     .addComponent(lblSuppProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(lblSuppProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlProductInfoLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(lblSuppProduct1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlProductInfoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -264,37 +299,91 @@ public final class PanelProduct extends ConnectionPanel {
         });
         jScrollPane1.setViewportView(tblProduct);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filter", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 153))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addComponent(pnlProductInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlProductInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMousePressed
-        int index = tblProduct.getSelectedRow();
+        index = tblProduct.getSelectedRow();
         int maSp = (int) modelTblProduct.getValueAt(index, 0);
         writeForm(maSp);
+        buttonsWhenEditInfo();
     }//GEN-LAST:event_tblProductMousePressed
 
     private void btnFlagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlagActionPerformed
-        // TODO add your handling code here:
+        flagProduct();
     }//GEN-LAST:event_btnFlagActionPerformed
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        addProduct();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txtPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPriceKeyTyped
+
+    private void cboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTypeActionPerformed
+        try {
+            String dvt = loaiHangDAO.getDVTByLoaiHang((String) cboType.getSelectedItem());
+            if (dvt == null) {
+                txtDVT.setText("");
+            } else {
+                txtDVT.setText(dvt);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboTypeActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        updateProduct();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    ////////////////////////////////////////////////////////////////////////////
     public void errorMessage(String str) {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
     }
@@ -309,70 +398,41 @@ public final class PanelProduct extends ConnectionPanel {
                 + "\nvà những hóa đơn chứa sản phẩm đó!!!", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
+    public void fillFlagLabel() {
+        lblFlag.setText("<html>Lưu ý: Sản phẩm này hiện đang ngừng bán<br>và tạm thời không thể được đặt hàng</html>");
+    }
+
     public void buttonsWhenAddInfo() {
+        if (this.role.equals("NV")) {
+            btnAdd.setEnabled(false);
+        }
         btnAdd.setEnabled(true);
         btnSave.setEnabled(false);
         btnFlag.setEnabled(false);
     }
 
     public void buttonsWhenEditInfo() {
+        if (this.role.equals("NV")) {
+            btnFlag.setEnabled(false);
+        }
         btnAdd.setEnabled(false);
         btnSave.setEnabled(true);
         btnFlag.setEnabled(true);
     }
 
-    @Override
-    public void getConnection(Connection connection) {
-        this.connection = connection;
-        sanPhamDAO = new SanPhamDAO(this.connection);
-        loaiHangDAO = new LoaiHangDAO(this.connection);
-        khoDAO = new KhoHangDAO(this.connection);
-        khctDAO = new KhoHangChiTietDAO(this.connection);
-        nccDAO = new NhaCungCapDAO(this.connection);
-        loadDataToTblProduct();
-        loadDataToForm();
-    }
-
-    @Override
-    public void disableButtonOnUserRole() {
-    }
-
-    public void loadDataToTblProduct() {
-        try {
-            modelTblProduct.setRowCount(0);
-            List<SanPham> spList = sanPhamDAO.findAll();
-
-            for (SanPham sp : spList) {
-                LoaiHang loaiHang = loaiHangDAO.findById(sp.getMaLh());
-                int id = sp.getMaSp();
-                String tensp = sp.getTenSp();
-                String tenlh = loaiHang.getTenLoai();
-                String dvt = loaiHang.getDvt();
-                int gia = sp.getGia();
-
-                modelTblProduct.addRow(new Object[]{id, tensp, tenlh, dvt, gia});
-            }
-        } catch (SQLException ex) {
-        }
-    }
-
-    public void loadDataToForm() {
-        try {
-            List<LoaiHang> lhList = loaiHangDAO.findAll();
-            for (LoaiHang lh : lhList) {
-                cboType.addItem(lh.getTenLoai());
-            }
-            List<NhaCungCap> nccList = nccDAO.findAll();
-            for (NhaCungCap ncc : nccList) {
-                cboSupplier.addItem(ncc.getTenNCC());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    ////////////////////////////////////////////////////////////////////////////
     public void clearForm() {
+        txtID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
+        txtProductName.setText("");
+        cboSupplier.setSelectedItem("CHỜ BỔ SUNG");
+        cboType.setSelectedItem("CHỜ BỔ SUNG");
+        txtDVT.setText("");
+        txtPrice.setText("");
 
+        tblProduct.clearSelection();
+        modelTblWarehouse.setRowCount(0);
+
+        buttonsWhenAddInfo();
     }
 
     public void writeForm(int maSp) {
@@ -398,15 +458,221 @@ public final class PanelProduct extends ConnectionPanel {
                 modelTblWarehouse.addRow(new Object[]{tenKho, soLuong});
             }
 
+            if (sp.isFlagged()) {
+                if (btnFlag.getText().equals("FLAG")) {
+                    btnFlag.setText("UNFLAG");
+                    btnFlag.setBackground(new Color(204, 0, 204));
+                }
+                fillFlagLabel();
+            } else if (btnFlag.getText().equals("UNFLAG")) {
+                btnFlag.setText("FLAG");
+                btnFlag.setBackground(new Color(204, 0, 0));
+                lblFlag.setText("");
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-//
-//    public Product readForm() {
-//    }
 
+    public SanPham readForm() throws SQLException {
+        int maSp = -1;
+
+        try {
+            maSp = Integer.parseInt(txtID.getText());
+        } catch (NumberFormatException e) {
+        }
+
+        String tenSp = txtProductName.getText();
+
+        int maNcc = nccDAO.findIDByName((String) cboSupplier.getSelectedItem());
+
+        LoaiHang lh = loaiHangDAO.findByNameAndDVT((String) cboType.getSelectedItem(), txtDVT.getText());
+        int maLh = lh.getMaLh();
+
+        int gia = Integer.parseInt(txtPrice.getText());
+
+        if (maSp == -1) {
+            return new SanPham(maLh, maNcc, tenSp, gia);
+        }
+
+        return new SanPham(maSp, maLh, maNcc, tenSp, gia);
+    }
+
+    public boolean validateInfo() {
+        boolean flag = true;
+
+        String tenSp = txtProductName.getText().trim();
+
+        if (tenSp.isBlank() || txtPrice.getText().isBlank()) {
+            errorMessage("Vui lòng không để trống thông tin sản phẩm!");
+            flag = false;
+            return flag;
+        }
+
+        if (tenSp.length() > 50) {
+            errorMessage("Tên sản phẩm không được vượt quá 50 ký tự");
+            flag = false;
+            return flag;
+        }
+
+        if (cboType.getSelectedItem().equals("CHỜ BỔ SUNG")) {
+            errorMessage("Vui lòng bổ sung thông tin loại hàng của sản phẩm!!!");
+            flag = false;
+            return flag;
+        }
+
+        if (cboSupplier.getSelectedItem().equals("CHỜ BỔ SUNG")) {
+            int n = customConfirmDialog("Thông tin nhà cung cấp của sản phẩm đang bị bỏ trống!\nXác nhận?");
+
+            if (n != JOptionPane.YES_OPTION) {
+                flag = false;
+                return flag;
+            }
+        }
+
+        int price = Integer.parseInt(txtPrice.getText());
+
+        if (price > 10000000) {
+            errorMessage("Giá của sản phẩm không được vượt quá 10,000,000 VNĐ");
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+
+        sanPhamDAO = new SanPhamDAO(this.connection);
+        loaiHangDAO = new LoaiHangDAO(this.connection);
+        khoDAO = new KhoHangDAO(this.connection);
+        khctDAO = new KhoHangChiTietDAO(this.connection);
+        nccDAO = new NhaCungCapDAO(this.connection);
+
+        loadDataToTblProduct();
+        loadDataToForm();
+
+    }
+
+    @Override
+    public void connectMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+        this.role = mainMenu.getUserRole();
+    }
+
+    @Override
+    public void resetPanelData() {
+        clearForm();
+        loadDataToTblProduct();
+
+        if (index != -1) {
+            tblProduct.setRowSelectionInterval(index, index);
+            writeForm((int) modelTblProduct.getValueAt(index, 0));
+        }
+    }
+
+    public void loadDataToTblProduct() {
+        try {
+            modelTblProduct.setRowCount(0);
+            List<SanPham> spList = sanPhamDAO.findAll();
+
+            for (SanPham sp : spList) {
+                LoaiHang loaiHang = loaiHangDAO.findById(sp.getMaLh());
+                int id = sp.getMaSp();
+                String tensp = sp.getTenSp();
+                String tenlh = loaiHang.getTenLoai();
+                String dvt = loaiHang.getDvt();
+                int gia = sp.getGia();
+
+                modelTblProduct.addRow(new Object[]{id, tensp, tenlh, dvt, gia});
+
+                if (sp.isFlagged()) {
+                    TableCustom.setRedRow(tblProduct, (tblProduct.getRowCount() - 1));
+                }
+            }
+        } catch (SQLException ex) {
+        }
+    }
+
+    public void loadDataToForm() {
+        try {
+            List<LoaiHang> lhList = loaiHangDAO.findAll();
+            cboType.addItem("CHỜ BỔ SUNG");
+            for (LoaiHang lh : lhList) {
+                cboType.addItem(lh.getTenLoai());
+            }
+
+            List<NhaCungCap> nccList = nccDAO.findAllByCustomQuery("SELECT * FROM NHACUNGCAP WHERE FLAG = 0");
+            cboSupplier.addItem("CHỜ BỔ SUNG");
+            for (NhaCungCap ncc : nccList) {
+                cboSupplier.addItem(ncc.getTenNCC());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addProduct() {
+        if (validateInfo()) {
+            if (customConfirmDialog("Tiếp tục thêm sản phẩm này?") == JOptionPane.YES_OPTION) {
+                try {
+                    SanPham sp = readForm();
+                    sanPhamDAO.insert(sp);
+                    index = tblProduct.getRowCount();
+                    resetPanelData();
+                    TableCustom.setBlueRow(tblProduct, index);
+                    JOptionPane.showMessageDialog(null, "Thêm sản phẩm mới thành công!");
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void updateProduct() {
+        if (validateInfo()) {
+            try {
+                int maSp = (int) modelTblProduct.getValueAt(index, 0);
+                SanPham old_SP = sanPhamDAO.findById(maSp);
+
+                SanPham new_SP = readForm();
+                new_SP.setFlag(sanPhamDAO.findById(maSp).isFlagged());
+
+                if (!old_SP.equals(new_SP)) {
+                    if (customConfirmDialog("Tiếp tục cập nhật thông tin?") == JOptionPane.YES_OPTION) {
+                        sanPhamDAO.update(new_SP);
+                        resetPanelData();
+                        JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void flagProduct() {
+        int maSp = (int) modelTblProduct.getValueAt(index, 0);
+
+        if (customConfirmDialog("Tiếp tục đánh dấu sản phẩm?\n"
+                + "Lưu ý: sản phẩm sẽ ngừng bán nếu bị đánh dấu")
+                == JOptionPane.YES_OPTION) {
+            try {
+                sanPhamDAO.flag(maSp);
+                index = -1;
+                resetPanelData();
+                JOptionPane.showMessageDialog(null, "Sản phẩm ngừng bán thành công!");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
@@ -414,9 +680,11 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cboSupplier;
     private javax.swing.JComboBox<String> cboType;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAddress;
+    private javax.swing.JLabel lblFlag;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhone;
     private javax.swing.JLabel lblProductName;
@@ -431,4 +699,5 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductName;
     // End of variables declaration//GEN-END:variables
+
 }

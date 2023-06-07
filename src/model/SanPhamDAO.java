@@ -33,14 +33,21 @@ public class SanPhamDAO {
     }
 
     public void update(SanPham sanPham) throws SQLException {
-        String query = "UPDATE SANPHAM SET MALH = ?, MANCC = ?, TENSP = ?, GIA = ? WHERE MASP = ?";
+        String query = "UPDATE SANPHAM SET MALH = ?, MANCC = ?, TENSP = ?, GIA = ?, FLAG = ? WHERE MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, sanPham.getMaLh());
             statement.setInt(2, sanPham.getMaNcc());
             statement.setString(3, sanPham.getTenSp());
             statement.setInt(4, sanPham.getGia());
-            statement.setInt(5, sanPham.getMaSp());
+
+            if (sanPham.isFlagged()) {
+                statement.setInt(5, 1);
+            } else {
+                statement.setInt(5, 0);
+            }
+
+            statement.setInt(6, sanPham.getMaSp());
 
             statement.executeUpdate();
         }
@@ -48,6 +55,16 @@ public class SanPhamDAO {
 
     public void flag(int maSp) throws SQLException {
         String query = "UPDATE SANPHAM SET FLAG = 1 WHERE MASP = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, maSp);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void unFlag(int maSp) throws SQLException {
+        String query = "UPDATE SANPHAM SET FLAG = 0 WHERE MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maSp);
@@ -68,8 +85,11 @@ public class SanPhamDAO {
                     int maNcc = resultSet.getInt("MANCC");
                     String tenSp = resultSet.getString("TENSP");
                     int gia = resultSet.getInt("GIA");
+                    boolean flag = resultSet.getBoolean("FLAG");
 
-                    return new SanPham(maSp, maLh, maNcc, tenSp, gia);
+                    SanPham sp = new SanPham(maSp, maLh, maNcc, tenSp, gia);
+                    sp.setFlag(flag);
+                    return sp;
                 }
             }
         }
@@ -80,7 +100,7 @@ public class SanPhamDAO {
     public List<SanPham> findAll() {
         List<SanPham> sanPhamList = new ArrayList<>();
 
-        String query = "SELECT * FROM SANPHAM ORDER BY MASP ASC";
+        String query = "SELECT * FROM SANPHAM ORDER BY FLAG ASC, MASP";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -89,8 +109,12 @@ public class SanPhamDAO {
                 int maNcc = resultSet.getInt("MANCC");
                 String tenSp = resultSet.getString("TENSP");
                 int gia = resultSet.getInt("GIA");
+                boolean flag = resultSet.getBoolean("FLAG");
 
-                sanPhamList.add(new SanPham(maSp, maLh, maNcc, tenSp, gia));
+                SanPham sp = new SanPham(maSp, maLh, maNcc, tenSp, gia);
+                sp.setFlag(flag);
+
+                sanPhamList.add(sp);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +126,7 @@ public class SanPhamDAO {
     public List<SanPham> findByNCC(int maNCC) throws SQLException {
         List<SanPham> sanPhamList = new ArrayList<>();
 
-        String query = "SELECT * FROM SANPHAM WHERE MANCC = ?";
+        String query = "SELECT * FROM SANPHAM WHERE MANCC = ? ORDER BY FLAG DESC, MASP";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maNCC);
@@ -114,13 +138,14 @@ public class SanPhamDAO {
                     int maNcc = resultSet.getInt("MANCC");
                     String tenSp = resultSet.getString("TENSP");
                     int gia = resultSet.getInt("GIA");
+                    boolean flag = resultSet.getBoolean("FLAG");
 
-                    sanPhamList.add(new SanPham(maSp, maLh, maNcc, tenSp, gia));
+                    SanPham sp = new SanPham(maSp, maLh, maNcc, tenSp, gia);
+                    sp.setFlag(flag);
+                    sanPhamList.add(sp);
                 }
             }
         }
-
         return sanPhamList;
     }
-
 }

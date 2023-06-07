@@ -14,13 +14,14 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import model.KhachHang;
+import swing.MainMenu;
 
 public class PanelDashboard extends ConnectionPanel {
 
     private DefaultTableModel modelTblPendingOrder;
     private TableColumnModel columnModelTblPendingOrder;
-    private Connection connection;
     private HoaDonDAO hoaDonDAO;
     private KhachHangDAO khachHangDAO;
 
@@ -101,7 +102,7 @@ public class PanelDashboard extends ConnectionPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_Revenue_Money, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lbl_Revenue_LastTwoMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_RevenueName, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(lbl_RevenueName, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addComponent(lbl_Revenue_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
@@ -162,7 +163,7 @@ public class PanelDashboard extends ConnectionPanel {
                     .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
                         .addComponent(lbl_PendingOrder_SoLuong)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_PendingOrder_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                        .addComponent(lbl_PendingOrder_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                     .addComponent(lbl_PendingOrder_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_PendingOrderLayout.createSequentialGroup()
                         .addComponent(lbl_PendingOrder_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -222,7 +223,7 @@ public class PanelDashboard extends ConnectionPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_UniqueBuyer_Ammount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lbl_UniqueBuyer_Percent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_UniqueBuyer_Name, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(lbl_UniqueBuyer_Name, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addComponent(lbl_UniqueBuyer_Icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
@@ -264,40 +265,38 @@ public class PanelDashboard extends ConnectionPanel {
         tblPendingOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblPendingOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblPendingOrder.setShowGrid(true);
-        tblPendingOrder.setShowHorizontalLines(true);
         tblPendingOrder.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblPendingOrder);
 
         lblDHCG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblDHCG.setText("ĐƠN HÀNG CHƯA GIAO");
+        lblDHCG.setText("ĐƠN XUẤT KHO CHƯA GIAO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
-                    .addComponent(lblDHCG, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblDHCG, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(lblDHCG)
-                .addGap(8, 8, 8)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public void getConnection(Connection connection) {
+    public void setConnection(Connection connection) {
         this.connection = connection;
         hoaDonDAO = new HoaDonDAO(this.connection);
         khachHangDAO = new KhachHangDAO(this.connection);
@@ -308,7 +307,14 @@ public class PanelDashboard extends ConnectionPanel {
     }
 
     @Override
-    public void disableButtonOnUserRole() {
+    public void connectMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+        this.role = mainMenu.getUserRole();
+    }
+
+    @Override
+    public void resetPanelData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void loadDataToTblPendingOrder() {
@@ -331,14 +337,6 @@ public class PanelDashboard extends ConnectionPanel {
             lbl_UniqueBuyer_Ammount.setText(khList.size() + "");
         } catch (SQLException ex) {
         }
-    }
-
-    public String formatMoneyString(int money) {
-        double number = money;
-
-        NumberFormat numberFormat = new DecimalFormat("#,###");
-
-        return numberFormat.format(number);
     }
 
     public void loadDataRevenuePanel() {
@@ -370,6 +368,13 @@ public class PanelDashboard extends ConnectionPanel {
         lbl_PendingOrder_CancelledAmmount.setText(cancelledHoaDonList.size() + "");
     }
 
+    public String formatMoneyString(int money) {
+        double number = money;
+
+        NumberFormat numberFormat = new DecimalFormat("#,###");
+
+        return numberFormat.format(number);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDHCG;

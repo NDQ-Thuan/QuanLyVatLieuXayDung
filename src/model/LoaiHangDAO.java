@@ -13,12 +13,10 @@ public class LoaiHangDAO {
 
     private Connection connection;
 
-    // Constructor
     public LoaiHangDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // Methods for CRUD operations
     public void insert(LoaiHang loaiHang) throws SQLException {
         String query = "INSERT INTO LOAIHANG (TENLOAI, DVT) VALUES (?, ?)";
 
@@ -71,6 +69,22 @@ public class LoaiHangDAO {
         return null;
     }
 
+    public LoaiHang findByNameAndDVT(String tenLoai, String dvt) throws SQLException {
+        String query = "SELECT * FROM LOAIHANG WHERE TENLOAI LIKE N'" + tenLoai + "' AND DVT LIKE N'" + dvt + "'";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                int maLh = resultSet.getInt("MALH");
+
+                return new LoaiHang(maLh, tenLoai, dvt);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
     public List<LoaiHang> findAll() {
         List<LoaiHang> loaiHangList = new ArrayList<>();
 
@@ -89,5 +103,17 @@ public class LoaiHangDAO {
         }
 
         return loaiHangList;
+    }
+
+    public String getDVTByLoaiHang(String str) throws SQLException {
+        String query = "SELECT DVT FROM LOAIHANG WHERE TENLOAI LIKE N'" + str + "'";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getString("DVT");
+            }
+        }
+
+        return null;
     }
 }

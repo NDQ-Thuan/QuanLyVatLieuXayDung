@@ -17,6 +17,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MainMenu extends javax.swing.JFrame {
 
+    private String role = "QL";
+
     private JLabel[] lblMenuList;
     private CardLayout cardLayout;
 
@@ -94,7 +96,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         lblInfo_Job.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblInfo_Job.setForeground(new java.awt.Color(255, 255, 255));
-        lblInfo_Job.setText("Chức vụ: Nhà cung cấp");
+        lblInfo_Job.setText("Chức vụ: Trùm Nhóm");
 
         lblInfo_Company.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblInfo_Company.setForeground(new java.awt.Color(255, 255, 255));
@@ -291,7 +293,7 @@ public class MainMenu extends javax.swing.JFrame {
         addMouseEffectForPnlMenu();
         lblMenu_Dashboard.setBackground(new Color(0, 0, 55));
 
-        connectAllPanelToSQL();
+        connectAllPanelToMainMenu();
     }//GEN-LAST:event_formWindowOpened
 
     private void lblMenu_LogOutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu_LogOutMousePressed
@@ -312,14 +314,15 @@ public class MainMenu extends javax.swing.JFrame {
         });
     }
 
-    public void connectAllPanelToSQL() {
+    public void connectAllPanelToMainMenu() {
         try {
             String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung";
 
             this.connection = DriverManager.getConnection(url, "sa", "123");
 
             for (ConnectionPanel conPnl : componentPanel) {
-                conPnl.getConnection(connection);
+                conPnl.setConnection(connection);
+                conPnl.connectMainMenu(this);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -341,6 +344,19 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
 
+    public void restartForm() {
+        for (ConnectionPanel conPnl : componentPanel) {
+            conPnl.resetPanelData();
+        }
+    }
+
+    public void setUserRole(String role) {
+        this.role = role;
+    }
+
+    public String getUserRole() {
+        return this.role;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblInfo_Company;
     private javax.swing.JLabel lblInfo_Img;

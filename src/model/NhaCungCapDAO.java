@@ -11,12 +11,10 @@ public class NhaCungCapDAO {
 
     private Connection connection;
 
-    // Constructor
     public NhaCungCapDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // Methods for CRUD operations
     public void insert(NhaCungCap nhaCungCap) throws SQLException {
         String query = "INSERT INTO NHACUNGCAP (TENNCC, DIACHI, SDT) VALUES (?, ?, ?)";
 
@@ -43,16 +41,18 @@ public class NhaCungCapDAO {
     }
 
     public void flag(int maNCC) throws SQLException {
-        String query = "UPDATE NHACUNGCAP SET FLAG = 1 WHERE MANCC = ?";
+        String query = "UPDATE NHACUNGCAP SET FLAG = 1 WHERE MANCC = ?; UPDATE SANPHAM SET MANCC = NULL WHERE MANCC = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maNCC);
+            statement.setInt(2, maNCC);
 
             statement.executeUpdate();
         }
     }
 
     public NhaCungCap findById(int maNCC) throws SQLException {
+        NhaCungCap ncc;
         String query = "SELECT * FROM NHACUNGCAP WHERE MANCC = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -63,19 +63,23 @@ public class NhaCungCapDAO {
                     String tenNCC = resultSet.getString("TENNCC");
                     String diaChi = resultSet.getString("DIACHI");
                     String sdt = resultSet.getString("SDT");
+                    boolean flag = resultSet.getBoolean("FLAG");
 
-                    return new NhaCungCap(maNCC, tenNCC, diaChi, sdt);
+                    ncc = new NhaCungCap(maNCC, tenNCC, diaChi, sdt);
+                    ncc.setFlag(flag);
+
+                    return ncc;
                 }
             }
         }
 
-        return null;
+        return new NhaCungCap(maNCC, "CHỜ BỔ SUNG", "", "");
     }
 
     public List<NhaCungCap> findAll() throws SQLException {
         List<NhaCungCap> nhaCungCapList = new ArrayList<>();
 
-        String query = "SELECT * FROM NHACUNGCAP ORDER BY MANCC ASC";
+        String query = "SELECT * FROM NHACUNGCAP ORDER BY FLAG ASC, MANCC";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -84,10 +88,50 @@ public class NhaCungCapDAO {
                 String diaChi = resultSet.getString("DIACHI");
                 String sdt = resultSet.getString("SDT");
 
-                nhaCungCapList.add(new NhaCungCap(maNCC, tenNCC, diaChi, sdt));
+                boolean flag = resultSet.getBoolean("FLAG");
+
+                NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, diaChi, sdt);
+                ncc.setFlag(flag);
+
+                nhaCungCapList.add(ncc);
             }
         }
 
         return nhaCungCapList;
+    }
+
+    public List<NhaCungCap> findAllByCustomQuery(String query) throws SQLException {
+        List<NhaCungCap> nhaCungCapList = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int maNCC = resultSet.getInt("MANCC");
+                    String tenNCC = resultSet.getString("TENNCC");
+                    String diaChi = resultSet.getString("DIACHI");
+                    String sdt = resultSet.getString("SDT");
+
+                    boolean flag = resultSet.getBoolean("FLAG");
+
+                    NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, diaChi, sdt);
+                    ncc.setFlag(flag);
+
+                    nhaCungCapList.add(ncc);
+                }
+            }
+        }
+
+        return nhaCungCapList;
+    }
+
+    public int findIDByName(String tenNCC) throws SQLException {
+        String query = "SELECT MANCC FROM NHACUNGCAP WHERE TENNCC LIKE N'" + tenNCC + "'";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("MANCC");
+        }
+        return 0;
     }
 }

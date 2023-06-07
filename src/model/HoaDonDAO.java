@@ -126,6 +126,56 @@ public class HoaDonDAO {
         return hoaDonList;
     }
 
+    public List<HoaDon> findExportOrder() {
+        List<HoaDon> hoaDonList = new ArrayList<>();
+
+        String query = """
+                SELECT * FROM HOADON
+                WHERE LOAIHOADON LIKE N'Xuất'
+                ORDER BY NGAYLAPHOADON DESC""";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maHd = resultSet.getInt("MAHD");
+                int maKhach = resultSet.getInt("MAKHACH");
+                int maKho = resultSet.getInt("MAKHO");
+                String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
+                String loaiHoaDon = resultSet.getString("LOAIHOADON");
+                String trangThai = resultSet.getString("TRANGTHAI");
+
+                hoaDonList.add(new HoaDon(maHd, maKhach, maKho, ngayLapHoaDon, loaiHoaDon, trangThai));
+            }
+        } catch (SQLException ex) {
+        }
+
+        return hoaDonList;
+    }
+
+    public List<HoaDon> findImportOrder() {
+        List<HoaDon> hoaDonList = new ArrayList<>();
+
+        String query = """
+                SELECT * FROM HOADON
+                WHERE LOAIHOADON LIKE N'Nhập'
+                ORDER BY NGAYLAPHOADON DESC""";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maHd = resultSet.getInt("MAHD");
+                int maKhach = resultSet.getInt("MAKHACH");
+                int maKho = resultSet.getInt("MAKHO");
+                String ngayLapHoaDon = formatDate(resultSet.getString("NGAYLAPHOADON"));
+                String loaiHoaDon = resultSet.getString("LOAIHOADON");
+                String trangThai = resultSet.getString("TRANGTHAI");
+
+                hoaDonList.add(new HoaDon(maHd, maKhach, maKho, ngayLapHoaDon, loaiHoaDon, trangThai));
+            }
+        } catch (SQLException ex) {
+        }
+
+        return hoaDonList;
+    }
+
     public List<HoaDon> findCancelledOrder() {
         List<HoaDon> hoaDonList = new ArrayList<>();
 

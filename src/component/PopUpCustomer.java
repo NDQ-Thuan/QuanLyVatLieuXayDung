@@ -17,20 +17,20 @@ public class PopUpCustomer extends javax.swing.JFrame {
 
     private int index = -1;
 
-    private PanelOrder pnlOrder;
+    private TabPanelExport pnlExport;
     private DefaultTableModel modelTblCustomer;
 
     private Connection connection;
     private KhachHangDAO khachDAO;
 
-    public PopUpCustomer(PanelOrder pnlOrder) {
+    public PopUpCustomer(TabPanelExport panelExport) {
         initComponents();
         setLocationRelativeTo(null);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         modelTblCustomer = (DefaultTableModel) tblCustomer.getModel();
 
-        this.pnlOrder = pnlOrder;
+        this.pnlExport = panelExport;
         getConnection();
     }
 
@@ -121,16 +121,10 @@ public class PopUpCustomer extends javax.swing.JFrame {
             UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
         } catch (UnsupportedLookAndFeelException e) {
         }
-
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new PopUpCustomer().setVisible(true);
-//            }
-//        });
     }
 
     public void getConnection() {
-        this.connection = pnlOrder.getPnlConnection();
+        this.connection = pnlExport.getPnlConnection();
 
         khachDAO = new KhachHangDAO(this.connection);
 
@@ -159,7 +153,7 @@ public class PopUpCustomer extends javax.swing.JFrame {
         try {
             int maKhach = (int) modelTblCustomer.getValueAt(index, 0);
             KhachHang khach = khachDAO.findById(maKhach);
-            pnlOrder.addCustomerInfo(khach);
+            pnlExport.addCustomerInfo(khach);
             this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(PopUpCustomer.class.getName()).log(Level.SEVERE, null, ex);

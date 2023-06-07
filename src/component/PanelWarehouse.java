@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import model.KhoHangDAO;
 import model.KhoHang;
@@ -15,12 +16,12 @@ import model.LoaiHang;
 import model.LoaiHangDAO;
 import model.SanPham;
 import model.SanPhamDAO;
+import swing.MainMenu;
 
 public class PanelWarehouse extends ConnectionPanel {
 
     private DefaultTableModel modelTblProduct;
 
-    private Connection connection;
     private KhoHangDAO khoHangDAO;
     private KhoHangChiTietDAO khctDAO;
     private SanPhamDAO spDAO;
@@ -148,7 +149,7 @@ public class PanelWarehouse extends ConnectionPanel {
     }//GEN-LAST:event_cboWarehouseItemStateChanged
 
     @Override
-    public void getConnection(Connection connection) {
+    public void setConnection(Connection connection) {
         this.connection = connection;
         khoHangDAO = new KhoHangDAO(this.connection);
         khctDAO = new KhoHangChiTietDAO(this.connection);
@@ -159,8 +160,14 @@ public class PanelWarehouse extends ConnectionPanel {
     }
 
     @Override
-    public void disableButtonOnUserRole() {
+    public void connectMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+        this.role = mainMenu.getUserRole();
+    }
 
+    @Override
+    public void resetPanelData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void loadDataToCboSupplier() {
@@ -199,6 +206,10 @@ public class PanelWarehouse extends ConnectionPanel {
                 int soLuong = khct.getSoLuong();
 
                 modelTblProduct.addRow(new Object[]{maSp, tenSp, tenLoaiHang, dvt, gia, soLuong});
+
+                if (sp.isFlagged()) {
+                    TableCustom.setRedRow(tblProduct, (tblProduct.getRowCount() - 1));
+                }
             }
 
         } catch (SQLException ex) {

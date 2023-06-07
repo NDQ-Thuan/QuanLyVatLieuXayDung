@@ -77,6 +77,24 @@ public class TableCustom {
         });
     }
 
+    public static void setRedRow(JTable table, int rowIndex) {
+        TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
+        if (cellRenderer instanceof TableCustomCellRender) {
+            TableCustomCellRender customCellRenderer = (TableCustomCellRender) cellRenderer;
+            customCellRenderer.setRedRow(rowIndex);
+            table.repaint();
+        }
+    }
+
+    public static void setBlueRow(JTable table, int rowIndex) {
+        TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
+        if (cellRenderer instanceof TableCustomCellRender) {
+            TableCustomCellRender customCellRenderer = (TableCustomCellRender) cellRenderer;
+            customCellRenderer.setBlueRow(rowIndex);
+            table.repaint();
+        }
+    }
+
     public static enum TableType {
         MULTI_LINE, DEFAULT
     }

@@ -2,6 +2,9 @@ package customTable;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -9,9 +12,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class TableCustomCellRender extends DefaultTableCellRenderer {
 
     private final HoverIndex hoverRow;
+    private final Set<Integer> redRows = new HashSet<>();
+    private final Set<Integer> blueRows = new HashSet<>();
 
     public TableCustomCellRender(HoverIndex hoverRow) {
         this.hoverRow = hoverRow;
+    }
+
+    public void setRedRow(int rowIndex) {
+        redRows.add(rowIndex);
+        blueRows.remove(rowIndex);
+    }
+
+    public void setBlueRow(int rowIndex) {
+        blueRows.add(rowIndex);
+        redRows.remove(rowIndex);
     }
 
     @Override
@@ -31,6 +46,18 @@ public class TableCustomCellRender extends DefaultTableCellRenderer {
                 }
             }
         }
+
+        // Customize the foreground color for the target rows
+        if (redRows.contains(row)) {
+            com.setForeground(Color.RED);
+            com.setFont(new Font("Arial", 1, 12));
+        } else if (blueRows.contains(row)) {
+            com.setForeground(Color.BLUE);
+            com.setFont(new Font("Arial", 1, 12));
+        } else {
+            com.setForeground(table.getForeground());
+        }
+
         return com;
     }
 }

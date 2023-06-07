@@ -24,7 +24,7 @@ public class PopUpProductMenu extends javax.swing.JFrame {
 
     private int index = -1;
 
-    private PanelOrder pnlOrder;
+    private TabPanelExport pnlExport;
     private DefaultTableModel modelTblProduct;
 
     private Connection connection;
@@ -33,14 +33,14 @@ public class PopUpProductMenu extends javax.swing.JFrame {
     private KhoHangChiTietDAO khctDAO;
     private LoaiHangDAO loaiHangDAO;
 
-    public PopUpProductMenu(PanelOrder pnlOrder) {
+    public PopUpProductMenu(TabPanelExport pnlExport) {
         initComponents();
         setLocationRelativeTo(null);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
 
-        this.pnlOrder = pnlOrder;
+        this.pnlExport = pnlExport;
 
         getConnection();
     }
@@ -176,16 +176,10 @@ public class PopUpProductMenu extends javax.swing.JFrame {
             UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
         } catch (UnsupportedLookAndFeelException e) {
         }
-
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new PopUpProductMenu().setVisible(true);
-//            }
-//        });
     }
 
     public void getConnection() {
-        this.connection = pnlOrder.getPnlConnection();
+        this.connection = pnlExport.getPnlConnection();
 
         sanPhamDAO = new SanPhamDAO(this.connection);
         khoDAO = new KhoHangDAO(this.connection);
@@ -199,7 +193,7 @@ public class PopUpProductMenu extends javax.swing.JFrame {
         try {
             modelTblProduct.setRowCount(0);
 
-            int maKho = this.pnlOrder.getCurrentWarehouseID();
+            int maKho = this.pnlExport.getCurrentWarehouseID();
             KhoHang kho = khoDAO.findById(maKho);
 
             List<KhoHangChiTiet> khctList = khctDAO.findByMaKho(maKho);
@@ -234,7 +228,7 @@ public class PopUpProductMenu extends javax.swing.JFrame {
 
             SanPham sp = sanPhamDAO.findById(maSP);
 
-            this.pnlOrder.addDetailProduct(sp, soLuong);
+            this.pnlExport.addDetailProduct(sp, soLuong);
             this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(PopUpProductMenu.class.getName()).log(Level.SEVERE, null, ex);
