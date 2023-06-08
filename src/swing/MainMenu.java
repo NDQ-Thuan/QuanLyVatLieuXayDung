@@ -1,7 +1,7 @@
 package swing;
 
 import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
-import component.ConnectionPanel;
+import component.PanelForMainMenu.ConnectionPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -43,11 +43,11 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlCardLayout = new javax.swing.JPanel();
-        panelDashboard = new component.PanelDashboard();
-        panelSupplier = new component.PanelSupplier();
-        panelWarehouse = new component.PanelWarehouse();
-        panelProduct = new component.PanelProduct();
-        panelOrder = new component.PanelOrder();
+        panelDashboard = new component.PanelForMainMenu.PanelDashboard();
+        panelSupplier = new component.PanelForMainMenu.PanelSupplier();
+        panelWarehouse = new component.PanelForMainMenu.PanelWarehouse();
+        panelProduct = new component.PanelForMainMenu.PanelProduct();
+        panelOrder = new component.PanelForMainMenu.PanelOrder();
         pnlMenu = new javax.swing.JPanel();
         pnlUserInfo = new javax.swing.JPanel();
         lblInfo_Img = new javax.swing.JLabel();
@@ -368,11 +368,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel lblMenu_Product;
     private javax.swing.JLabel lblMenu_Supplier;
     private javax.swing.JLabel lblMenu_Warehouse;
-    private component.PanelDashboard panelDashboard;
-    private component.PanelOrder panelOrder;
-    private component.PanelProduct panelProduct;
-    private component.PanelSupplier panelSupplier;
-    private component.PanelWarehouse panelWarehouse;
+    private component.PanelForMainMenu.PanelDashboard panelDashboard;
+    private component.PanelForMainMenu.PanelOrder panelOrder;
+    private component.PanelForMainMenu.PanelProduct panelProduct;
+    private component.PanelForMainMenu.PanelSupplier panelSupplier;
+    private component.PanelForMainMenu.PanelWarehouse panelWarehouse;
     private javax.swing.JPanel pnlCardLayout;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlUserInfo;

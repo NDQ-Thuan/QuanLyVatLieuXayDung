@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import customTable.ScrollBarCustomUI;
 
 public class TableCustom {
 
@@ -86,13 +86,27 @@ public class TableCustom {
         }
     }
 
-    public static void setBlueRow(JTable table, int rowIndex) {
+    public static void setNormalRow(JTable table, int rowIndex) {
         TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
         if (cellRenderer instanceof TableCustomCellRender) {
             TableCustomCellRender customCellRenderer = (TableCustomCellRender) cellRenderer;
-            customCellRenderer.setBlueRow(rowIndex);
+            customCellRenderer.setNormalRow(rowIndex);
             table.repaint();
         }
+    }
+
+    public static void setBlueColumn(JTable table, int columnIndex) {
+        TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
+        if (cellRenderer instanceof TableCustomCellRender) {
+            TableCustomCellRender customCellRenderer = (TableCustomCellRender) cellRenderer;
+            customCellRenderer.setBlueColumn(columnIndex);
+            table.repaint();
+        }
+    }
+
+    public static void setCellColor(JTable table, int rowIndex, int columnIndex, Color color) {
+        table.setDefaultRenderer(Object.class, new CellColorRenderer((DefaultTableCellRenderer) table.getDefaultRenderer(Object.class), rowIndex, columnIndex, color));
+        table.repaint();
     }
 
     public static enum TableType {

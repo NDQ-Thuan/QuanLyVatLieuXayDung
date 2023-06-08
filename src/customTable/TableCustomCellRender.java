@@ -3,7 +3,10 @@ package customTable;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Point;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +16,9 @@ public class TableCustomCellRender extends DefaultTableCellRenderer {
 
     private final HoverIndex hoverRow;
     private final Set<Integer> redRows = new HashSet<>();
-    private final Set<Integer> blueRows = new HashSet<>();
+    private final Set<Integer> normalRows = new HashSet<>();
+    private final Set<Integer> blueColumns = new HashSet<>();
+    private final Map<Point, Color> cellColors = new HashMap<>();
 
     public TableCustomCellRender(HoverIndex hoverRow) {
         this.hoverRow = hoverRow;
@@ -21,12 +26,21 @@ public class TableCustomCellRender extends DefaultTableCellRenderer {
 
     public void setRedRow(int rowIndex) {
         redRows.add(rowIndex);
-        blueRows.remove(rowIndex);
+        normalRows.remove(rowIndex);
     }
 
-    public void setBlueRow(int rowIndex) {
-        blueRows.add(rowIndex);
+    public void setNormalRow(int rowIndex) {
+        normalRows.add(rowIndex);
         redRows.remove(rowIndex);
+    }
+
+    public void setBlueColumn(int columnIndex) {
+        blueColumns.add(columnIndex);
+    }
+
+    public void setCellColor(int rowIndex, int columnIndex, Color color) {
+        Point cell = new Point(rowIndex, columnIndex);
+        cellColors.put(cell, color);
     }
 
     @Override
@@ -51,11 +65,15 @@ public class TableCustomCellRender extends DefaultTableCellRenderer {
         if (redRows.contains(row)) {
             com.setForeground(Color.RED);
             com.setFont(new Font("Arial", 1, 12));
-        } else if (blueRows.contains(row)) {
-            com.setForeground(Color.BLUE);
-            com.setFont(new Font("Arial", 1, 12));
         } else {
             com.setForeground(table.getForeground());
+        }
+
+        // Customize the background color for the target columns
+        if (blueColumns.contains(column)) {
+            com.setBackground(new Color(0, 0, 153));
+            com.setForeground(Color.WHITE);
+            com.setFont(new Font("Arial", 1, 14));
         }
 
         return com;

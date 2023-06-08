@@ -46,28 +46,28 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
-        <Component class="component.PanelDashboard" name="panelDashboard">
+        <Component class="component.PanelForMainMenu.PanelDashboard" name="panelDashboard">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="cardDashboard"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="component.PanelSupplier" name="panelSupplier">
+        <Component class="component.PanelForMainMenu.PanelSupplier" name="panelSupplier">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="cardSupplier"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="component.PanelWarehouse" name="panelWarehouse">
+        <Component class="component.PanelForMainMenu.PanelWarehouse" name="panelWarehouse">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="cardWarehouse"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="component.PanelProduct" name="panelProduct">
+        <Component class="component.PanelForMainMenu.PanelProduct" name="panelProduct">
           <Properties>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
@@ -77,7 +77,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="component.PanelOrder" name="panelOrder">
+        <Component class="component.PanelForMainMenu.PanelOrder" name="panelOrder">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="cardOrder"/>
