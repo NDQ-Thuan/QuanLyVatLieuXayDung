@@ -27,7 +27,7 @@ import model.Object.KhoHangChiTiet;
 import model.Object.SanPhamDatHang;
 import util.DateUtils;
 
-public class TabPanelExport extends javax.swing.JPanel {
+public class TabPanelImport extends javax.swing.JPanel {
 
     private String userRole = "QL";
 
@@ -47,11 +47,11 @@ public class TabPanelExport extends javax.swing.JPanel {
     private KhoHangDAO khoHangDAO;
     private KhoHangChiTietDAO khctDAO;
 
-    public TabPanelExport() {
+    public TabPanelImport() {
         initComponents();
 
-        modelTblOrder = (DefaultTableModel) tblExportOrder.getModel();
-        modelTblDetail = (DefaultTableModel) tblExportDetail.getModel();
+        modelTblOrder = (DefaultTableModel) tblImportOrder.getModel();
+        modelTblDetail = (DefaultTableModel) tblDetail.getModel();
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
@@ -63,40 +63,37 @@ public class TabPanelExport extends javax.swing.JPanel {
 
         pnlExport = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblExportDetail = new javax.swing.JTable();
+        tblDetail = new javax.swing.JTable();
         lblExportOrderDetail = new javax.swing.JLabel();
-        lblExportOrderID = new javax.swing.JLabel();
+        lblImportOrderID = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblExportOrder = new javax.swing.JTable();
-        txtExportID = new javax.swing.JTextField();
+        tblImportOrder = new javax.swing.JTable();
+        txtImportID = new javax.swing.JTextField();
         lblImportWarehouse = new javax.swing.JLabel();
         btnClear = new javax.swing.JButton();
-        lbExportDate = new javax.swing.JLabel();
+        lblImportDate = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
-        txtExportDate = new javax.swing.JTextField();
+        txtImportDate = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         lblTrangThai = new javax.swing.JLabel();
-        pnlThongTinKhachHang = new javax.swing.JPanel();
-        lblTenKhach = new javax.swing.JLabel();
-        btnOldCustomer = new javax.swing.JButton();
+        pnlThongTinKhoHang = new javax.swing.JPanel();
+        lblTenKho = new javax.swing.JLabel();
         lblSDT = new javax.swing.JLabel();
+        lblWarehouseID = new javax.swing.JLabel();
+        lblWarehouseName = new javax.swing.JLabel();
+        lblWarehousePhone = new javax.swing.JLabel();
         lblDiaChi = new javax.swing.JLabel();
-        lblCustomerID = new javax.swing.JLabel();
-        lblCustomerName = new javax.swing.JLabel();
-        lblCustomerPhone = new javax.swing.JLabel();
-        lblCustomerAddress = new javax.swing.JLabel();
-        btnNewCustomer = new javax.swing.JButton();
-        btnEditCustomerInfo = new javax.swing.JButton();
-        cboExportWarehouse = new javax.swing.JComboBox<>();
+        lblWarehouseAddress = new javax.swing.JLabel();
         btnFilter = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
-        btnExportProduct = new javax.swing.JButton();
+        btnImportProduct = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnWarehouse = new javax.swing.JButton();
 
         pnlExport.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        tblExportDetail.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        tblExportDetail.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetail.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        tblDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -112,20 +109,20 @@ public class TabPanelExport extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblExportDetail.setFocusable(false);
-        tblExportDetail.setRowSelectionAllowed(false);
-        tblExportDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblExportDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(tblExportDetail);
+        tblDetail.setFocusable(false);
+        tblDetail.setRowSelectionAllowed(false);
+        tblDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblDetail.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(tblDetail);
 
         lblExportOrderDetail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblExportOrderDetail.setText("ĐƠN HÀNG CHI TIẾT");
 
-        lblExportOrderID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblExportOrderID.setText("MÃ HÓA ĐƠN");
+        lblImportOrderID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblImportOrderID.setText("MÃ HÓA ĐƠN");
 
-        tblExportOrder.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        tblExportOrder.setModel(new javax.swing.table.DefaultTableModel(
+        tblImportOrder.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        tblImportOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -144,23 +141,23 @@ public class TabPanelExport extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblExportOrder.setFocusable(false);
-        tblExportOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblExportOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblExportOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblImportOrder.setFocusable(false);
+        tblImportOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblImportOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblImportOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblExportOrderMousePressed(evt);
+                tblImportOrderMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblExportOrder);
+        jScrollPane1.setViewportView(tblImportOrder);
 
-        txtExportID.setEditable(false);
-        txtExportID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtExportID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
-        txtExportID.setFocusable(false);
+        txtImportID.setEditable(false);
+        txtImportID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtImportID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
+        txtImportID.setFocusable(false);
 
         lblImportWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblImportWarehouse.setText("KHO LẤY HÀNG");
+        lblImportWarehouse.setText("KHO NHẬP HÀNG");
 
         btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -173,8 +170,8 @@ public class TabPanelExport extends javax.swing.JPanel {
             }
         });
 
-        lbExportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbExportDate.setText("NGÀY LẬP ĐƠN");
+        lblImportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblImportDate.setText("NGÀY LẬP ĐƠN");
 
         btnSave.setBackground(new java.awt.Color(0, 51, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -188,9 +185,9 @@ public class TabPanelExport extends javax.swing.JPanel {
             }
         });
 
-        txtExportDate.setEditable(false);
-        txtExportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtExportDate.setFocusable(false);
+        txtImportDate.setEditable(false);
+        txtImportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtImportDate.setFocusable(false);
 
         btnAdd.setBackground(new java.awt.Color(0, 153, 51));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -205,118 +202,70 @@ public class TabPanelExport extends javax.swing.JPanel {
 
         lblTrangThai.setText("Trạng thái đơn hàng:");
 
-        pnlThongTinKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "KHÁCH HÀNG", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 10))); // NOI18N
+        pnlThongTinKhoHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "KHO HÀNG", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 10))); // NOI18N
 
-        lblTenKhach.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        lblTenKhach.setText("TÊN KHÁCH");
-
-        btnOldCustomer.setBackground(new java.awt.Color(0, 102, 102));
-        btnOldCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnOldCustomer.setForeground(new java.awt.Color(242, 242, 242));
-        btnOldCustomer.setText("KHÁCH HÀNG CŨ");
-        btnOldCustomer.setFocusable(false);
-        btnOldCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOldCustomerActionPerformed(evt);
-            }
-        });
+        lblTenKho.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lblTenKho.setText("TÊN KHO");
 
         lblSDT.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblSDT.setText("SỐ ĐIỆN THOẠI");
 
+        lblWarehouseID.setBackground(new java.awt.Color(255, 255, 255));
+        lblWarehouseID.setFont(new java.awt.Font("Segoe UI", 0, 1)); // NOI18N
+        lblWarehouseID.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblWarehouseName.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+
+        lblWarehousePhone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+
         lblDiaChi.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lblDiaChi.setText("ĐỊA CHỈ");
 
-        lblCustomerID.setBackground(new java.awt.Color(255, 255, 255));
-        lblCustomerID.setFont(new java.awt.Font("Segoe UI", 0, 1)); // NOI18N
-        lblCustomerID.setForeground(new java.awt.Color(255, 255, 255));
+        lblWarehouseAddress.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
-        lblCustomerName.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        lblCustomerPhone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        lblCustomerAddress.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-
-        btnNewCustomer.setBackground(new java.awt.Color(102, 255, 255));
-        btnNewCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnNewCustomer.setForeground(new java.awt.Color(51, 51, 51));
-        btnNewCustomer.setText("KHÁCH HÀNG MỚI");
-        btnNewCustomer.setFocusable(false);
-        btnNewCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewCustomerActionPerformed(evt);
-            }
-        });
-
-        btnEditCustomerInfo.setBackground(new java.awt.Color(0, 51, 51));
-        btnEditCustomerInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnEditCustomerInfo.setForeground(new java.awt.Color(242, 242, 242));
-        btnEditCustomerInfo.setText("SỬA THÔNG TIN");
-        btnEditCustomerInfo.setFocusable(false);
-        btnEditCustomerInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditCustomerInfoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlThongTinKhachHangLayout = new javax.swing.GroupLayout(pnlThongTinKhachHang);
-        pnlThongTinKhachHang.setLayout(pnlThongTinKhachHangLayout);
-        pnlThongTinKhachHangLayout.setHorizontalGroup(
-            pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlThongTinKhachHangLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlThongTinKhoHangLayout = new javax.swing.GroupLayout(pnlThongTinKhoHang);
+        pnlThongTinKhoHang.setLayout(pnlThongTinKhoHangLayout);
+        pnlThongTinKhoHangLayout.setHorizontalGroup(
+            pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlThongTinKhoHangLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTenKhach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTenKho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblCustomerPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                    .addComponent(lblCustomerName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCustomerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnNewCustomer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOldCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCustomerID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(143, 143, 143))
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlThongTinKhoHangLayout.createSequentialGroup()
+                        .addGap(354, 354, 354)
+                        .addComponent(lblWarehouseID, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
+                        .addGap(75, 75, 75))
+                    .addGroup(pnlThongTinKhoHangLayout.createSequentialGroup()
+                        .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblWarehouseName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblWarehousePhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblWarehouseAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
-        pnlThongTinKhachHangLayout.setVerticalGroup(
-            pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhachHangLayout.createSequentialGroup()
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlThongTinKhachHangLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTenKhach)
-                            .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhachHangLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnOldCustomer)
-                        .addGap(18, 18, 18)))
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnNewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCustomerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        pnlThongTinKhoHangLayout.setVerticalGroup(
+            pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhoHangLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTenKho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlThongTinKhoHangLayout.createSequentialGroup()
+                        .addComponent(lblWarehouseName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(15, 15, 15)
-                .addComponent(lblCustomerID)
-                .addGap(0, 0, 0)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(lblCustomerAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblWarehousePhone, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblWarehouseAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(lblWarehouseID))
         );
-
-        cboExportWarehouse.setFocusable(false);
-        cboExportWarehouse.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboExportWarehouseItemStateChanged(evt);
-            }
-        });
 
         btnFilter.setBackground(new java.awt.Color(255, 255, 0));
         btnFilter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -327,14 +276,14 @@ public class TabPanelExport extends javax.swing.JPanel {
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStatus.setText("Đang tạo");
 
-        btnExportProduct.setBackground(new java.awt.Color(102, 0, 102));
-        btnExportProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnExportProduct.setForeground(new java.awt.Color(242, 242, 242));
-        btnExportProduct.setText("MENU SẢN PHẨM");
-        btnExportProduct.setFocusable(false);
-        btnExportProduct.addActionListener(new java.awt.event.ActionListener() {
+        btnImportProduct.setBackground(new java.awt.Color(102, 0, 102));
+        btnImportProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnImportProduct.setForeground(new java.awt.Color(242, 242, 242));
+        btnImportProduct.setText("MENU SẢN PHẨM");
+        btnImportProduct.setFocusable(false);
+        btnImportProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportProductActionPerformed(evt);
+                btnImportProductActionPerformed(evt);
             }
         });
 
@@ -350,6 +299,17 @@ public class TabPanelExport extends javax.swing.JPanel {
             }
         });
 
+        btnWarehouse.setBackground(new java.awt.Color(0, 102, 102));
+        btnWarehouse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnWarehouse.setForeground(new java.awt.Color(242, 242, 242));
+        btnWarehouse.setText("CHỌN KHO");
+        btnWarehouse.setFocusable(false);
+        btnWarehouse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWarehouseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlExportLayout = new javax.swing.GroupLayout(pnlExport);
         pnlExport.setLayout(pnlExportLayout);
         pnlExportLayout.setHorizontalGroup(
@@ -358,36 +318,33 @@ public class TabPanelExport extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlExportLayout.createSequentialGroup()
-                        .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnlExportLayout.createSequentialGroup()
-                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlExportLayout.createSequentialGroup()
-                                        .addComponent(lblExportOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(pnlExportLayout.createSequentialGroup()
-                                        .addComponent(lblImportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cboExportWarehouse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtExportID, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblImportOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblImportWarehouse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtImportID, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(btnWarehouse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(30, 30, 30)
-                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(pnlExportLayout.createSequentialGroup()
-                                        .addComponent(lbExportDate)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtExportDate, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btnExportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblImportDate)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtImportDate))
+                                    .addComponent(btnImportProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(pnlThongTinKhoHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlExportLayout.createSequentialGroup()
                                 .addComponent(lblTrangThai)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
                             .addGroup(pnlExportLayout.createSequentialGroup()
                                 .addComponent(lblExportOrderDetail)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -404,28 +361,28 @@ public class TabPanelExport extends javax.swing.JPanel {
             .addGroup(pnlExportLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtExportID)
+                    .addComponent(txtImportID)
                     .addComponent(lblExportOrderDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblExportOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbExportDate, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtExportDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImportOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImportDate, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtImportDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblImportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cboExportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnExportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnWarehouse))
+                            .addComponent(btnImportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlExportLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlThongTinKhoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlExportLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblStatus))))
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addComponent(btnClear)
@@ -459,66 +416,30 @@ public class TabPanelExport extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblExportOrderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblExportOrderMousePressed
-        index = tblExportOrder.getSelectedRow();
+    private void tblImportOrderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImportOrderMousePressed
+        index = tblImportOrder.getSelectedRow();
         int maHd = (int) modelTblOrder.getValueAt(index, 0);
         writeForm(maHd);
         buttonOnUpdate();
-    }//GEN-LAST:event_tblExportOrderMousePressed
+    }//GEN-LAST:event_tblImportOrderMousePressed
 
-    private void btnExportProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportProductActionPerformed
-        PopupProductSelection popUpProductMenu = new PopupProductSelection(this);
-        popUpProductMenu.setVisible(true);
-    }//GEN-LAST:event_btnExportProductActionPerformed
+    private void btnImportProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportProductActionPerformed
+
+    }//GEN-LAST:event_btnImportProductActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void cboExportWarehouseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboExportWarehouseItemStateChanged
-        modelTblDetail.setRowCount(0);
+    private void btnWarehouseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWarehouseActionPerformed
 
-        btnExportProduct.setEnabled(true);
-
-        if (cboExportWarehouse.getSelectedItem() != null) {
-            if (cboExportWarehouse.getSelectedItem().equals("CHỜ BỔ SUNG")
-                    || cboExportWarehouse.getSelectedItem() == null) {
-                btnExportProduct.setEnabled(false);
-            }
-        }
-
-    }//GEN-LAST:event_cboExportWarehouseItemStateChanged
-
-    private void btnEditCustomerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerInfoActionPerformed
-        String id = lblCustomerID.getText();
-        String ten = lblCustomerName.getText();
-        String sdt = lblCustomerPhone.getText();
-        String diaChi = lblCustomerAddress.getText();
-
-        if (id.isBlank() || ten.isBlank() || sdt.isBlank() || diaChi.isBlank()) {
-            errorMessage("Không có thông tin khách hàng để chỉnh sửa!!!");
-        } else {
-            PopupEditCustomerInfo popupEditCustomerInfo = new PopupEditCustomerInfo(this);
-            popupEditCustomerInfo.setVisible(true);
-        }
-
-    }//GEN-LAST:event_btnEditCustomerInfoActionPerformed
-
-    private void btnNewCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewCustomerActionPerformed
-        PopupNewCustomer popupNewCustomer = new PopupNewCustomer(this);
-        popupNewCustomer.setVisible(true);
-    }//GEN-LAST:event_btnNewCustomerActionPerformed
-
-    private void btnOldCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOldCustomerActionPerformed
-        PopupOldCustomer popupOldCustomer = new PopupOldCustomer(this);
-        popupOldCustomer.setVisible(true);
-    }//GEN-LAST:event_btnOldCustomerActionPerformed
+    }//GEN-LAST:event_btnWarehouseActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
             addHoaDon();
         } catch (SQLException ex) {
-            Logger.getLogger(TabPanelExport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TabPanelImport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -526,7 +447,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         try {
             updateHoaDon();
         } catch (SQLException ex) {
-            Logger.getLogger(TabPanelExport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TabPanelImport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -534,7 +455,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         try {
             deleteHoaDon();
         } catch (SQLException ex) {
-            Logger.getLogger(TabPanelExport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TabPanelImport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
     ////////////////////////////////////////////////////////////////////////////
@@ -582,18 +503,18 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void dragTableToIndex(int i) {
-        tblExportOrder.requestFocus();
-        tblExportOrder.changeSelection(i, 0, false, false);
-        tblExportOrder.setRowSelectionInterval(i, i);
-        writeForm((int) tblExportOrder.getValueAt(i, 0));
+        tblImportOrder.requestFocus();
+        tblImportOrder.changeSelection(i, 0, false, false);
+        tblImportOrder.setRowSelectionInterval(i, i);
+        writeForm((int) tblImportOrder.getValueAt(i, 0));
         buttonOnUpdate();
     }
 
     public void dragTableToID(int id) {
-        int count = tblExportOrder.getColumnCount();
+        int count = tblImportOrder.getColumnCount();
 
         for (int i = 0; i < count; i++) {
-            if ((int) tblExportOrder.getValueAt(i, 0) == id) {
+            if ((int) tblImportOrder.getValueAt(i, 0) == id) {
                 dragTableToIndex(i);
                 break;
             }
@@ -624,16 +545,9 @@ public class TabPanelExport extends javax.swing.JPanel {
 
             List<KhoHang> khoHangList = khoHangDAO.findAll();
 
-            cboExportWarehouse.removeAllItems();
-            for (KhoHang kh : khoHangList) {
-                cboExportWarehouse.addItem(kh.getTenKho());
-            }
-            cboExportWarehouse.addItem("CHỜ BỔ SUNG");
-            cboExportWarehouse.setSelectedItem("CHỜ BỔ SUNG");
+            btnImportProduct.setEnabled(false);
 
-            btnExportProduct.setEnabled(false);
-
-            txtExportDate.setText(getTodayDate());
+            txtImportDate.setText(getTodayDate());
         } catch (SQLException ex) {
         }
     }
@@ -644,8 +558,8 @@ public class TabPanelExport extends javax.swing.JPanel {
             public void tableChanged(TableModelEvent e) {
                 sanPhamDatHangList.clear();
 
-                if (tblExportDetail.getRowCount() != 0) {
-                    int numberOfSp = tblExportDetail.getRowCount();
+                if (tblDetail.getRowCount() != 0) {
+                    int numberOfSp = tblDetail.getRowCount();
 
                     for (int i = 0; i < numberOfSp; i++) {
                         int maSp = (int) modelTblDetail.getValueAt(i, 0);
@@ -666,15 +580,14 @@ public class TabPanelExport extends javax.swing.JPanel {
             KhoHang kho = khoHangDAO.findById(hoaDon.getMaKho());
             KhachHang khach = khachHangDAO.findById(hoaDon.getMaKhach());
 
-            txtExportID.setText(hoaDon.getMaHd() + "");
-            cboExportWarehouse.setSelectedItem(kho.getTenKho());
-            txtExportDate.setText(hoaDon.getNgayLapHoaDon());
+            txtImportID.setText(hoaDon.getMaHd() + "");
+            txtImportDate.setText(hoaDon.getNgayLapHoaDon());
             lblStatus.setText(hoaDon.getTrangThai());
 
-            lblCustomerID.setText(khach.getMaKhach() + "");
-            lblCustomerName.setText(khach.getTenKhach());
-            lblCustomerPhone.setText(khach.getSdt());
-            lblCustomerAddress.setText(khach.getDiaChi());
+            lblWarehouseID.setText(khach.getMaKhach() + "");
+            lblWarehouseName.setText(khach.getTenKhach());
+            lblWarehousePhone.setText(khach.getSdt());
+            lblWarehouseAddress.setText(khach.getDiaChi());
 
             modelTblDetail.setRowCount(0);
             List<HoaDonChiTiet> hdctList = hdctDAO.findByMaHd(maHD);
@@ -695,18 +608,17 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void clearForm() {
-        txtExportID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
+        txtImportID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
 
-        txtExportDate.setText(getTodayDate());
-        cboExportWarehouse.setSelectedItem("CHỜ BỔ SUNG");
+        txtImportDate.setText(getTodayDate());
 
-        lblCustomerName.setText("");
-        lblCustomerAddress.setText("");
-        lblCustomerPhone.setText("");
+        lblWarehouseName.setText("");
+        lblWarehouseAddress.setText("");
+        lblWarehousePhone.setText("");
 
         lblStatus.setText("Đang tạo");
         modelTblDetail.setRowCount(0);
-        tblExportOrder.clearSelection();
+        tblImportOrder.clearSelection();
 
         buttonOnAdd();
     }
@@ -715,15 +627,15 @@ public class TabPanelExport extends javax.swing.JPanel {
         int maHd = 0;
 
         try {
-            maHd = Integer.parseInt(txtExportID.getText());
+            maHd = Integer.parseInt(txtImportID.getText());
         } catch (NumberFormatException e) {
         }
 
-        String ngayLapDon = DateUtils.convertToSQLDate(txtExportDate.getText());
+        String ngayLapDon = DateUtils.convertToSQLDate(txtImportDate.getText());
 
         int maKho = khoHangDAO.findIdByName((String) cboExportWarehouse.getSelectedItem());
 
-        int maKhach = Integer.parseInt(lblCustomerID.getText());
+        int maKhach = Integer.parseInt(lblWarehouseID.getText());
 
         return new HoaDon(maHd, maKhach, maKho, ngayLapDon, "Xuất", "Pending");
     }
@@ -732,13 +644,13 @@ public class TabPanelExport extends javax.swing.JPanel {
         int maHd = 0;
 
         try {
-            maHd = Integer.parseInt(txtExportID.getText());
+            maHd = Integer.parseInt(txtImportID.getText());
         } catch (NumberFormatException e) {
         }
 
         List<HoaDonChiTiet> hdctList = new ArrayList<>();
 
-        int hdctRow = tblExportDetail.getRowCount();
+        int hdctRow = tblDetail.getRowCount();
 
         if (hdctRow != 0) {
             for (int i = 0; i < hdctRow; i++) {
@@ -760,14 +672,14 @@ public class TabPanelExport extends javax.swing.JPanel {
             return false;
         }
 
-        if (tblExportDetail.getRowCount() == 0) {
+        if (tblDetail.getRowCount() == 0) {
             errorMessage("Vui lòng chọn sản phẩm đặt hàng");
             flag = false;
         }
 
-        if (lblCustomerName.getText().isBlank()
+        if (lblWarehouseName.getText().isBlank()
                 || lblCustomerAddress.getText().isBlank()
-                || lblCustomerPhone.getText().isBlank()) {
+                || lblWarehousePhone.getText().isBlank()) {
             errorMessage("Vui lòng cung cấp thông tin khách hàng");
             return false;
         }
@@ -776,7 +688,7 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public boolean isTwoOrdersTheSame() throws SQLException {
-        int maHd = Integer.parseInt(txtExportID.getText());
+        int maHd = Integer.parseInt(txtImportID.getText());
 
         HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
         List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
@@ -808,7 +720,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                 hoaDonDAO.addHoaDon(hoaDon);
 
                 hoaDon = hoaDonDAO.findNewest();
-                txtExportID.setText(hoaDon.getMaHd() + "");
+                txtImportID.setText(hoaDon.getMaHd() + "");
 
                 List<HoaDonChiTiet> hdctList = returnHDCT();
                 KhoHangChiTiet khct;
@@ -836,7 +748,7 @@ public class TabPanelExport extends javax.swing.JPanel {
             return;
         }
 
-        int maHd = Integer.parseInt(txtExportID.getText());
+        int maHd = Integer.parseInt(txtImportID.getText());
 
         HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
         List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
@@ -957,7 +869,7 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void deleteHoaDon() throws SQLException {
-        int maHd = Integer.parseInt(txtExportID.getText());
+        int maHd = Integer.parseInt(txtImportID.getText());
 
         HoaDon hoaDon = hoaDonDAO.findById(maHd);
 
@@ -1026,9 +938,9 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void addCustomerInfo(KhachHang khach) {
-        lblCustomerID.setText(khach.getMaKhach() + "");
-        lblCustomerName.setText(khach.getTenKhach());
-        lblCustomerPhone.setText(khach.getSdt());
+        lblWarehouseID.setText(khach.getMaKhach() + "");
+        lblWarehouseName.setText(khach.getTenKhach());
+        lblWarehousePhone.setText(khach.getSdt());
         lblCustomerAddress.setText(khach.getDiaChi());
     }
 
@@ -1056,10 +968,10 @@ public class TabPanelExport extends javax.swing.JPanel {
 
     public KhachHang getCurrentKhachHang() {
         try {
-            return khachHangDAO.findById(Integer.parseInt(lblCustomerID.getText()));
+            return khachHangDAO.findById(Integer.parseInt(lblWarehouseID.getText()));
 
         } catch (SQLException ex) {
-            Logger.getLogger(TabPanelExport.class
+            Logger.getLogger(TabPanelImport.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -1086,33 +998,30 @@ public class TabPanelExport extends javax.swing.JPanel {
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnDelete;
-    public javax.swing.JButton btnEditCustomerInfo;
-    public javax.swing.JButton btnExportProduct;
     public javax.swing.JButton btnFilter;
-    public javax.swing.JButton btnNewCustomer;
-    public javax.swing.JButton btnOldCustomer;
+    public javax.swing.JButton btnImportProduct;
     public javax.swing.JButton btnSave;
-    public javax.swing.JComboBox<String> cboExportWarehouse;
+    public javax.swing.JButton btnWarehouse;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lbExportDate;
-    private javax.swing.JLabel lblCustomerAddress;
-    private javax.swing.JLabel lblCustomerID;
-    private javax.swing.JLabel lblCustomerName;
-    private javax.swing.JLabel lblCustomerPhone;
     public javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblExportOrderDetail;
-    private javax.swing.JLabel lblExportOrderID;
+    private javax.swing.JLabel lblImportDate;
+    private javax.swing.JLabel lblImportOrderID;
     private javax.swing.JLabel lblImportWarehouse;
     public javax.swing.JLabel lblSDT;
     private javax.swing.JLabel lblStatus;
-    public javax.swing.JLabel lblTenKhach;
+    public javax.swing.JLabel lblTenKho;
     private javax.swing.JLabel lblTrangThai;
+    private javax.swing.JLabel lblWarehouseAddress;
+    private javax.swing.JLabel lblWarehouseID;
+    private javax.swing.JLabel lblWarehouseName;
+    private javax.swing.JLabel lblWarehousePhone;
     private javax.swing.JPanel pnlExport;
-    private javax.swing.JPanel pnlThongTinKhachHang;
-    public javax.swing.JTable tblExportDetail;
-    public javax.swing.JTable tblExportOrder;
-    public javax.swing.JTextField txtExportDate;
-    public javax.swing.JTextField txtExportID;
+    private javax.swing.JPanel pnlThongTinKhoHang;
+    public javax.swing.JTable tblDetail;
+    public javax.swing.JTable tblImportOrder;
+    public javax.swing.JTextField txtImportDate;
+    public javax.swing.JTextField txtImportID;
     // End of variables declaration//GEN-END:variables
 }

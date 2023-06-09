@@ -2,6 +2,7 @@ package component.PanelForMainMenu;
 
 import customTable.TableCustom;
 import java.awt.Color;
+import java.awt.Point;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -53,7 +54,7 @@ public final class PanelSupplier extends ConnectionPanel {
         lblSuppProduct = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSuppProduct = new javax.swing.JTable();
-        btnAddSupplier = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnFlag = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
@@ -109,16 +110,21 @@ public final class PanelSupplier extends ConnectionPanel {
         tblSuppProduct.setFocusable(false);
         tblSuppProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblSuppProduct.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblSuppProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblSuppProductMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSuppProduct);
 
-        btnAddSupplier.setBackground(new java.awt.Color(0, 153, 0));
-        btnAddSupplier.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnAddSupplier.setForeground(new java.awt.Color(242, 242, 242));
-        btnAddSupplier.setText("ADD");
-        btnAddSupplier.setFocusable(false);
-        btnAddSupplier.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setBackground(new java.awt.Color(0, 153, 0));
+        btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(242, 242, 242));
+        btnAdd.setText("ADD");
+        btnAdd.setFocusable(false);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddSupplierActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -185,7 +191,7 @@ public final class PanelSupplier extends ConnectionPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnClear)
                         .addGap(26, 26, 26)
-                        .addComponent(btnAddSupplier)
+                        .addComponent(btnAdd)
                         .addGap(32, 32, 32)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -226,7 +232,7 @@ public final class PanelSupplier extends ConnectionPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -306,9 +312,18 @@ public final class PanelSupplier extends ConnectionPanel {
         }
     }//GEN-LAST:event_btnFlagActionPerformed
 
-    private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         addSupplier();
-    }//GEN-LAST:event_btnAddSupplierActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void tblSuppProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuppProductMousePressed
+        Point point = evt.getPoint();
+        int row = tblSuppProduct.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && tblSuppProduct.getSelectedRow() != -1) {
+            int id = (int) tblSuppProduct.getValueAt(row, 0);
+            this.mainMenu.switchCardProduct(id);
+        }
+    }//GEN-LAST:event_tblSuppProductMousePressed
 
     ////////////////////////////////////////////////////////////////////////////
     public void errorMessage(String str) {
@@ -334,15 +349,23 @@ public final class PanelSupplier extends ConnectionPanel {
     }
 
     public void buttonsWhenAddInfo() {
-        btnAddSupplier.setEnabled(true);
+        btnAdd.setEnabled(true);
         btnSave.setEnabled(false);
         btnFlag.setEnabled(false);
+
+        if (this.role.equals("NV")) {
+            btnAdd.setEnabled(false);
+        }
     }
 
     public void buttonsWhenEditInfo() {
-        btnAddSupplier.setEnabled(false);
+        btnAdd.setEnabled(false);
         btnSave.setEnabled(true);
         btnFlag.setEnabled(true);
+
+        if (this.role.equals("NV")) {
+            btnFlag.setEnabled(false);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -442,6 +465,9 @@ public final class PanelSupplier extends ConnectionPanel {
     public void connectMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
         this.role = mainMenu.getUserRole();
+        if (this.role.equals("NV")) {
+            btnAdd.setEnabled(false);
+        }
     }
 
     @Override
@@ -450,11 +476,16 @@ public final class PanelSupplier extends ConnectionPanel {
         loadDataToTblSupplier();
 
         if (index != -1) {
-            tblSuppliers.requestFocus();
-            tblSuppliers.changeSelection(index, 0, false, false);
-            tblSuppliers.setRowSelectionInterval(index, index);
-            writeForm((int) modelTblSupplier.getValueAt(index, 0));
+            dragTableToIndex(index);
+            buttonsWhenEditInfo();
         }
+    }
+
+    public void dragTableToIndex(int i) {
+        tblSuppliers.requestFocus();
+        tblSuppliers.changeSelection(i, 0, false, false);
+        tblSuppliers.setRowSelectionInterval(i, i);
+        writeForm((int) tblSuppliers.getValueAt(i, 0));
     }
 
     public void loadDataToTblSupplier() {
@@ -570,7 +601,7 @@ public final class PanelSupplier extends ConnectionPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddSupplier;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnFlag;
     private javax.swing.JButton btnSave;

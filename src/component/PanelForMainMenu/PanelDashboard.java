@@ -9,12 +9,12 @@ import model.Object.HoaDon;
 import model.DAO.HoaDonDAO;
 import model.DAO.KhachHangDAO;
 import customTable.TableCustom;
+import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import model.Object.KhachHang;
 import swing.MainMenu;
 
@@ -266,6 +266,11 @@ public class PanelDashboard extends ConnectionPanel {
         tblPendingOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblPendingOrder.setShowGrid(true);
         tblPendingOrder.getTableHeader().setReorderingAllowed(false);
+        tblPendingOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblPendingOrderMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblPendingOrder);
 
         lblDHCG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -294,6 +299,15 @@ public class PanelDashboard extends ConnectionPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblPendingOrderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPendingOrderMousePressed
+        Point point = evt.getPoint();
+        int row = tblPendingOrder.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && tblPendingOrder.getSelectedRow() != -1) {
+            int id = (int) tblPendingOrder.getValueAt(row, 0);
+            this.mainMenu.switchCardExportOrder(id);
+        }
+    }//GEN-LAST:event_tblPendingOrderMousePressed
 
     @Override
     public void setConnection(Connection connection) {

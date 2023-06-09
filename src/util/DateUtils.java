@@ -3,9 +3,12 @@ package util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-public class DateConverter {
+public class DateUtils {
 
     public static String convertToSQLDate(String europeanDate) {
         try {
@@ -35,5 +38,16 @@ public class DateConverter {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static long dateCalculator(String dateBegin, String dateEnd) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate begin = LocalDate.parse(dateBegin, formatter);
+        LocalDate end = LocalDate.parse(dateEnd, formatter);
+
+        long daysBetween = ChronoUnit.DAYS.between(begin, end);
+
+        return daysBetween;
     }
 }

@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Object.HoaDon;
-import util.DateConverter;
+import util.DateUtils;
 
 public class HoaDonDAO {
 
@@ -67,7 +67,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -89,7 +89,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -111,7 +111,7 @@ public class HoaDonDAO {
                 if (resultSet.next()) {
                     int maKhach = resultSet.getInt("MAKHACH");
                     int maKho = resultSet.getInt("MAKHO");
-                    String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                    String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                     String loaiHoaDon = resultSet.getString("LOAIHOADON");
                     String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -136,7 +136,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -161,7 +161,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -186,7 +186,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -208,7 +208,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateUtils.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 

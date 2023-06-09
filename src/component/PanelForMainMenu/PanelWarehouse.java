@@ -1,6 +1,7 @@
 package component.PanelForMainMenu;
 
 import customTable.TableCustom;
+import java.awt.Point;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -94,11 +95,21 @@ public class PanelWarehouse extends ConnectionPanel {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
         btnAdd.setText("NHẬP KHO SẢN PHẨM");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(242, 242, 242));
         btnDelete.setText("XÓA SẢN PHẨM");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         lblDiaChi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDiaChi.setText("ĐỊA CHỈ:");
@@ -163,7 +174,22 @@ public class PanelWarehouse extends ConnectionPanel {
 
     private void tblProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMousePressed
         index = tblProduct.getSelectedRow();
+
+        Point point = evt.getPoint();
+        int row = tblProduct.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && tblProduct.getSelectedRow() != -1) {
+            int id = (int) tblProduct.getValueAt(row, 0);
+            this.mainMenu.switchCardProduct(id);
+        }
     }//GEN-LAST:event_tblProductMousePressed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
 
     @Override
     public void setConnection(Connection connection) {
@@ -180,6 +206,10 @@ public class PanelWarehouse extends ConnectionPanel {
     public void connectMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
         this.role = mainMenu.getUserRole();
+
+        if (this.role.equals("NV")) {
+            btnDelete.setEnabled(false);
+        }
     }
 
     @Override
@@ -189,9 +219,25 @@ public class PanelWarehouse extends ConnectionPanel {
         loadDataToTblAndFormByTenKho(warehouseName);
 
         if (index != -1) {
-            tblProduct.requestFocus();
-            tblProduct.changeSelection(index, 0, false, false);
-            tblProduct.setRowSelectionInterval(index, index);
+            dragTableToIndex(index);
+        }
+    }
+
+    public void dragTableToIndex(int i) {
+        tblProduct.requestFocus();
+        tblProduct.changeSelection(i, 0, false, false);
+        tblProduct.setRowSelectionInterval(i, i);
+    }
+
+    public void dragTableToID(String kho, int maSp) {
+        int count = tblProduct.getColumnCount();
+        cboWarehouse.setSelectedItem(kho);
+
+        for (int i = 0; i < count; i++) {
+            if ((int) tblProduct.getValueAt(i, 0) == maSp) {
+                dragTableToIndex(i);
+                break;
+            }
         }
     }
 

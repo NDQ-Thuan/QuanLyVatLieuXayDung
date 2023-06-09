@@ -327,6 +327,8 @@ public class MainMenu extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        System.out.println(this.role);
     }
 
     public void addMouseEffectForPnlMenu() {
@@ -356,6 +358,36 @@ public class MainMenu extends javax.swing.JFrame {
 
     public String getUserRole() {
         return this.role;
+    }
+
+    public void switchCardProduct(int i) {
+        cardLayout.show(pnlCardLayout, "cardProduct");
+
+        for (JLabel label : lblMenuList) {
+            label.setBackground(new Color(0, 0, 102));
+        }
+        lblMenu_Product.setBackground(new Color(0, 0, 55));
+        panelProduct.dragTableToID(i);
+    }
+
+    public void switchCardWarehouse(String kho, int i) {
+        cardLayout.show(pnlCardLayout, "cardWarehouse");
+
+        for (JLabel label : lblMenuList) {
+            label.setBackground(new Color(0, 0, 102));
+        }
+        lblMenu_Warehouse.setBackground(new Color(0, 0, 55));
+        panelWarehouse.dragTableToID(kho, i);
+    }
+
+    public void switchCardExportOrder(int i) {
+        cardLayout.show(pnlCardLayout, "cardOrder");
+
+        for (JLabel label : lblMenuList) {
+            label.setBackground(new Color(0, 0, 102));
+        }
+        lblMenu_Order.setBackground(new Color(0, 0, 55));
+        panelOrder.exportDragTableToID(i);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblInfo_Company;

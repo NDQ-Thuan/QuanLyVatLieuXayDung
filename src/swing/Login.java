@@ -1,15 +1,20 @@
 package swing;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneLightContrastIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import java.sql.*;
 
 public class Login extends javax.swing.JFrame {
+
+    private String role;
 
     public Login() {
         initComponents();
 
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -89,12 +94,25 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
-        // TODO add your handling code here:
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+
+        if (checkLogin(username, password)) {
+            JOptionPane.showMessageDialog(this, "ĐĂNG NHẬP THÀNH CÔNG");
+
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.setUserRole(this.role);
+            mainMenu.setVisible(true);
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác");
+        }
     }//GEN-LAST:event_btnLogInActionPerformed
 
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatAtomOneLightContrastIJTheme());
+            UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
         } catch (UnsupportedLookAndFeelException e) {
         }
 
@@ -103,6 +121,25 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    private boolean checkLogin(String username, String password) {
+        String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyVatLieuXayDung;";
+
+        try (Connection conn = DriverManager.getConnection(url, "sa", "123")) {
+            String query = "SELECT * FROM USERS WHERE USERNAME LIKE '" + username + "' AND PASSWORD LIKE '" + password + "'";
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                this.role = resultSet.getString("ROLE");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnLogIn;

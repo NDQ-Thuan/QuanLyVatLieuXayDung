@@ -2,6 +2,7 @@ package component.PanelForMainMenu;
 
 import customTable.TableCustom;
 import java.awt.Color;
+import java.awt.Point;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -181,6 +182,11 @@ public final class PanelProduct extends ConnectionPanel {
         });
         tblWarehouse.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblWarehouse.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblWarehouse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblWarehouseMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblWarehouse);
 
         lblProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -388,6 +394,17 @@ public final class PanelProduct extends ConnectionPanel {
         }
     }//GEN-LAST:event_cboTypeItemStateChanged
 
+    private void tblWarehouseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWarehouseMousePressed
+        Point point = evt.getPoint();
+        int row = tblWarehouse.rowAtPoint(point);
+        if (evt.getClickCount() == 2 && tblWarehouse.getSelectedRow() != -1) {
+            String kho = (String) tblWarehouse.getValueAt(row, 0);
+            int id = 0;
+            id = (int) tblWarehouse.getValueAt(row, 1);
+            this.mainMenu.switchCardWarehouse(kho, id);
+        }
+    }//GEN-LAST:event_tblWarehouseMousePressed
+
     ////////////////////////////////////////////////////////////////////////////
     public void errorMessage(String str) {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
@@ -408,21 +425,23 @@ public final class PanelProduct extends ConnectionPanel {
     }
 
     public void buttonsWhenAddInfo() {
-        if (this.role.equals("NV")) {
-            btnAdd.setEnabled(false);
-        }
         btnAdd.setEnabled(true);
         btnSave.setEnabled(false);
         btnFlag.setEnabled(false);
+
+        if (this.role.equals("NV")) {
+            btnAdd.setEnabled(false);
+        }
     }
 
     public void buttonsWhenEditInfo() {
+        btnFlag.setEnabled(true);
+        btnAdd.setEnabled(false);
+        btnSave.setEnabled(true);
+
         if (this.role.equals("NV")) {
             btnFlag.setEnabled(false);
         }
-        btnAdd.setEnabled(false);
-        btnSave.setEnabled(true);
-        btnFlag.setEnabled(true);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -567,6 +586,9 @@ public final class PanelProduct extends ConnectionPanel {
     public void connectMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
         this.role = mainMenu.getUserRole();
+        if (this.role.equals("NV")) {
+            btnAdd.setEnabled(false);
+        }
     }
 
     @Override
@@ -576,10 +598,26 @@ public final class PanelProduct extends ConnectionPanel {
         loadDataToForm();
 
         if (index != -1) {
-            tblProduct.requestFocus();
-            tblProduct.changeSelection(index, 0, false, false);
-            tblProduct.setRowSelectionInterval(index, index);
-            writeForm((int) modelTblProduct.getValueAt(index, 0));
+            dragTableToIndex(index);
+            buttonsWhenEditInfo();
+        }
+    }
+
+    public void dragTableToIndex(int i) {
+        tblProduct.requestFocus();
+        tblProduct.changeSelection(i, 0, false, false);
+        tblProduct.setRowSelectionInterval(i, i);
+        writeForm((int) modelTblProduct.getValueAt(i, 0));
+    }
+
+    public void dragTableToID(int id) {
+        int count = tblProduct.getColumnCount();
+
+        for (int i = 0; i < count; i++) {
+            if ((int) tblProduct.getValueAt(i, 0) == id) {
+                dragTableToIndex(i);
+                break;
+            }
         }
     }
 
