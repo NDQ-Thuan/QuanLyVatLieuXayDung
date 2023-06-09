@@ -108,6 +108,17 @@ GO
 
 INSERT INTO KHACHHANG (TENKHACH, DIACHI, SDT)
 VALUES
+	(N'Kho Hồ Chí Minh 1', N'Công Trường Lam Sơn, Quận 1, Thành phố Hồ Chí Minh', '1900636677'),
+	(N'Kho Hồ Chí Minh 2', N'144 Xuân Thủy, Quận Cầu Giấy, Thành phố Hồ Chí Minh', '19008095'),
+    (N'Kho Hà Nội 1', N'Số 58 Quốc Tử Giám, Văn Miếu, Đống Đa, Hà Nội', '1900545481'),
+	(N'Kho Hà Nội 2', N'Số 18 Phan Bội Châu, Hoàn Kiếm, Hà Nội', '19001088'),
+    (N'Kho Đà Nẵng', N'Phường Khương Đông, Quận Ngũ Hành Sơn, Đà Nẵng', '1900886877'),
+    (N'Kho Nghệ An', N'Số 22 Trường Thi, TP. Vinh, Nghệ An', '19001031'),
+    (N'Kho Cần Thơ', N' 46 Hai Bà Trưng, phường An Bình, quận Ninh Kiều, Cần Thơ', '1900232345'),
+    (N'Kho Huế', N'Số 2 Thái Phiên, Phường Hiệp Hòa, Thành phố Huế, Thừa Thiên Huế', '1900545411'),
+    (N'Kho Bình Dương', N'KCN Việt Nam - Singapore, Thị xã Thuận An, Bình Dương', '19001221'),
+    (N'Kho Thái Nguyên', N'Phường Tân Lập, thành phố Thái Nguyên, tỉnh Thái Nguyên', '19002828'),
+
     (N'Công Ty Xây Dựng Thiên Hạ', N'Q. 5, TP. HCM', '0901234567'),
     (N'Công Ty Kiến Trúc Xanh', N'Q. 12, TP. HCM', '0912345678'),
     (N'Công Ty Thiết Kế Phong Cách Mới', N'Q. Bình Thạnh, TP. HCM', '0923456789'),
@@ -609,5 +620,3 @@ VALUES
 SELECT * FROM SANPHAM ORDER BY MASP DESC
 
 */
-
-SELECT * FROM HOADONCHITIET

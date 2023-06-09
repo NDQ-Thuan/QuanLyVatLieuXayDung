@@ -254,7 +254,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblCustomerPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                     .addComponent(lblCustomerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlThongTinKhachHangLayout.createSequentialGroup()
@@ -282,11 +282,9 @@ public class TabPanelExport extends javax.swing.JPanel {
                 .addComponent(lblCustomerID)
                 .addGap(0, 0, 0)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhachHangLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblCustomerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCustomerAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
         );
 
@@ -334,15 +332,16 @@ public class TabPanelExport extends javax.swing.JPanel {
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlExportLayout.createSequentialGroup()
-                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(pnlExportLayout.createSequentialGroup()
+                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlExportLayout.createSequentialGroup()
                                         .addComponent(lblExportOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtExportID))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlExportLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18))
+                                    .addGroup(pnlExportLayout.createSequentialGroup()
                                         .addComponent(lblImportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cboExportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(18, 18, 18)))
+                                .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cboExportWarehouse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtExportID, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                                 .addGap(30, 30, 30)
                                 .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlExportLayout.createSequentialGroup()
@@ -395,7 +394,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                         .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6))
                     .addGroup(pnlExportLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -621,6 +620,9 @@ public class TabPanelExport extends javax.swing.JPanel {
         tblExportOrder.clearSelection();
     }
 
+//    public List<T> readForm() {
+//
+//    }
     ////////////////////////////////////////////////////////////////////////////
     public int getCurrentWarehouseID() {
         int maKho = 0;
@@ -681,11 +683,11 @@ public class TabPanelExport extends javax.swing.JPanel {
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnDelete;
     public javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnEditCustomerInfo;
+    public javax.swing.JButton btnEditCustomerInfo;
     public javax.swing.JButton btnExportProduct;
     public javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnNewCustomer;
-    private javax.swing.JButton btnOldCustomer;
+    public javax.swing.JButton btnNewCustomer;
+    public javax.swing.JButton btnOldCustomer;
     public javax.swing.JComboBox<String> cboExportWarehouse;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -694,13 +696,13 @@ public class TabPanelExport extends javax.swing.JPanel {
     private javax.swing.JLabel lblCustomerID;
     private javax.swing.JLabel lblCustomerName;
     private javax.swing.JLabel lblCustomerPhone;
-    private javax.swing.JLabel lblDiaChi;
+    public javax.swing.JLabel lblDiaChi;
     private javax.swing.JLabel lblExportOrderDetail;
     private javax.swing.JLabel lblExportOrderID;
     private javax.swing.JLabel lblImportWarehouse;
-    private javax.swing.JLabel lblSDT;
+    public javax.swing.JLabel lblSDT;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JLabel lblTenKhach;
+    public javax.swing.JLabel lblTenKhach;
     private javax.swing.JLabel lblTrangThai;
     private javax.swing.JPanel pnlExport;
     private javax.swing.JPanel pnlThongTinKhachHang;
