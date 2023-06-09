@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Object.HoaDon;
+import util.DateConverter;
 
 public class HoaDonDAO {
 
@@ -58,6 +59,26 @@ public class HoaDonDAO {
         }
     }
 
+    public HoaDon findNewest() {
+        String query = "SELECT TOP 1 * FROM HOADON ORDER BY MAHD DESC";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                int maHd = resultSet.getInt("MAHD");
+                int maKhach = resultSet.getInt("MAKHACH");
+                int maKho = resultSet.getInt("MAKHO");
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
+                String loaiHoaDon = resultSet.getString("LOAIHOADON");
+                String trangThai = resultSet.getString("TRANGTHAI");
+
+                return new HoaDon(maHd, maKhach, maKho, ngayLapHoaDon, loaiHoaDon, trangThai);
+            }
+        } catch (SQLException ex) {
+        }
+
+        return null;
+    }
+
     public List<HoaDon> findAll() {
         List<HoaDon> hoaDonList = new ArrayList<>();
 
@@ -68,7 +89,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -90,7 +111,7 @@ public class HoaDonDAO {
                 if (resultSet.next()) {
                     int maKhach = resultSet.getInt("MAKHACH");
                     int maKho = resultSet.getInt("MAKHO");
-                    String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                    String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                     String loaiHoaDon = resultSet.getString("LOAIHOADON");
                     String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -108,14 +129,14 @@ public class HoaDonDAO {
                 SELECT * FROM HOADON
                 WHERE TRANGTHAI LIKE 'Pending'
                 AND LOAIHOADON LIKE N'Xuất'
-                ORDER BY NGAYLAPHOADON DESC""";
+                ORDER BY MAHD DESC""";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -133,14 +154,14 @@ public class HoaDonDAO {
         String query = """
                 SELECT * FROM HOADON
                 WHERE LOAIHOADON LIKE N'Xuất'
-                ORDER BY NGAYLAPHOADON DESC""";
+                ORDER BY MAHD DESC""";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -158,14 +179,14 @@ public class HoaDonDAO {
         String query = """
                 SELECT * FROM HOADON
                 WHERE LOAIHOADON LIKE N'Nhập'
-                ORDER BY NGAYLAPHOADON DESC""";
+                ORDER BY MAHD DESC""";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -187,7 +208,7 @@ public class HoaDonDAO {
                 int maHd = resultSet.getInt("MAHD");
                 int maKhach = resultSet.getInt("MAKHACH");
                 int maKho = resultSet.getInt("MAKHO");
-                String ngayLapHoaDon = formatSQLDateToEuropeDate(resultSet.getString("NGAYLAPHOADON"));
+                String ngayLapHoaDon = DateConverter.convertToEuropeanDate(resultSet.getString("NGAYLAPHOADON"));
                 String loaiHoaDon = resultSet.getString("LOAIHOADON");
                 String trangThai = resultSet.getString("TRANGTHAI");
 
@@ -221,28 +242,6 @@ public class HoaDonDAO {
             }
         }
         return total;
-    }
-
-    public String formatSQLDateToEuropeDate(String dateFromSQL) {
-        String dateStringFromSQL = dateFromSQL;
-
-        // Create a SimpleDateFormat instance to parse the SQL date string
-        DateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        String europeanDateString = "";
-        try {
-            // Parse the SQL date string into a Date object
-            Date date = sqlDateFormat.parse(dateStringFromSQL);
-
-            // Create a SimpleDateFormat instance with the desired European date format
-            DateFormat europeanDateFormat = new SimpleDateFormat("dd - MM - yyyy");
-
-            // Format the date into the European date string
-            europeanDateString = europeanDateFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return europeanDateString;
     }
 
 }

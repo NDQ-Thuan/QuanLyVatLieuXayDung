@@ -16,7 +16,7 @@ public class HoaDonChiTietDAO {
         this.connection = connection;
     }
 
-    public void addHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
+    public void add(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
         String query = "INSERT INTO HOADONCHITIET (MASP, MAHD, SOLUONG) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -28,7 +28,7 @@ public class HoaDonChiTietDAO {
         }
     }
 
-    public void updateHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
+    public void update(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
         String query = "UPDATE HOADONCHITIET SET SOLUONG = ? WHERE MASP = ? AND MAHD = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -40,12 +40,22 @@ public class HoaDonChiTietDAO {
         }
     }
 
-    public void deleteHoaDonChiTiet(int maSp, int maHd) throws SQLException {
+    public void delete(int maSp, int maHd) throws SQLException {
         String query = "DELETE FROM HOADONCHITIET WHERE MASP = ? AND MAHD = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, maSp);
             statement.setInt(2, maHd);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void deleteByMaHD(int maHd) throws SQLException {
+        String query = "DELETE FROM HOADONCHITIET WHERE MAHD = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, maHd);
 
             statement.executeUpdate();
         }
@@ -70,5 +80,25 @@ public class HoaDonChiTietDAO {
         }
 
         return hoaDonChiTietList;
+    }
+
+    public HoaDonChiTiet findByMaHdAndMaSp(int maSp, int maHd) throws SQLException {
+        String query = "SELECT * FROM HOADONCHITIET WHERE MAHD = ? AND MASP = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, maHd);
+            statement.setInt(2, maSp);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int soLuong = resultSet.getInt("SOLUONG");
+
+                    return new HoaDonChiTiet(maSp, maHd, soLuong
+                    );
+                }
+            }
+        }
+
+        return null;
     }
 }

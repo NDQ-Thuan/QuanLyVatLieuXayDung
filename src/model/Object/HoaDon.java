@@ -70,4 +70,29 @@ public class HoaDon {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final HoaDon other = (HoaDon) obj;
+        if (this.maKhach != other.maKhach) {
+            return false;
+        }
+        return this.maKho == other.maKho;
+    }
+
 }

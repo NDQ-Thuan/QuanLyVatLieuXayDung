@@ -76,7 +76,7 @@ public class KhachHangDAO {
     public List<KhachHang> findAll() throws SQLException {
         List<KhachHang> khachHangList = new ArrayList<>();
 
-        String query = "SELECT * FROM KHACHHANG ORDER BY MAKHACH ASC";
+        String query = "SELECT * FROM KHACHHANG ORDER BY MAKHACH ASC OFFSET 10 ROWS";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {

@@ -1,14 +1,12 @@
 package component.PanelForMainMenu;
 
 import java.sql.Connection;
-import javax.swing.JFrame;
 import swing.MainMenu;
 
 public final class PanelOrder extends ConnectionPanel {
 
     public PanelOrder() {
         initComponents();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +38,7 @@ public final class PanelOrder extends ConnectionPanel {
     public void setConnection(Connection connection) {
         this.connection = connection;
 
-        tabPanelExport.getConnection(this.connection);
+        tabPanelExport.getConnection(this.connection, this);
     }
 
     @Override
@@ -51,6 +49,15 @@ public final class PanelOrder extends ConnectionPanel {
 
     @Override
     public void resetPanelData() {
+        tabPanelExport.resetPanel();
+    }
+
+    public String getUserRole() {
+        return this.role;
+    }
+
+    public void askMainMenuToRestart() {
+        this.mainMenu.restartForm();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;

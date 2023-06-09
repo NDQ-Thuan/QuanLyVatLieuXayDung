@@ -3,8 +3,6 @@ package component.ComponentsForPanelOrder;
 import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
 import customTable.TableCustom;
 import java.awt.Color;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,6 +27,9 @@ import javax.swing.event.ChangeEvent;
 import model.Object.SanPhamDatHang;
 
 public class PopupProductSelection extends javax.swing.JFrame {
+
+    private int index = -1;
+    private int originalOrderedNumber = 0;
 
     private TabPanelExport pnlExport;
     private DefaultTableModel modelTblProduct;
@@ -88,6 +89,11 @@ public class PopupProductSelection extends javax.swing.JFrame {
         });
         tblProduct.setToolTipText("");
         tblProduct.getTableHeader().setReorderingAllowed(false);
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblProductMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduct);
         if (tblProduct.getColumnModel().getColumnCount() > 0) {
             tblProduct.getColumnModel().getColumn(6).setResizable(false);
@@ -170,6 +176,11 @@ public class PopupProductSelection extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void tblProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMousePressed
+        index = tblProduct.getSelectedRow();
+        originalOrderedNumber = retriveSoLuongDatHang(index);
+    }//GEN-LAST:event_tblProductMousePressed
+
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
@@ -182,8 +193,11 @@ public class PopupProductSelection extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
     }
 
-    public int customConfirmDialog(String str) {
-        return JOptionPane.showConfirmDialog(null, str, "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    public boolean customConfirmDialog(String str) {
+        int i = JOptionPane.showConfirmDialog(null, str, "Xác nhận",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        return i == JOptionPane.YES_OPTION;
     }
     ////////////////////////////////////////////////////////////////////////////
 
@@ -231,7 +245,7 @@ public class PopupProductSelection extends javax.swing.JFrame {
                 modelTblProduct.addRow(new Object[]{maSp, tenSp, loai, dvt, gia, soLuong, soLuongDatHang});
 
                 if (soLuongDatHang > 0) {
-                    TableCustom.setCellColor(tblProduct, (tblProduct.getRowCount() - 1), 6, new Color(0, 153, 0));
+                    TableCustom.setCellColor(tblProduct, (tblProduct.getRowCount() - 1), 6, new Color(204, 102, 0));
                 }
             }
 
@@ -246,14 +260,19 @@ public class PopupProductSelection extends javax.swing.JFrame {
         int soLuong = 0;
         String soLuongString;
 
-        if (modelTblProduct.getValueAt(row, 6) instanceof String) {
-            soLuongString = (String) modelTblProduct.getValueAt(row, 6);
-            if (soLuongString.isBlank()) {
-                soLuongString = "0";
-            }
-            soLuong = Integer.parseInt(soLuongString);
-        } else {
+        try {
             soLuong = (int) modelTblProduct.getValueAt(row, 6);
+        } catch (NumberFormatException | ClassCastException e) {
+            if (modelTblProduct.getValueAt(row, 6) instanceof String) {
+                soLuongString = (String) modelTblProduct.getValueAt(row, 6);
+                if (soLuongString.matches("^[0-9]+$")) {
+                    if (soLuongString.isBlank()) {
+                        soLuongString = "0";
+                    }
+
+                    soLuong = Integer.parseInt(soLuongString);
+                }
+            }
         }
 
         return soLuong;
@@ -275,12 +294,12 @@ public class PopupProductSelection extends javax.swing.JFrame {
         try {
             int maSp = (int) modelTblProduct.getValueAt(row, 0);
             String tenSp = (String) modelTblProduct.getValueAt(row, 1);
-            int soLuong = retriveSoLuongDatHang(row);
+            int soLuongDatHang = retriveSoLuongDatHang(row);
 
             KhoHangChiTiet khct = khctDAO.findOneByMaKhoAndMaSp(kho.getMaKho(), maSp);
             int soLuongTonKho = khct.getSoLuong();
 
-            if (soLuong > soLuongTonKho) {
+            if (soLuongDatHang > soLuongTonKho) {
                 errorMessage("Sản phẩm đặt hàng " + tenSp + " có số lượng đặt LỚN HƠN số lượng tồn kho!");
                 return false;
             }
@@ -312,15 +331,24 @@ public class PopupProductSelection extends javax.swing.JFrame {
         if (validateInfo()) {
             List<Integer> orderedRow = getOrderProductRows();
 
-            for (Integer row : orderedRow) {
-                int maSp = (int) modelTblProduct.getValueAt(row, 0);
-                String tenSp = (String) modelTblProduct.getValueAt(row, 1);
-                int soLuong = retriveSoLuongDatHang(row);
+            if (!orderedRow.isEmpty()) {
+                for (Integer row : orderedRow) {
+                    int maSp = (int) modelTblProduct.getValueAt(row, 0);
+                    String tenSp = (String) modelTblProduct.getValueAt(row, 1);
+                    int soLuong = retriveSoLuongDatHang(row);
 
-                spdhList.add(new SanPhamDatHang(maSp, tenSp, soLuong));
+                    spdhList.add(new SanPhamDatHang(maSp, tenSp, soLuong));
+                }
+                this.pnlExport.addDetailProduct(spdhList);
+                this.dispose();
+
+            } else {
+                boolean confirm = customConfirmDialog("Bạn dường như vẫn chưa chọn sản phẩm nào cả!\n "
+                        + "Nếu xác nhận sẽ trả về thông tin đơn hàng cũ");
+                if (confirm) {
+                    this.dispose();
+                }
             }
-            this.pnlExport.addDetailProduct(spdhList);
-            this.dispose();
         }
 
     }
@@ -335,13 +363,23 @@ public class PopupProductSelection extends javax.swing.JFrame {
 
                 if (column == 6) {
                     Object newValue = tblProduct.getValueAt(row, column);
-                    int soLuong = retriveSoLuongDatHang(row);
+                    int oldSoLuongDatHang = originalOrderedNumber;
+                    int newSoLuongDatHang = retriveSoLuongDatHang(row);
 
-                    if (soLuong > 0) {
+                    int soLuongTonKho = (int) tblProduct.getValueAt(row, 5);
+
+                    if (oldSoLuongDatHang != newSoLuongDatHang) {
                         TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 153, 0));
-                    } else if (soLuong == 0) {
-                        TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 0, 153));
                     }
+
+                    if (newSoLuongDatHang == 0) {
+                        TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 0, 0));
+                    }
+
+                    int n = oldSoLuongDatHang - newSoLuongDatHang;
+                    soLuongTonKho += n;
+
+                    tblProduct.setValueAt(soLuongTonKho, row, 5);
                 }
             }
 

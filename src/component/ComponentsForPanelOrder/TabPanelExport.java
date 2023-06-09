@@ -18,26 +18,34 @@ import model.DAO.HoaDonChiTietDAO;
 import model.DAO.HoaDonDAO;
 import model.Object.KhachHang;
 import model.DAO.KhachHangDAO;
+import model.DAO.KhoHangChiTietDAO;
 import model.Object.KhoHang;
 import model.DAO.KhoHangDAO;
 import model.Object.SanPham;
 import model.DAO.SanPhamDAO;
+import model.Object.KhoHangChiTiet;
 import model.Object.SanPhamDatHang;
+import util.DateConverter;
 
 public class TabPanelExport extends javax.swing.JPanel {
 
+    private String userRole = "QL";
+
     private int index = -1;
     private List<SanPhamDatHang> sanPhamDatHangList = new ArrayList<>();
+
+    public PanelOrder pnlOrder;
 
     private DefaultTableModel modelTblOrder;
     private DefaultTableModel modelTblDetail;
 
     private Connection connection;
     private HoaDonDAO hoaDonDAO;
-    private HoaDonChiTietDAO hoaDonChiTietDAO;
+    private HoaDonChiTietDAO hdctDAO;
     private KhachHangDAO khachHangDAO;
     private SanPhamDAO sanPhamDAO;
     private KhoHangDAO khoHangDAO;
+    private KhoHangChiTietDAO khctDAO;
 
     public TabPanelExport() {
         initComponents();
@@ -64,7 +72,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         lblImportWarehouse = new javax.swing.JLabel();
         btnClear = new javax.swing.JButton();
         lbExportDate = new javax.swing.JLabel();
-        btnEdit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         txtExportDate = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         lblTrangThai = new javax.swing.JLabel();
@@ -168,11 +176,17 @@ public class TabPanelExport extends javax.swing.JPanel {
         lbExportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbExportDate.setText("NGÀY LẬP ĐƠN");
 
-        btnEdit.setBackground(new java.awt.Color(0, 51, 153));
-        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(242, 242, 242));
-        btnEdit.setText("SAVE");
-        btnEdit.setFocusable(false);
+        btnSave.setBackground(new java.awt.Color(0, 51, 153));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(242, 242, 242));
+        btnSave.setText("SAVE");
+        btnSave.setEnabled(false);
+        btnSave.setFocusable(false);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         txtExportDate.setEditable(false);
         txtExportDate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -183,6 +197,11 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
         btnAdd.setText("ADD");
         btnAdd.setFocusable(false);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         lblTrangThai.setText("Trạng thái đơn hàng:");
 
@@ -272,20 +291,20 @@ public class TabPanelExport extends javax.swing.JPanel {
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenKhach)
                     .addComponent(btnOldCustomer)
-                    .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCustomerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCustomerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
                 .addComponent(lblCustomerID)
                 .addGap(0, 0, 0)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(lblCustomerAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
 
         cboExportWarehouse.setFocusable(false);
@@ -319,7 +338,13 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("DELETE");
+        btnDelete.setEnabled(false);
         btnDelete.setFocusable(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlExportLayout = new javax.swing.GroupLayout(pnlExport);
         pnlExport.setLayout(pnlExportLayout);
@@ -364,7 +389,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
@@ -391,8 +416,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                                 .addComponent(cboExportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnExportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
+                        .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -406,7 +430,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEdit)
+                        .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFilter)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -437,6 +461,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         index = tblExportOrder.getSelectedRow();
         int maHd = (int) modelTblOrder.getValueAt(index, 0);
         writeForm(maHd);
+        buttonOnUpdate();
     }//GEN-LAST:event_tblExportOrderMousePressed
 
     private void btnExportProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportProductActionPerformed
@@ -451,11 +476,15 @@ public class TabPanelExport extends javax.swing.JPanel {
     private void cboExportWarehouseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboExportWarehouseItemStateChanged
         modelTblDetail.setRowCount(0);
 
-        if (cboExportWarehouse.getSelectedItem().equals("CHỜ BỔ SUNG")) {
-            btnExportProduct.setEnabled(false);
-        } else {
-            btnExportProduct.setEnabled(true);
+        btnExportProduct.setEnabled(true);
+
+        if (cboExportWarehouse.getSelectedItem() != null) {
+            if (cboExportWarehouse.getSelectedItem().equals("CHỜ BỔ SUNG")
+                    || cboExportWarehouse.getSelectedItem() == null) {
+                btnExportProduct.setEnabled(false);
+            }
         }
+
     }//GEN-LAST:event_cboExportWarehouseItemStateChanged
 
     private void btnEditCustomerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerInfoActionPerformed
@@ -482,34 +511,67 @@ public class TabPanelExport extends javax.swing.JPanel {
         PopupOldCustomer popupOldCustomer = new PopupOldCustomer(this);
         popupOldCustomer.setVisible(true);
     }//GEN-LAST:event_btnOldCustomerActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        try {
+            addHoaDon();
+        } catch (SQLException ex) {
+            Logger.getLogger(TabPanelExport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try {
+            updateHoaDon();
+        } catch (SQLException ex) {
+            Logger.getLogger(TabPanelExport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
     ////////////////////////////////////////////////////////////////////////////
 
     public void errorMessage(String str) {
         JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
     }
 
-    public int customConfirmDialog(String str) {
-        return JOptionPane.showConfirmDialog(null, str, "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-    }
+    public boolean customConfirmDialog(String str) {
+        int i = JOptionPane.showConfirmDialog(null, str, "Xác nhận",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+        return i == JOptionPane.YES_OPTION;
+    }
     ////////////////////////////////////////////////////////////////////////////
-    public void getConnection(Connection connection) {
+
+    public void getConnection(Connection connection, PanelOrder panelOrder) {
         this.connection = connection;
+        this.pnlOrder = panelOrder;
 
         hoaDonDAO = new HoaDonDAO(this.connection);
-        hoaDonChiTietDAO = new HoaDonChiTietDAO(this.connection);
+        hdctDAO = new HoaDonChiTietDAO(this.connection);
         khachHangDAO = new KhachHangDAO(this.connection);
         sanPhamDAO = new SanPhamDAO(this.connection);
         khoHangDAO = new KhoHangDAO(this.connection);
+        khctDAO = new KhoHangChiTietDAO(this.connection);
 
         tblDetailEvent();
         loadDataToTblOrder();
     }
 
     public void resetPanel() {
-    }
+        clearForm();
 
-    public void disableButtonOnUserRole(String role) {
+        loadDataToTblOrder();
+
+        if (index != -1) {
+            tblExportOrder.requestFocus();
+            tblExportOrder.changeSelection(index, 0, false, false);
+            tblExportOrder.setRowSelectionInterval(index, index);
+            writeForm((int) modelTblOrder.getValueAt(index, 0));
+            buttonOnUpdate();
+        }
     }
 
     public Connection getPnlConnection() {
@@ -545,7 +607,7 @@ public class TabPanelExport extends javax.swing.JPanel {
 
             btnExportProduct.setEnabled(false);
 
-            txtExportDate.setText(hoaDonDAO.formatSQLDateToEuropeDate(getTodayDate()));
+            txtExportDate.setText(DateConverter.convertToEuropeanDate(getTodayDate()));
         } catch (SQLException ex) {
         }
     }
@@ -583,12 +645,13 @@ public class TabPanelExport extends javax.swing.JPanel {
             txtExportDate.setText(hoaDon.getNgayLapHoaDon());
             lblStatus.setText(hoaDon.getTrangThai());
 
+            lblCustomerID.setText(khach.getMaKhach() + "");
             lblCustomerName.setText(khach.getTenKhach());
             lblCustomerPhone.setText(khach.getSdt());
             lblCustomerAddress.setText(khach.getDiaChi());
 
             modelTblDetail.setRowCount(0);
-            List<HoaDonChiTiet> hdctList = hoaDonChiTietDAO.findByMaHd(maHD);
+            List<HoaDonChiTiet> hdctList = hdctDAO.findByMaHd(maHD);
 
             for (HoaDonChiTiet hdct : hdctList) {
                 SanPham sp = sanPhamDAO.findById(hdct.getMaSp());
@@ -608,7 +671,7 @@ public class TabPanelExport extends javax.swing.JPanel {
     public void clearForm() {
         txtExportID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
 
-        txtExportDate.setText(hoaDonDAO.formatSQLDateToEuropeDate(getTodayDate()));
+        txtExportDate.setText(DateConverter.convertToEuropeanDate(getTodayDate()));
         cboExportWarehouse.setSelectedItem("CHỜ BỔ SUNG");
 
         lblCustomerName.setText("");
@@ -618,12 +681,254 @@ public class TabPanelExport extends javax.swing.JPanel {
         lblStatus.setText("Đang tạo");
         modelTblDetail.setRowCount(0);
         tblExportOrder.clearSelection();
+
+        buttonOnAdd();
     }
 
-//    public List<T> readForm() {
-//
-//    }
+    public HoaDon returnHoaDon() throws SQLException {
+        int maHd = 0;
+
+        try {
+            maHd = Integer.parseInt(txtExportID.getText());
+        } catch (NumberFormatException e) {
+        }
+
+        String ngayLapDon = DateConverter.convertToSQLDate(txtExportDate.getText());
+
+        int maKho = khoHangDAO.findIdByName((String) cboExportWarehouse.getSelectedItem());
+
+        int maKhach = Integer.parseInt(lblCustomerID.getText());
+
+        return new HoaDon(maHd, maKhach, maKho, ngayLapDon, "Xuất", "Pending");
+    }
+
+    public List<HoaDonChiTiet> returnHDCT() {
+        int maHd = 0;
+
+        try {
+            maHd = Integer.parseInt(txtExportID.getText());
+        } catch (NumberFormatException e) {
+        }
+
+        List<HoaDonChiTiet> hdctList = new ArrayList<>();
+
+        int hdctRow = tblExportDetail.getRowCount();
+
+        if (hdctRow != 0) {
+            for (int i = 0; i < hdctRow; i++) {
+                int maSp = (int) modelTblDetail.getValueAt(i, 0);
+                int soLuong = (int) modelTblDetail.getValueAt(i, 2);
+
+                hdctList.add(new HoaDonChiTiet(maSp, maHd, soLuong));
+            }
+        }
+
+        return hdctList;
+    }
+
+    public boolean validateInfo() {
+        boolean flag = true;
+
+        if (cboExportWarehouse.getSelectedItem().equals("CHỜ BỔ SUNG")) {
+            errorMessage("Vui lòng chọn kho hàng");
+            return false;
+        }
+
+        if (tblExportDetail.getRowCount() == 0) {
+            errorMessage("Vui lòng chọn sản phẩm đặt hàng");
+            flag = false;
+        }
+
+        if (lblCustomerName.getText().isBlank()
+                || lblCustomerAddress.getText().isBlank()
+                || lblCustomerPhone.getText().isBlank()) {
+            errorMessage("Vui lòng cung cấp thông tin khách hàng");
+            return false;
+        }
+
+        return flag;
+    }
+
+    public boolean isTwoOrdersTheSame() throws SQLException {
+        int maHd = Integer.parseInt(txtExportID.getText());
+
+        HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
+        List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
+
+        HoaDon newHoaDon = returnHoaDon();
+        List<HoaDonChiTiet> newHDCTList = hdctDAO.findByMaHd(newHoaDon.getMaHd());
+
+        if (!oldHoaDon.equals(newHoaDon)) {
+            return false;
+        }
+
+        if (!oldHDCTList.equals(newHDCTList)) {
+            return false;
+        }
+
+        for (int i = 0; i < oldHDCTList.size(); i++) {
+            if (oldHDCTList.get(i).equals(newHDCTList.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void addHoaDon() throws SQLException {
+        if (validateInfo()) {
+            if (customConfirmDialog("Thêm hóa đơn mới này?")) {
+                HoaDon hoaDon = returnHoaDon();
+                hoaDonDAO.addHoaDon(hoaDon);
+
+                hoaDon = hoaDonDAO.findNewest();
+                txtExportID.setText(hoaDon.getMaHd() + "");
+
+                List<HoaDonChiTiet> hdctList = returnHDCT();
+                KhoHangChiTiet khct;
+
+                for (HoaDonChiTiet hdct : hdctList) {
+                    hdctDAO.add(hdct);
+
+                    khct = (KhoHangChiTiet) khctDAO.findOneByMaKhoAndMaSp(hoaDon.getMaKho(), hdct.getMaSp());
+
+                    int newSoLuongTonKho = khct.getSoLuong() - hdct.getSoLuong();
+
+                    khct.setSoLuong(newSoLuongTonKho);
+                    khctDAO.updateKhoHangChiTiet(khct);
+                }
+
+                index = 0;
+                this.pnlOrder.askMainMenuToRestart();
+                JOptionPane.showMessageDialog(null, "Thêm hóa đơn mới thành công!");
+            }
+        }
+    }
+
+    public void updateHoaDon() throws SQLException {
+        if (!validateInfo()) {
+            return;
+        }
+
+        int maHd = Integer.parseInt(txtExportID.getText());
+
+        HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
+        List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
+        List<Integer> spInOldHD = new ArrayList<>();
+
+        HoaDon newHoaDon = returnHoaDon();
+        List<HoaDonChiTiet> newHDCTList = returnHDCT();
+        List<Integer> spInNewHD = new ArrayList<>();
+
+        int maKho = oldHoaDon.getMaKho();
+
+        boolean diff = isTwoOrdersTheSame();
+
+        if (!diff) {
+            boolean confirmUpdate = customConfirmDialog("Tiếp tục cập nhật hóa đơn này?");
+            if (confirmUpdate) {
+                hoaDonDAO.updateHoaDon(newHoaDon);
+
+                for (HoaDonChiTiet hdct : oldHDCTList) {
+                    spInOldHD.add(hdct.getMaSp());
+                }
+
+                for (HoaDonChiTiet hdct : newHDCTList) {
+                    spInNewHD.add(hdct.getMaSp());
+                }
+
+                List<Integer> deletedSp = new ArrayList<>();
+                List<Integer> sameSp = new ArrayList<>();
+                List<Integer> newSp = new ArrayList<>();
+
+                for (Integer oldMaSp : spInOldHD) {
+                    if (spInNewHD.contains(oldMaSp)) {
+                        sameSp.add(oldMaSp);
+                    } else {
+                        deletedSp.add(oldMaSp);
+                    }
+                }
+
+                for (Integer newMaSp : spInNewHD) {
+                    if (!spInOldHD.contains(newMaSp)) {
+                        newSp.add(newMaSp);
+                    }
+                }
+                HoaDonChiTiet oldHDCT;
+                KhoHangChiTiet khct;
+
+                if (!deletedSp.isEmpty()) {
+                    for (Integer maSp : deletedSp) {
+                        oldHDCT = hdctDAO.findByMaHdAndMaSp(maSp, maHd);
+                        khct = khctDAO.findOneByMaKhoAndMaSp(maKho, maSp);
+
+                        int traHang = oldHDCT.getSoLuong();
+                        int tonKho = khct.getSoLuong();
+                        int nowTonKho = tonKho + traHang;
+
+                        khct.setSoLuong(nowTonKho);
+                        khctDAO.updateKhoHangChiTiet(khct);
+                        hdctDAO.delete(maSp, maHd);
+                    }
+                }
+
+                if (!sameSp.isEmpty()) {
+                    for (Integer maSp : sameSp) {
+                        oldHDCT = hdctDAO.findByMaHdAndMaSp(maSp, maHd);
+                        khct = khctDAO.findOneByMaKhoAndMaSp(maKho, maSp);
+
+                        int oldDatHang = oldHDCT.getSoLuong();
+                        int newDatHang = 0;
+                        int tonKho = khct.getSoLuong();
+
+                        for (HoaDonChiTiet newHDCT : newHDCTList) {
+                            if (newHDCT.getMaSp() == maSp) {
+                                newDatHang = newHDCT.getSoLuong();
+                                hdctDAO.update(newHDCT);
+                                break;
+                            }
+                        }
+
+                        int nowTonKho = (tonKho + oldDatHang) - newDatHang;
+                        khct.setSoLuong(nowTonKho);
+                        khctDAO.updateKhoHangChiTiet(khct);
+                    }
+                }
+
+                if (!newSp.isEmpty()) {
+                    for (Integer maSp : newSp) {
+                        khct = khctDAO.findOneByMaKhoAndMaSp(maKho, maSp);
+
+                        int newDatHang = 0;
+                        int tonKho = khct.getSoLuong();
+
+                        for (HoaDonChiTiet newHDCT : newHDCTList) {
+                            if (newHDCT.getMaSp() == maSp) {
+                                newDatHang = newHDCT.getSoLuong();
+                                hdctDAO.add(newHDCT);
+                                break;
+                            }
+                        }
+
+                        int nowTonKho = tonKho - newDatHang;
+
+                        khct.setSoLuong(nowTonKho);
+                        khctDAO.updateKhoHangChiTiet(khct);
+                        hdctDAO.delete(maSp, maHd);
+                    }
+                }
+
+                this.pnlOrder.askMainMenuToRestart();
+                JOptionPane.showMessageDialog(null, "Cập nhật hóa đơn thành công!");
+            }
+        }
+    }
+
+    public void deleteHoaDon() {
+
+    }
     ////////////////////////////////////////////////////////////////////////////
+
     public int getCurrentWarehouseID() {
         int maKho = 0;
 
@@ -675,19 +980,32 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    public void handlePopupClosing() {
-        setVisible(true);
+    public void buttonOnUpdate() {
+        btnAdd.setEnabled(false);
+        btnSave.setEnabled(true);
+        btnDelete.setEnabled(true);
+
+        if (userRole.equals("NV")) {
+            btnDelete.setEnabled(false);
+        }
     }
+
+    public void buttonOnAdd() {
+        btnAdd.setEnabled(true);
+        btnSave.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnDelete;
-    public javax.swing.JButton btnEdit;
     public javax.swing.JButton btnEditCustomerInfo;
     public javax.swing.JButton btnExportProduct;
     public javax.swing.JButton btnFilter;
     public javax.swing.JButton btnNewCustomer;
     public javax.swing.JButton btnOldCustomer;
+    public javax.swing.JButton btnSave;
     public javax.swing.JComboBox<String> cboExportWarehouse;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

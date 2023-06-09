@@ -638,8 +638,8 @@ public final class PanelProduct extends ConnectionPanel {
                     SanPham sp = readForm();
                     sanPhamDAO.insert(sp);
                     index = tblProduct.getRowCount();
-                    JOptionPane.showMessageDialog(null, "Thêm sản phẩm mới thành công!");
                     mainMenu.restartForm();
+                    JOptionPane.showMessageDialog(null, "Thêm sản phẩm mới thành công!");
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -659,8 +659,8 @@ public final class PanelProduct extends ConnectionPanel {
                 if (!old_SP.equals(new_SP)) {
                     if (customConfirmDialog("Tiếp tục cập nhật thông tin?") == JOptionPane.YES_OPTION) {
                         sanPhamDAO.update(new_SP);
-                        JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
                         mainMenu.restartForm();
+                        JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
                     }
                 }
             } catch (SQLException ex) {
@@ -678,8 +678,9 @@ public final class PanelProduct extends ConnectionPanel {
             try {
                 sanPhamDAO.flag(maSp);
                 index = -1;
-                JOptionPane.showMessageDialog(null, "Sản phẩm ngừng bán thành công!");
                 mainMenu.restartForm();
+                JOptionPane.showMessageDialog(null, "Sản phẩm ngừng bán thành công!");
+
             } catch (SQLException ex) {
                 Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -695,8 +696,8 @@ public final class PanelProduct extends ConnectionPanel {
             try {
                 sanPhamDAO.unflag(maSp);
                 index = -1;
-                JOptionPane.showMessageDialog(null, "Sản phẩm đã được bỏ đánh dấu thành công!");
                 mainMenu.restartForm();
+                JOptionPane.showMessageDialog(null, "Sản phẩm đã được bỏ đánh dấu thành công!");
             } catch (SQLException ex) {
                 Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
             }

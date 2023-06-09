@@ -436,36 +436,36 @@ GO
 
 INSERT INTO HOADON (MAKHACH, MAKHO, NGAYLAPHOADON, LOAIHOADON, TRANGTHAI)
 VALUES
+  (1, 9, '2023-05-09', N'Nhập', 'Returned'),
+  (20, 10, '2023-05-10', N'Xuất', 'Success'),
+  (2, 2, '2023-05-11', N'Nhập', 'Pending'),
+  (12, 3, '2023-05-12', N'Xuất', 'Delivering'),
+  (3, 4, '2023-05-13', N'Nhập', 'Cancelled'),
+  (14, 5, '2023-05-14', N'Xuất', 'Returned'),
+  (5, 6, '2023-05-15', N'Nhập', 'Success'),
+  (16, 7, '2023-05-16', N'Xuất', 'Pending'),
+  (7, 8, '2023-05-17', N'Nhập', 'Delivering'),
+  (18, 9, '2023-05-18', N'Xuất', 'Cancelled'),
+  (9, 10, '2023-05-19', N'Nhập', 'Returned'),
+  (20, 1, '2023-05-20', N'Xuất', 'Success'),
+  (1, 3, '2023-05-21', N'Nhập', 'Pending'),
+  (12, 4, '2023-05-22', N'Xuất', 'Delivering'),
+  (3, 5, '2023-05-23', N'Nhập', 'Cancelled'),
+  (14, 6, '2023-05-24', N'Xuất', 'Returned'),
+  (5, 7, '2023-05-25', N'Nhập', 'Success'),
+  (16, 8, '2023-05-26', N'Xuất', 'Pending'),
+  (7, 9, '2023-05-27', N'Nhập', 'Delivering'),
+  (18, 10, '2023-05-28', N'Xuất', 'Cancelled'),
+  (9, 1, '2023-05-29', N'Nhập', 'Returned'),
+  (20, 2, '2023-05-30', N'Xuất', 'Success'),
   (1, 1, '2023-06-01', N'Nhập', 'Pending'),
-  (2, 2, '2023-06-02', N'Xuất', 'Delivering'),
+  (12, 2, '2023-06-02', N'Xuất', 'Delivering'),
   (3, 3, '2023-06-03', N'Nhập', 'Cancelled'),
-  (4, 4, '2023-06-04', N'Xuất', 'Returned'),
+  (14, 4, '2023-06-04', N'Xuất', 'Returned'),
   (5, 5, '2023-06-05', N'Nhập', 'Success'),
-  (6, 6, '2023-06-06', N'Xuất', 'Pending'),
+  (16, 6, '2023-06-06', N'Xuất', 'Pending'),
   (7, 7, '2023-06-07', N'Nhập', 'Delivering'),
-  (8, 8, '2023-06-08', N'Xuất', 'Cancelled'),
-  (9, 9, '2023-06-09', N'Nhập', 'Returned'),
-  (10, 10, '2023-06-10', N'Xuất', 'Success'),
-  (1, 2, '2023-06-11', N'Nhập', 'Pending'),
-  (2, 3, '2023-06-12', N'Xuất', 'Delivering'),
-  (3, 4, '2023-06-13', N'Nhập', 'Cancelled'),
-  (4, 5, '2023-06-14', N'Xuất', 'Returned'),
-  (5, 6, '2023-06-15', N'Nhập', 'Success'),
-  (6, 7, '2023-06-16', N'Xuất', 'Pending'),
-  (7, 8, '2023-06-17', N'Nhập', 'Delivering'),
-  (8, 9, '2023-06-18', N'Xuất', 'Cancelled'),
-  (9, 10, '2023-06-19', N'Nhập', 'Returned'),
-  (10, 1, '2023-06-20', N'Xuất', 'Success'),
-  (1, 3, '2023-06-21', N'Nhập', 'Pending'),
-  (2, 4, '2023-06-22', N'Xuất', 'Delivering'),
-  (3, 5, '2023-06-23', N'Nhập', 'Cancelled'),
-  (4, 6, '2023-06-24', N'Xuất', 'Returned'),
-  (5, 7, '2023-06-25', N'Nhập', 'Success'),
-  (6, 8, '2023-06-26', N'Xuất', 'Pending'),
-  (7, 9, '2023-06-27', N'Nhập', 'Delivering'),
-  (8, 10, '2023-06-28', N'Xuất', 'Cancelled'),
-  (9, 1, '2023-06-29', N'Nhập', 'Returned'),
-  (10, 2, '2023-06-30', N'Xuất', 'Success');
+  (18, 8, '2023-06-08', N'Xuất', 'Cancelled');
 GO
 
 INSERT INTO HOADONCHITIET(MASP, MAHD, SOLUONG)
@@ -608,15 +608,23 @@ BEGIN
 END
 GO
 
+-- TRIGGER HOADON
+CREATE OR ALTER TRIGGER trg_HOADON_delete
+ON HOADON
+INSTEAD OF DELETE
+AS
+BEGIN
+	DECLARE @maHd INT = (SELECT MAHD FROM deleted)
+
+	DELETE HOADONCHITIET
+	WHERE MAHD = @maHd
+
+	DELETE HOADON
+	WHERE MAHD = @maHd
+END
+GO
+
 /*
 EXEC sp_MSforeachtable @command1 = "DROP TABLE ?"
-
-
-INSERT INTO KHACHHANG (MAKHACH, TENKHACH, DIACHI, SDT)
-VALUES
-	(0, N'Công ty vật liệu xây dựng 3BROS', NULL, NULL)
-
-
-SELECT * FROM SANPHAM ORDER BY MASP DESC
 
 */
