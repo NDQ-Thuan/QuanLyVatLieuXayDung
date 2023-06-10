@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.Object.HoaDon;
 import model.Object.HoaDonChiTiet;
 import model.DAO.HoaDonChiTietDAO;
@@ -52,6 +53,21 @@ public class TabPanelExport extends javax.swing.JPanel {
 
         modelTblOrder = (DefaultTableModel) tblExportOrder.getModel();
         modelTblDetail = (DefaultTableModel) tblExportDetail.getModel();
+
+        TableColumnModel columnModelTblOrder = tblExportOrder.getColumnModel();
+
+        columnModelTblOrder.getColumn(0).setPreferredWidth(20);
+        columnModelTblOrder.getColumn(1).setPreferredWidth(60);
+        columnModelTblOrder.getColumn(2).setPreferredWidth(180);
+        columnModelTblOrder.getColumn(3).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(4).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(5).setPreferredWidth(50);
+
+        TableColumnModel columnModelTblOrderDetail = tblExportDetail.getColumnModel();
+
+        columnModelTblOrderDetail.getColumn(0).setPreferredWidth(10);
+        columnModelTblOrderDetail.getColumn(1).setPreferredWidth(100);
+        columnModelTblOrderDetail.getColumn(2).setPreferredWidth(20);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
@@ -165,7 +181,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
-        btnClear.setText("CLEAR");
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/clear.png"))); // NOI18N
         btnClear.setFocusable(false);
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +195,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnSave.setBackground(new java.awt.Color(0, 51, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSave.setForeground(new java.awt.Color(242, 242, 242));
-        btnSave.setText("SAVE");
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/save.png"))); // NOI18N
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +211,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnAdd.setBackground(new java.awt.Color(0, 153, 51));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
-        btnAdd.setText("ADD");
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/add.png"))); // NOI18N
         btnAdd.setFocusable(false);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,9 +317,9 @@ public class TabPanelExport extends javax.swing.JPanel {
                 .addComponent(lblCustomerID)
                 .addGap(0, 0, 0)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(btnEditCustomerInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblCustomerAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblDiaChi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -314,10 +330,10 @@ public class TabPanelExport extends javax.swing.JPanel {
             }
         });
 
-        btnFilter.setBackground(new java.awt.Color(255, 255, 0));
+        btnFilter.setBackground(new java.awt.Color(51, 0, 0));
         btnFilter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnFilter.setForeground(new java.awt.Color(0, 0, 0));
-        btnFilter.setText("FILTER");
+        btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/filter.png"))); // NOI18N
         btnFilter.setFocusable(false);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -337,7 +353,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("DELETE");
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/delete.png"))); // NOI18N
         btnDelete.setEnabled(false);
         btnDelete.setFocusable(false);
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -373,7 +389,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtExportDate, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btnExportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 587, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlExportLayout.createSequentialGroup()
@@ -386,12 +402,12 @@ public class TabPanelExport extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addGroup(pnlExportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1)))
                 .addGap(6, 6, 6))
         );
@@ -414,7 +430,7 @@ public class TabPanelExport extends javax.swing.JPanel {
                                 .addComponent(cboExportWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnExportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlThongTinKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlExportLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -563,7 +579,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         khoHangDAO = new KhoHangDAO(this.connection);
         khctDAO = new KhoHangChiTietDAO(this.connection);
 
-        tblDetailEvent();
+        addEventForTblDetail();
         loadDataToTblOrder();
     }
 
@@ -585,15 +601,19 @@ public class TabPanelExport extends javax.swing.JPanel {
         buttonOnUpdate();
     }
 
-    public void dragTableToID(int id) {
-        int count = tblExportOrder.getColumnCount();
+    public void findSp(int maHd) {
+        int columnCount = tblExportOrder.getRowCount();
 
-        for (int i = 0; i < count; i++) {
-            if ((int) tblExportOrder.getValueAt(i, 0) == id) {
-                dragTableToIndex(i);
+        for (int i = 0; i < columnCount; i++) {
+            int maHDTbl = (int) tblExportOrder.getValueAt(i, 0);
+
+            if (maHd == maHDTbl) {
+                index = i;
                 break;
             }
         }
+
+        dragTableToIndex(index);
     }
 
     public Connection getPnlConnection() {
@@ -634,7 +654,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         }
     }
 
-    public void tblDetailEvent() {
+    public void addEventForTblDetail() {
         modelTblDetail.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {

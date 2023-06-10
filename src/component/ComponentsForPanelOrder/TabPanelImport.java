@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.Object.HoaDon;
 import model.Object.HoaDonChiTiet;
 import model.DAO.HoaDonChiTietDAO;
@@ -52,6 +53,20 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         modelTblOrder = (DefaultTableModel) tblImportOrder.getModel();
         modelTblDetail = (DefaultTableModel) tblDetail.getModel();
+
+        TableColumnModel columnModelTblOrder = tblImportOrder.getColumnModel();
+
+        columnModelTblOrder.getColumn(0).setPreferredWidth(20);
+        columnModelTblOrder.getColumn(1).setPreferredWidth(180);
+        columnModelTblOrder.getColumn(2).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(3).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(4).setPreferredWidth(50);
+
+        TableColumnModel columnModelTblOrderDetail = tblDetail.getColumnModel();
+
+        columnModelTblOrderDetail.getColumn(0).setPreferredWidth(10);
+        columnModelTblOrderDetail.getColumn(1).setPreferredWidth(120);
+        columnModelTblOrderDetail.getColumn(2).setPreferredWidth(20);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
@@ -163,7 +178,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
-        btnClear.setText("CLEAR");
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/clear.png"))); // NOI18N
         btnClear.setFocusable(false);
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,7 +192,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         btnSave.setBackground(new java.awt.Color(0, 51, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSave.setForeground(new java.awt.Color(242, 242, 242));
-        btnSave.setText("SAVE");
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/save.png"))); // NOI18N
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -193,7 +208,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         btnAdd.setBackground(new java.awt.Color(0, 153, 51));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
-        btnAdd.setText("ADD");
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/add.png"))); // NOI18N
         btnAdd.setFocusable(false);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,26 +267,24 @@ public class TabPanelImport extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhoHangLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenKho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlThongTinKhoHangLayout.createSequentialGroup()
-                        .addComponent(lblWarehouseName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(lblTenKho, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWarehouseName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lblWarehousePhone, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWarehousePhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
-                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lblWarehouseAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGroup(pnlThongTinKhoHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWarehouseAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6)
                 .addComponent(lblWarehouseID))
         );
 
-        btnFilter.setBackground(new java.awt.Color(255, 255, 0));
+        btnFilter.setBackground(new java.awt.Color(204, 102, 0));
         btnFilter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnFilter.setForeground(new java.awt.Color(0, 0, 0));
-        btnFilter.setText("FILTER");
+        btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/filter.png"))); // NOI18N
         btnFilter.setFocusable(false);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -291,7 +304,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("DELETE");
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/delete.png"))); // NOI18N
         btnDelete.setEnabled(false);
         btnDelete.setFocusable(false);
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -322,7 +335,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlImportLayout.createSequentialGroup()
-                        .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlImportLayout.createSequentialGroup()
                                 .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblImportOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -353,11 +366,11 @@ public class TabPanelImport extends javax.swing.JPanel {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                            .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1)))
                 .addGap(6, 6, 6))
@@ -374,7 +387,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                     .addComponent(txtImportDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSuccess))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -382,7 +395,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                                 .addComponent(btnWarehouse))
                             .addComponent(btnImportProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlThongTinKhoHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlThongTinKhoHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlImportLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -390,19 +403,18 @@ public class TabPanelImport extends javax.swing.JPanel {
                             .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblStatus))))
                 .addGap(17, 17, 17)
-                .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)
                         .addComponent(btnAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)
                         .addComponent(btnFilter)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)
                         .addComponent(btnDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -523,17 +535,6 @@ public class TabPanelImport extends javax.swing.JPanel {
         tblImportOrder.setRowSelectionInterval(i, i);
         writeForm((int) tblImportOrder.getValueAt(i, 0));
         buttonOnUpdate();
-    }
-
-    public void dragTableToID(int id) {
-        int count = tblImportOrder.getColumnCount();
-
-        for (int i = 0; i < count; i++) {
-            if ((int) tblImportOrder.getValueAt(i, 0) == id) {
-                dragTableToIndex(i);
-                break;
-            }
-        }
     }
 
     public Connection getPnlConnection() {

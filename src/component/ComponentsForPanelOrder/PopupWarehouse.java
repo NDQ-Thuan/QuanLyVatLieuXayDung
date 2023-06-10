@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
+import javax.swing.table.TableColumnModel;
 import model.Object.KhachHang;
 import model.DAO.KhachHangDAO;
-import model.DAO.KhoHangDAO;
 
 public class PopupWarehouse extends javax.swing.JFrame {
 
@@ -30,6 +30,13 @@ public class PopupWarehouse extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        TableColumnModel columnModelTblCustomer = tblCustomer.getColumnModel();
+
+        columnModelTblCustomer.getColumn(0).setPreferredWidth(20);
+        columnModelTblCustomer.getColumn(1).setPreferredWidth(80);
+        columnModelTblCustomer.getColumn(2).setPreferredWidth(30);
+        columnModelTblCustomer.getColumn(3).setPreferredWidth(300);
 
         modelTblCustomer = (DefaultTableModel) tblCustomer.getModel();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
@@ -49,12 +56,13 @@ public class PopupWarehouse extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tblCustomer.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "MÃ KHÁCH", "TÊN KHÁCH", "SĐT", "ĐỊA CHỈ"
+                "MÃ KHO", "TÊN KHO", "SĐT", "ĐỊA CHỈ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -90,7 +98,7 @@ public class PopupWarehouse extends javax.swing.JFrame {
         btnExit.setBackground(new java.awt.Color(153, 0, 0));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setText("HỦY");
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/exit.png"))); // NOI18N
         btnExit.setFocusable(false);
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +115,7 @@ public class PopupWarehouse extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnConfirm)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

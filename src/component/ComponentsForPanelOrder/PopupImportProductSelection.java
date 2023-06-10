@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.table.TableColumnModel;
 import model.Object.SanPhamDatHang;
 
 public class PopupImportProductSelection extends javax.swing.JFrame {
@@ -48,6 +49,16 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        TableColumnModel columnModelTblOrder = tblProduct.getColumnModel();
+
+        columnModelTblOrder.getColumn(0).setPreferredWidth(20);
+        columnModelTblOrder.getColumn(1).setPreferredWidth(180);
+        columnModelTblOrder.getColumn(2).setPreferredWidth(60);
+        columnModelTblOrder.getColumn(3).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(4).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(5).setPreferredWidth(100);
+        columnModelTblOrder.getColumn(6).setPreferredWidth(120);
+
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
@@ -67,6 +78,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         lblImporting = new javax.swing.JLabel();
+        lbllWarehouse = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,7 +127,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         btnCancel.setBackground(new java.awt.Color(204, 0, 0));
         btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancel.setText("X");
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/exit.png"))); // NOI18N
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -125,17 +137,22 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         lblImporting.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblImporting.setText("CỬA SỔ NHẬP HÀNG CHO");
 
+        lbllWarehouse.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lbllWarehouse.setForeground(new java.awt.Color(0, 102, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblProductMenu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblImporting)))
+                        .addComponent(lblImporting)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbllWarehouse))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +170,8 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblProductMenu)
-                            .addComponent(lblImporting))
+                            .addComponent(lblImporting)
+                            .addComponent(lbllWarehouse))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -252,7 +270,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
                     TableCustom.setCellColor(tblProduct, (tblProduct.getRowCount() - 1), 6, new Color(204, 102, 0));
                 }
 
-                lblImporting.setText("CỬA SỐ NHẬP HÀNG CHO " + kho.getTenKho().toUpperCase());
+                lbllWarehouse.setText(kho.getTenKho().toUpperCase());
             }
 
         } catch (SQLException ex) {
@@ -358,6 +376,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblImporting;
     private javax.swing.JLabel lblProductMenu;
+    private javax.swing.JLabel lbllWarehouse;
     private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables
 }

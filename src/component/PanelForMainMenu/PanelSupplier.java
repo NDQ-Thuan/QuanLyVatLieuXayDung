@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.DAO.KhoHangChiTietDAO;
 import model.DAO.KhoHangDAO;
 import model.Object.NhaCungCap;
@@ -33,6 +34,18 @@ public final class PanelSupplier extends ConnectionPanel {
         initComponents();
         modelTblSupplier = (DefaultTableModel) tblSuppliers.getModel();
         modelTblSuppProduct = (DefaultTableModel) tblSuppProduct.getModel();
+
+        TableColumnModel columnModelTblSupplier = tblSuppliers.getColumnModel();
+
+        columnModelTblSupplier.getColumn(0).setPreferredWidth(25);
+        columnModelTblSupplier.getColumn(1).setPreferredWidth(150);
+        columnModelTblSupplier.getColumn(2).setPreferredWidth(100);
+        columnModelTblSupplier.getColumn(3).setPreferredWidth(60);
+
+        TableColumnModel columnModelTblSupplieProduct = tblSuppProduct.getColumnModel();
+
+        columnModelTblSupplieProduct.getColumn(0).setPreferredWidth(25);
+        columnModelTblSupplieProduct.getColumn(1).setPreferredWidth(200);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
@@ -65,7 +78,7 @@ public final class PanelSupplier extends ConnectionPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblSuppID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblSuppID.setText("MÃ NHÀ CUNG CẤP");
+        lblSuppID.setText("MÃ NCC");
 
         txtID.setEditable(false);
         txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -73,7 +86,7 @@ public final class PanelSupplier extends ConnectionPanel {
         txtID.setFocusable(false);
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblName.setText("TÊN NHÀ CUNG CẤP");
+        lblName.setText("TÊN NCC");
 
         txtName.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
@@ -120,7 +133,7 @@ public final class PanelSupplier extends ConnectionPanel {
         btnAdd.setBackground(new java.awt.Color(0, 153, 0));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
-        btnAdd.setText("ADD");
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/add.png"))); // NOI18N
         btnAdd.setFocusable(false);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +144,7 @@ public final class PanelSupplier extends ConnectionPanel {
         btnSave.setBackground(new java.awt.Color(0, 0, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(242, 242, 242));
-        btnSave.setText("SAVE");
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/save.png"))); // NOI18N
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -152,10 +165,10 @@ public final class PanelSupplier extends ConnectionPanel {
             }
         });
 
-        btnClear.setBackground(new java.awt.Color(255, 255, 255));
+        btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
-        btnClear.setText("CLEAR");
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/clear.png"))); // NOI18N
         btnClear.setFocusable(false);
         btnClear.setSelected(true);
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -175,31 +188,33 @@ public final class PanelSupplier extends ConnectionPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSuppID)
-                            .addComponent(lblPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSuppProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                            .addComponent(txtName)
-                            .addComponent(txtPhone)
-                            .addComponent(lblFlag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnClear)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnAdd)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFlag))
+                        .addGap(230, 230, 230)
+                        .addComponent(lblFlag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblAddress)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSuppID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(txtAddress)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID)
+                            .addComponent(txtAddress)
+                            .addComponent(txtName)
+                            .addComponent(txtPhone)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblSuppProduct)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnFlag)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -229,8 +244,8 @@ public final class PanelSupplier extends ConnectionPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblFlag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,7 +289,7 @@ public final class PanelSupplier extends ConnectionPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

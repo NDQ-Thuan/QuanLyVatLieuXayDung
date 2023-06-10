@@ -61,7 +61,7 @@ public class PopupNewCustomer extends javax.swing.JFrame {
         btnExit.setBackground(new java.awt.Color(153, 0, 0));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setText("HỦY");
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/exit.png"))); // NOI18N
         btnExit.setFocusable(false);
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,19 +104,17 @@ public class PopupNewCustomer extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblName)
                         .addGap(144, 144, 144)
-                        .addComponent(lblID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnExit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
-                        .addComponent(btnConfirm))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAddress)
-                            .addComponent(lblPhone))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(lblID, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
                     .addComponent(txtPhone)
                     .addComponent(txtAddress)
-                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnExit)
+                            .addComponent(lblAddress)
+                            .addComponent(lblPhone))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConfirm)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,9 +135,9 @@ public class PopupNewCustomer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirm)
-                    .addComponent(btnExit))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

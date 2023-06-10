@@ -70,8 +70,9 @@ public final class PanelOrder extends ConnectionPanel {
         this.mainMenu.restartForm();
     }
 
-    public void exportTab() {
+    public void exportTab(int maHD) {
         tabbedPane.setSelectedIndex(0);
+        tabPanelExport.findSp(maHD);
     }
 
     public void importTab() {

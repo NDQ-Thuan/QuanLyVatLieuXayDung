@@ -3,6 +3,8 @@ package component.PanelForMainMenu;
 import customTable.TableCustom;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.Object.KhoHang;
 import model.Object.KhoHangChiTiet;
 import model.DAO.KhoHangChiTietDAO;
@@ -38,6 +41,17 @@ public final class PanelProduct extends ConnectionPanel {
         initComponents();
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
         modelTblWarehouse = (DefaultTableModel) tblWarehouse.getModel();
+
+        TableColumnModel columnModelTblProduct = tblProduct.getColumnModel();
+
+        columnModelTblProduct.getColumn(0).setPreferredWidth(30);
+        columnModelTblProduct.getColumn(1).setPreferredWidth(140);
+        columnModelTblProduct.getColumn(2).setPreferredWidth(80);
+        columnModelTblProduct.getColumn(3).setPreferredWidth(60);
+
+        TableColumnModel columnModelTblWarehouse = tblWarehouse.getColumnModel();
+
+        columnModelTblWarehouse.getColumn(0).setPreferredWidth(60);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.apply(jScrollPane2, TableCustom.TableType.DEFAULT);
@@ -71,6 +85,9 @@ public final class PanelProduct extends ConnectionPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        cboFilterType = new javax.swing.JComboBox<>();
+        cboFilterDVT = new javax.swing.JComboBox<>();
+        cboFilterPrice = new javax.swing.JComboBox<>();
 
         pnlProductInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -101,7 +118,7 @@ public final class PanelProduct extends ConnectionPanel {
         btnAdd.setBackground(new java.awt.Color(0, 153, 0));
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(242, 242, 242));
-        btnAdd.setText("ADD");
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/add.png"))); // NOI18N
         btnAdd.setFocusable(false);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +129,7 @@ public final class PanelProduct extends ConnectionPanel {
         btnSave.setBackground(new java.awt.Color(0, 0, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(242, 242, 242));
-        btnSave.setText("SAVE");
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/save.png"))); // NOI18N
         btnSave.setEnabled(false);
         btnSave.setFocusable(false);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +172,7 @@ public final class PanelProduct extends ConnectionPanel {
         btnClear.setBackground(new java.awt.Color(0, 0, 0));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setForeground(new java.awt.Color(255, 255, 255));
-        btnClear.setText("CLEAR");
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/clear.png"))); // NOI18N
         btnClear.setFocusable(false);
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,12 +237,12 @@ public final class PanelProduct extends ConnectionPanel {
                             .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtProductName)))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
-                        .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(btnAdd)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnSave)
-                        .addGap(26, 26, 26)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
                         .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
@@ -269,13 +286,14 @@ public final class PanelProduct extends ConnectionPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                 .addGap(10, 10, 10)
-                .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10))
         );
 
@@ -308,15 +326,47 @@ public final class PanelProduct extends ConnectionPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filter", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 153))); // NOI18N
 
+        cboFilterType.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        cboFilterType.setForeground(new java.awt.Color(0, 0, 102));
+        cboFilterType.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loại Hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        cboFilterDVT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        cboFilterDVT.setForeground(new java.awt.Color(153, 102, 0));
+        cboFilterDVT.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đơn Vị Tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        cboFilterPrice.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        cboFilterPrice.setForeground(new java.awt.Color(0, 102, 0));
+        cboFilterPrice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tăng dần", "Giảm dần", " " }));
+        cboFilterPrice.setSelectedIndex(2);
+        cboFilterPrice.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giá", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        cboFilterPrice.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboFilterPriceItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -326,11 +376,11 @@ public final class PanelProduct extends ConnectionPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(pnlProductInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,14 +446,19 @@ public final class PanelProduct extends ConnectionPanel {
 
     private void tblWarehouseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblWarehouseMousePressed
         Point point = evt.getPoint();
-        int row = tblWarehouse.rowAtPoint(point);
+        int row = tblProduct.rowAtPoint(point);
         if (evt.getClickCount() == 2 && tblWarehouse.getSelectedRow() != -1) {
             String kho = (String) tblWarehouse.getValueAt(row, 0);
-            int id = 0;
-            id = (int) tblWarehouse.getValueAt(row, 1);
-            this.mainMenu.switchCardWarehouse(kho, id);
+            int maSp = 0;
+            maSp = (int) tblProduct.getValueAt(index, 0);
+            System.out.println(maSp);
+            this.mainMenu.switchCardWarehouse(kho, maSp);
         }
     }//GEN-LAST:event_tblWarehouseMousePressed
+
+    private void cboFilterPriceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFilterPriceItemStateChanged
+
+    }//GEN-LAST:event_cboFilterPriceItemStateChanged
 
     ////////////////////////////////////////////////////////////////////////////
     public void errorMessage(String str) {
@@ -580,6 +635,7 @@ public final class PanelProduct extends ConnectionPanel {
 
         loadDataToTblProduct();
         loadDataToForm();
+        addEventForCboFilter();
     }
 
     @Override
@@ -601,13 +657,6 @@ public final class PanelProduct extends ConnectionPanel {
             dragTableToIndex(index);
             buttonsWhenEditInfo();
         }
-    }
-
-    public void dragTableToIndex(int i) {
-        tblProduct.requestFocus();
-        tblProduct.changeSelection(i, 0, false, false);
-        tblProduct.setRowSelectionInterval(i, i);
-        writeForm((int) modelTblProduct.getValueAt(i, 0));
     }
 
     public void loadDataToTblProduct() {
@@ -638,21 +687,54 @@ public final class PanelProduct extends ConnectionPanel {
     public void loadDataToForm() {
         try {
             List<LoaiHang> lhList = loaiHangDAO.findAll();
+
             cboType.removeAllItems();
+
+            System.out.println(lhList.size());
+
             for (LoaiHang lh : lhList) {
                 cboType.addItem(lh.getTenLoai());
+
+                int cboFilterTypeFilterCount = cboFilterType.getItemCount();
+
+                cboFilterType.addItem(lh.getTenLoai());
+
+                int cboFilterDVTFilterCount = cboFilterDVT.getItemCount();
+
+                if (cboFilterDVTFilterCount == 0) {
+                    cboFilterDVT.addItem(lh.getDvt());
+                } else {
+                    boolean flag = true;
+                    for (int i = 0; i < cboFilterDVTFilterCount; i++) {
+                        if (lh.getDvt().equals(cboFilterDVT.getItemAt(i))) {
+                            flag = false;
+                            break;
+                        }
+                    }
+
+                    if (flag) {
+                        cboFilterDVT.addItem(lh.getDvt());
+                    }
+                }
             }
+
             cboType.addItem("CHỜ BỔ SUNG");
+            cboType.setSelectedItem("CHỜ BỔ SUNG");
+
+            cboFilterType.setSelectedItem(" ");
+            cboFilterDVT.setSelectedItem(" ");
+            cboFilterPrice.setSelectedItem(" ");
 
             List<NhaCungCap> nccList = nccDAO.findAllByCustomQuery("SELECT * FROM NHACUNGCAP WHERE FLAG = 0");
+
             cboSupplier.removeAllItems();
+
             for (NhaCungCap ncc : nccList) {
                 cboSupplier.addItem(ncc.getTenNCC());
             }
             cboSupplier.addItem("CHỜ BỔ SUNG");
 
             cboSupplier.setSelectedItem("CHỜ BỔ SUNG");
-            cboType.setSelectedItem("CHỜ BỔ SUNG");
         } catch (SQLException ex) {
             Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -730,12 +812,133 @@ public final class PanelProduct extends ConnectionPanel {
             }
         }
     }
+
+    public void loadDataToTblProductWithFilter(String query) {
+        try {
+            modelTblProduct.setRowCount(0);
+            List<SanPham> spList = sanPhamDAO.findAllByCustomQuery(query);
+
+            for (SanPham sp : spList) {
+                LoaiHang loaiHang = loaiHangDAO.findById(sp.getMaLh());
+                int id = sp.getMaSp();
+                String tensp = sp.getTenSp();
+                String tenlh = loaiHang.getTenLoai();
+                String dvt = loaiHang.getDvt();
+                int gia = sp.getGia();
+
+                modelTblProduct.addRow(new Object[]{id, tensp, tenlh, dvt, gia});
+
+                if (sp.isFlagged()) {
+                    TableCustom.setRedRow(tblProduct, (tblProduct.getRowCount() - 1));
+                } else {
+                    TableCustom.setNormalRow(tblProduct, (tblProduct.getRowCount() - 1));
+                }
+            }
+        } catch (SQLException ex) {
+        }
+    }
+
+    public void filterSanPham() throws SQLException {
+        String loaiHang = (String) cboFilterType.getSelectedItem();
+        if (loaiHang == null) {
+            loaiHang = "";
+        }
+        String dvt = (String) cboFilterDVT.getSelectedItem();
+        if (dvt == null) {
+            dvt = "";
+        }
+
+        String giaCondition = (String) cboFilterPrice.getSelectedItem();
+        if (giaCondition == null) {
+            giaCondition = "";
+        }
+
+        String customQuery = "SELECT * FROM SANPHAM sp JOIN LOAIHANG lh ON sp.MALH = lh.MALH";
+
+        if (loaiHang.isBlank() && dvt.isBlank() && giaCondition.isBlank()) {
+            List<SanPham> spList = sanPhamDAO.findAll();
+
+            index = -1;
+            clearForm();
+            loadDataToTblProduct();
+
+        } else {
+            if (!loaiHang.isBlank()) {
+                int maLh = loaiHangDAO.findIDByName(loaiHang);
+                customQuery += " WHERE sp.MALH = " + maLh + "";
+            }
+
+            if (!dvt.isBlank()) {
+                if (customQuery.contains("WHERE")) {
+                    customQuery += " AND DVT LIKE N'" + dvt + "'";
+                } else {
+                    customQuery += " WHERE DVT LIKE N'" + dvt + "'";
+                }
+            }
+
+            if (!giaCondition.isBlank()) {
+                if (giaCondition.equals("Tăng dần")) {
+                    customQuery += " ORDER BY GIA ASC";
+                } else {
+                    customQuery += " ORDER BY GIA DESC";
+                }
+            }
+
+            clearForm();
+            loadDataToTblProductWithFilter(customQuery);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    public void dragTableToIndex(int i) {
+        tblProduct.requestFocus();
+        tblProduct.changeSelection(i, 0, false, false);
+        tblProduct.setRowSelectionInterval(i, i);
+        writeForm((int) modelTblProduct.getValueAt(i, 0));
+    }
+
+    public void findSp(int maSp) {
+        int columnCount = tblProduct.getRowCount();
+
+        for (int i = 0; i < columnCount; i++) {
+            int maSpTbl = (int) modelTblProduct.getValueAt(i, 0);
+
+            if (maSp == maSpTbl) {
+                index = i;
+                break;
+            }
+        }
+
+        dragTableToIndex(index);
+    }
+
+    public void addEventForCboFilter() {
+        ItemListener il = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        filterSanPham();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+        cboFilterType.addItemListener(il);
+        cboFilterDVT.addItemListener(il);
+        cboFilterPrice.addItemListener(il);
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnFlag;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cboFilterDVT;
+    private javax.swing.JComboBox<String> cboFilterPrice;
+    private javax.swing.JComboBox<String> cboFilterType;
     private javax.swing.JComboBox<String> cboSupplier;
     private javax.swing.JComboBox<String> cboType;
     private javax.swing.JPanel jPanel1;

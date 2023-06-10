@@ -20,7 +20,7 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="534" max="-2" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="575" max="-2" attributes="0"/>
               <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -56,35 +56,38 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblName" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblSuppID" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblPhone" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblSuppProduct" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtID" alignment="0" pref="237" max="32767" attributes="0"/>
-                              <Component id="txtName" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtPhone" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblFlag" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="lblFlag" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnClear" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="btnAdd" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnFlag" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="lblSuppID" max="32767" attributes="0"/>
+                              <Component id="lblName" max="32767" attributes="0"/>
+                              <Component id="lblAddress" max="32767" attributes="0"/>
+                              <Component id="lblPhone" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtID" max="32767" attributes="0"/>
+                              <Component id="txtAddress" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtName" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtPhone" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="lblAddress" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtAddress" max="32767" attributes="0"/>
+                          <Component id="lblSuppProduct" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnClear" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace pref="30" max="32767" attributes="0"/>
+                          <Component id="btnAdd" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnSave" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnFlag" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -124,12 +127,12 @@
                           <Component id="lblFlag" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="235" max="-2" attributes="0"/>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="235" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnAdd" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="btnSave" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="btnAdd" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="btnSave" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btnFlag" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btnClear" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
@@ -144,7 +147,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xc3; NH&#xc0; CUNG C&#x1ea4;P"/>
+            <Property name="text" type="java.lang.String" value="M&#xc3; NCC"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtID">
@@ -162,7 +165,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="T&#xca;N NH&#xc0; CUNG C&#x1ea4;P"/>
+            <Property name="text" type="java.lang.String" value="T&#xca;N NCC"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtName">
@@ -268,7 +271,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ADD"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/ButtonIcon/add.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -286,7 +291,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="SAVE"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/ButtonIcon/save.png"/>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
@@ -316,7 +323,7 @@
         <Component class="javax.swing.JButton" name="btnClear">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
@@ -324,7 +331,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="CLEAR"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/ButtonIcon/clear.png"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="selected" type="boolean" value="true"/>
           </Properties>

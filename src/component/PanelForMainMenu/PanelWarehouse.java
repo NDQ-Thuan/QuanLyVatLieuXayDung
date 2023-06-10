@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import model.DAO.KhoHangDAO;
 import model.Object.KhoHang;
 import model.Object.KhoHangChiTiet;
@@ -33,6 +34,15 @@ public class PanelWarehouse extends ConnectionPanel {
     public PanelWarehouse() {
         initComponents();
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
+
+        TableColumnModel columnModelTblProduct = tblProduct.getColumnModel();
+
+        columnModelTblProduct.getColumn(0).setPreferredWidth(25);
+        columnModelTblProduct.getColumn(1).setPreferredWidth(300);
+        columnModelTblProduct.getColumn(2).setPreferredWidth(50);
+        columnModelTblProduct.getColumn(3).setPreferredWidth(60);
+        columnModelTblProduct.getColumn(4).setPreferredWidth(60);
+        columnModelTblProduct.getColumn(5).setPreferredWidth(60);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
     }
@@ -115,34 +125,34 @@ public class PanelWarehouse extends ConnectionPanel {
         lblDiaChi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDiaChi.setText("ĐỊA CHỈ:");
 
-        lblAddress.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        lblAddress.setFont(new java.awt.Font("Segoe UI Semibold", 0, 13)); // NOI18N
 
-        lblPhone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        lblPhone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 13)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDiaChi)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cboWarehouse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblLienLac)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(407, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboWarehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDiaChi)
+                                .addGap(38, 38, 38)
+                                .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(141, 141, 141)
+                        .addComponent(lblLienLac)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,6 +320,25 @@ public class PanelWarehouse extends ConnectionPanel {
         }
     }
     ////////////////////////////////////////////////////////////////////////////
+
+    public void changeWarehouse(String name) {
+        cboWarehouse.setSelectedItem(name);
+    }
+
+    public void findSp(int maSp) {
+        int columnCount = tblProduct.getRowCount();
+
+        for (int i = 0; i < columnCount; i++) {
+            int maSpTbl = (int) modelTblProduct.getValueAt(i, 0);
+
+            if (maSp == maSpTbl) {
+                index = i;
+                break;
+            }
+        }
+
+        dragTableToIndex(index);
+    }
 
     public void deleteSanPham(int index) throws SQLException {
         if (index != -1) {

@@ -72,7 +72,7 @@ public class PanelDashboard extends ConnectionPanel {
         pnl_Revenue.setBackground(new java.awt.Color(0, 153, 51));
 
         lbl_Revenue_Icon.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_Revenue_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/revenue.png"))); // NOI18N
+        lbl_Revenue_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/revenue.png"))); // NOI18N
 
         lbl_RevenueName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_RevenueName.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,7 +119,7 @@ public class PanelDashboard extends ConnectionPanel {
                     .addComponent(lbl_Revenue_Money))
                 .addGap(10, 10, 10)
                 .addComponent(lbl_Revenue_LastTwoMonth)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
         );
 
         pnl_Dashboard_Grid.add(pnl_Revenue);
@@ -127,7 +127,7 @@ public class PanelDashboard extends ConnectionPanel {
         pnl_PendingOrder.setBackground(new java.awt.Color(255, 153, 0));
 
         lbl_PendingOrder_Icon.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PendingOrder_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/pending_order.png"))); // NOI18N
+        lbl_PendingOrder_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/pending_order.png"))); // NOI18N
 
         lbl_PendingOrder_Name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_PendingOrder_Name.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,7 +185,7 @@ public class PanelDashboard extends ConnectionPanel {
                 .addGroup(pnl_PendingOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_PendingOrder_DaHuy)
                     .addComponent(lbl_PendingOrder_CancelledAmmount))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
         );
 
         pnl_Dashboard_Grid.add(pnl_PendingOrder);
@@ -193,7 +193,7 @@ public class PanelDashboard extends ConnectionPanel {
         pnl_UniqueBuyer.setBackground(new java.awt.Color(204, 0, 0));
 
         lbl_UniqueBuyer_Icon.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_UniqueBuyer_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/unique_customer.png"))); // NOI18N
+        lbl_UniqueBuyer_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/unique_customer.png"))); // NOI18N
 
         lbl_UniqueBuyer_Name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_UniqueBuyer_Name.setForeground(new java.awt.Color(255, 255, 255));
@@ -240,11 +240,12 @@ public class PanelDashboard extends ConnectionPanel {
                     .addComponent(lbl_UniqueBuyer_Ammount))
                 .addGap(10, 10, 10)
                 .addComponent(lbl_UniqueBuyer_Percent)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pnl_Dashboard_Grid.add(pnl_UniqueBuyer);
 
+        tblPendingOrder.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         tblPendingOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -291,8 +292,8 @@ public class PanelDashboard extends ConnectionPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pnl_Dashboard_Grid, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(lblDHCG)
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)

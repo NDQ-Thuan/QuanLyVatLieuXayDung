@@ -134,7 +134,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_Dashboard.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Dashboard.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_Dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_Dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/dashboard.png"))); // NOI18N
+        lblMenu_Dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/dashboard.png"))); // NOI18N
         lblMenu_Dashboard.setText("  Thống Kê");
         lblMenu_Dashboard.setAlignmentX(0.5F);
         lblMenu_Dashboard.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
@@ -149,7 +149,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_Supplier.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Supplier.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_Supplier.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_Supplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/nha_cung_cap.png"))); // NOI18N
+        lblMenu_Supplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/nha_cung_cap.png"))); // NOI18N
         lblMenu_Supplier.setText("  Nhà Cung Cấp");
         lblMenu_Supplier.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_Supplier.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -163,7 +163,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_Warehouse.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Warehouse.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_Warehouse.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_Warehouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/inventory.png"))); // NOI18N
+        lblMenu_Warehouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/inventory.png"))); // NOI18N
         lblMenu_Warehouse.setText("  Kho hàng");
         lblMenu_Warehouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_Warehouse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -177,7 +177,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_Product.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Product.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_Product.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_Product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/material.png"))); // NOI18N
+        lblMenu_Product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/material.png"))); // NOI18N
         lblMenu_Product.setText("  Danh sách vật liệu");
         lblMenu_Product.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_Product.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -191,7 +191,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_LogOut.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_LogOut.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_LogOut.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_LogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/logout.png"))); // NOI18N
+        lblMenu_LogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/logout.png"))); // NOI18N
         lblMenu_LogOut.setText("  Đăng xuất");
         lblMenu_LogOut.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_LogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -205,7 +205,7 @@ public class MainMenu extends javax.swing.JFrame {
         lblMenu_Order.setBackground(new java.awt.Color(0, 0, 102));
         lblMenu_Order.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblMenu_Order.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu_Order.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/receipt.png"))); // NOI18N
+        lblMenu_Order.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/receipt.png"))); // NOI18N
         lblMenu_Order.setText("  Đơn hàng");
         lblMenu_Order.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         lblMenu_Order.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -242,9 +242,9 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(lblMenu_Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(lblMenu_Warehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addComponent(lblMenu_Product, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblMenu_Warehouse, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(lblMenu_Order, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -367,25 +367,29 @@ public class MainMenu extends javax.swing.JFrame {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Product.setBackground(new Color(0, 0, 55));
+        panelProduct.findSp(i);
     }
 
-    public void switchCardWarehouse(String kho, int i) {
+    public void switchCardWarehouse(String kho, int maSp) {
         cardLayout.show(pnlCardLayout, "cardWarehouse");
 
         for (JLabel label : lblMenuList) {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Warehouse.setBackground(new Color(0, 0, 55));
+        panelWarehouse.changeWarehouse(kho);
+        panelWarehouse.findSp(maSp);
     }
 
-    public void switchCardExportOrder(int i) {
+    public void switchCardExportOrder(int maHD) {
         cardLayout.show(pnlCardLayout, "cardOrder");
 
         for (JLabel label : lblMenuList) {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Order.setBackground(new Color(0, 0, 55));
-        panelOrder.exportTab();
+        panelOrder.exportTab(maHD);
+
     }
 
     public void switchCardImportOrder(int maKho) throws SQLException {

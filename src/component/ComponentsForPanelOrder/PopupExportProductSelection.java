@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.table.TableColumnModel;
 import model.Object.SanPhamDatHang;
 
 public class PopupExportProductSelection extends javax.swing.JFrame {
@@ -49,6 +50,16 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         modelTblProduct = (DefaultTableModel) tblProduct.getModel();
+
+        TableColumnModel columnModelTblOrder = tblProduct.getColumnModel();
+
+        columnModelTblOrder.getColumn(0).setPreferredWidth(20);
+        columnModelTblOrder.getColumn(1).setPreferredWidth(180);
+        columnModelTblOrder.getColumn(2).setPreferredWidth(60);
+        columnModelTblOrder.getColumn(3).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(4).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(5).setPreferredWidth(50);
+        columnModelTblOrder.getColumn(6).setPreferredWidth(120);
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.setBlueColumn(tblProduct, 6);
@@ -118,7 +129,7 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
         btnCancel.setBackground(new java.awt.Color(204, 0, 0));
         btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancel.setText("X");
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/exit.png"))); // NOI18N
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -140,28 +151,24 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCancel)
-                        .addGap(10, 10, 10)))
+                    .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblProductMenu)
-                            .addComponent(lblWarehouseName))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblProductMenu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnConfirm)
-                        .addGap(143, 143, 143)))
+                        .addGap(143, 143, 143))
+                    .addComponent(lblWarehouseName))
                 .addContainerGap())
         );
 

@@ -121,9 +121,9 @@
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="lblMenu_Supplier" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="lblMenu_Warehouse" min="-2" pref="48" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="lblMenu_Product" min="-2" pref="48" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="lblMenu_Warehouse" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="lblMenu_Order" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -253,7 +253,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/dashboard.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/dashboard.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  Th&#x1ed1;ng K&#xea;"/>
             <Property name="alignmentX" type="float" value="0.5"/>
@@ -283,7 +283,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/nha_cung_cap.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/nha_cung_cap.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  Nh&#xe0; Cung C&#x1ea5;p"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -312,7 +312,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/inventory.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/inventory.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  Kho h&#xe0;ng"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -341,7 +341,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/material.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/material.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  Danh s&#xe1;ch v&#x1ead;t li&#x1ec7;u"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -370,7 +370,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/logout.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/logout.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  &#x110;&#x103;ng xu&#x1ea5;t"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -399,7 +399,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/icon/receipt.png"/>
+              <Image iconType="3" name="/img/MainMenuIcon/receipt.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="  &#x110;&#x1a1;n h&#xe0;ng"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

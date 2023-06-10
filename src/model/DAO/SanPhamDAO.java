@@ -14,12 +14,10 @@ public class SanPhamDAO {
 
     private Connection connection;
 
-    // Constructor
     public SanPhamDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // Methods for CRUD operations
     public void insert(SanPham sanPham) throws SQLException {
         String query = "INSERT INTO SANPHAM (MALH, MANCC, TENSP, GIA) VALUES (?, ?, ?, ?)";
 
@@ -103,7 +101,7 @@ public class SanPhamDAO {
 
         String query = "SELECT * FROM SANPHAM ORDER BY FLAG ASC, MASP";
 
-        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maSp = resultSet.getInt("MASP");
                 int maLh = resultSet.getInt("MALH");
@@ -117,6 +115,32 @@ public class SanPhamDAO {
 
                 sanPhamList.add(sp);
             }
+            resultSet.beforeFirst();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return sanPhamList;
+    }
+
+    public List<SanPham> findAllByCustomQuery(String query) {
+        List<SanPham> sanPhamList = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maSp = resultSet.getInt("MASP");
+                int maLh = resultSet.getInt("MALH");
+                int maNcc = resultSet.getInt("MANCC");
+                String tenSp = resultSet.getString("TENSP");
+                int gia = resultSet.getInt("GIA");
+                boolean flag = resultSet.getBoolean("FLAG");
+
+                SanPham sp = new SanPham(maSp, maLh, maNcc, tenSp, gia);
+                sp.setFlag(flag);
+
+                sanPhamList.add(sp);
+            }
+            resultSet.beforeFirst();
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
