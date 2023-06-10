@@ -326,6 +326,11 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         btnSuccess.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSuccess.setText("SUCCESSIFY");
+        btnSuccess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuccessActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlImportLayout = new javax.swing.GroupLayout(pnlImport);
         pnlImport.setLayout(pnlImportLayout);
@@ -361,8 +366,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                             .addGroup(pnlImportLayout.createSequentialGroup()
                                 .addComponent(lblImportOrderDetail)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSuccess)
-                                .addGap(17, 17, 17))
+                                .addComponent(btnSuccess))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -485,6 +489,14 @@ public class TabPanelImport extends javax.swing.JPanel {
             Logger.getLogger(TabPanelImport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuccessActionPerformed
+        try {
+            successifyHoaDon();
+        } catch (SQLException ex) {
+            Logger.getLogger(TabPanelImport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSuccessActionPerformed
     ////////////////////////////////////////////////////////////////////////////
 
     public void errorMessage(String str) {
@@ -551,7 +563,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                 KhoHang kho = khoHangDAO.findById(hd.getMaKho());
                 int id = hd.getMaHd();
                 String tenKho = kho.getTenKho();
-                String tenKhach = khachHangDAO.getTenKhachByID(hd.getMaKhach());
+                String tenKhach = khachHangDAO.getNameByID(hd.getMaKhach());
                 String ngayLap = hd.getNgayLapHoaDon();
                 String loaiHD = hd.getLoaiHoaDon();
                 String trangThai = hd.getTrangThai();
@@ -603,7 +615,7 @@ public class TabPanelImport extends javax.swing.JPanel {
             lblWarehouseAddress.setText(khach.getDiaChi());
 
             modelTblDetail.setRowCount(0);
-            List<HoaDonChiTiet> hdctList = hdctDAO.findByMaHd(maHD);
+            List<HoaDonChiTiet> hdctList = hdctDAO.findByOrderID(maHD);
 
             for (HoaDonChiTiet hdct : hdctList) {
                 SanPham sp = sanPhamDAO.findById(hdct.getMaSp());
@@ -697,10 +709,10 @@ public class TabPanelImport extends javax.swing.JPanel {
         int maHd = Integer.parseInt(txtImportID.getText());
 
         HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
-        List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
+        List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByOrderID(oldHoaDon.getMaHd());
 
         HoaDon newHoaDon = returnHoaDon();
-        List<HoaDonChiTiet> newHDCTList = hdctDAO.findByMaHd(newHoaDon.getMaHd());
+        List<HoaDonChiTiet> newHDCTList = returnHDCT();
 
         if (!oldHoaDon.equals(newHoaDon)) {
             return false;
@@ -723,7 +735,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         if (validateInfo()) {
             if (customConfirmDialog("Thêm hóa đơn mới này?")) {
                 HoaDon hoaDon = returnHoaDon();
-                hoaDonDAO.addHoaDon(hoaDon);
+                hoaDonDAO.insert(hoaDon);
 
                 hoaDon = hoaDonDAO.findNewest();
                 txtImportID.setText(hoaDon.getMaHd() + "");
@@ -732,7 +744,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                 KhoHangChiTiet khct;
 
                 for (HoaDonChiTiet hdct : hdctList) {
-                    hdctDAO.add(hdct);
+                    hdctDAO.insert(hdct);
                 }
 
                 index = 0;
@@ -751,8 +763,6 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
 
-        System.out.println("");
-
         HoaDon newHoaDon = returnHoaDon();
         List<HoaDonChiTiet> newHDCT = returnHDCT();
 
@@ -769,12 +779,12 @@ public class TabPanelImport extends javax.swing.JPanel {
         if (!diff) {
             boolean confirmUpdate = customConfirmDialog("Tiếp tục cập nhật hóa đơn này?");
             if (confirmUpdate) {
-                hoaDonDAO.updateHoaDon(newHoaDon);
+                hoaDonDAO.update(newHoaDon);
 
-                hdctDAO.deleteByMaHD(maHd);
+                hdctDAO.deleteByOrderID(maHd);
 
                 for (HoaDonChiTiet hdct : newHDCT) {
-                    hdctDAO.add(hdct);
+                    hdctDAO.insert(hdct);
                 }
 
                 this.pnlOrder.askMainMenuToRestart();
@@ -803,7 +813,7 @@ public class TabPanelImport extends javax.swing.JPanel {
             boolean confirm = customConfirmDialog("Đơn hàng đang chờ được giao\n"
                     + "Tiếp tục xóa đơn hàng này");
             if (confirm) {
-                hoaDonDAO.deleteHoaDon(maHd);
+                hoaDonDAO.delete(maHd);
                 index = -1;
                 this.pnlOrder.askMainMenuToRestart();
                 JOptionPane.showMessageDialog(null, "Xóa hóa đơn thành công!");
@@ -812,10 +822,54 @@ public class TabPanelImport extends javax.swing.JPanel {
             boolean confirm = customConfirmDialog("Đơn hàng này được tạo và có thời gian lưu trữ dưới 1 năm\n"
                     + "Bạn có chắc chắn muốn xóa đơn hàng này?");
             if (confirm) {
-                hoaDonDAO.deleteHoaDon(maHd);
+                hoaDonDAO.delete(maHd);
                 index = -1;
                 this.pnlOrder.askMainMenuToRestart();
                 JOptionPane.showMessageDialog(null, "Xóa hóa đơn thành công!");
+            }
+        }
+    }
+
+    public void successifyHoaDon() throws SQLException {
+        int maHd = (int) tblImportOrder.getValueAt(index, 0);
+
+        if (maHd != 0) {
+
+            HoaDon hoaDon = returnHoaDon();
+
+            System.out.println(hoaDon.getNgayLapHoaDon());
+
+            if (hoaDon.getTrangThai().equals("Pending")
+                    || hoaDon.getTrangThai().equals("Delivering")) {
+                boolean confirm = customConfirmDialog("Cập nhật tình trạng đơn hàng này thành 'Success'?");
+
+                if (confirm) {
+                    hoaDon.setTrangThai("Success");
+                    hoaDonDAO.update(hoaDon);
+                    List<HoaDonChiTiet> hdctList = hdctDAO.findByOrderID(maHd);
+
+                    KhoHang kho = khoHangDAO.findById(hoaDon.getMaKho());
+                    KhoHangChiTiet khct;
+
+                    for (HoaDonChiTiet hdct : hdctList) {
+                        khct = khctDAO.findOneByWarehouseAndProductID(kho.getMaKho(), hdct.getMaSp());
+
+                        if (khct != null) {
+                            int tonKho = khct.getSoLuong();
+                            int nhapHang = hdct.getSoLuong();
+                            int tongKho = tonKho + nhapHang;
+
+                            khct.setSoLuong(tongKho);
+                            khctDAO.update(khct);
+                        } else {
+                            khct = new KhoHangChiTiet(kho.getMaKho(), hdct.getMaSp(), hdct.getSoLuong());
+                            khctDAO.insert(khct);
+                        }
+                    }
+
+                    this.pnlOrder.askMainMenuToRestart();
+                    JOptionPane.showMessageDialog(null, "Hóa đơn giao hàng thành công!");
+                }
             }
         }
     }

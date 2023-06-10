@@ -101,7 +101,7 @@ public class SanPhamDAO {
 
         String query = "SELECT * FROM SANPHAM ORDER BY FLAG ASC, MASP";
 
-        try (PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maSp = resultSet.getInt("MASP");
                 int maLh = resultSet.getInt("MALH");
@@ -115,7 +115,6 @@ public class SanPhamDAO {
 
                 sanPhamList.add(sp);
             }
-            resultSet.beforeFirst();
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -126,7 +125,7 @@ public class SanPhamDAO {
     public List<SanPham> findAllByCustomQuery(String query) {
         List<SanPham> sanPhamList = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maSp = resultSet.getInt("MASP");
                 int maLh = resultSet.getInt("MALH");
@@ -140,7 +139,6 @@ public class SanPhamDAO {
 
                 sanPhamList.add(sp);
             }
-            resultSet.beforeFirst();
         } catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -148,7 +146,7 @@ public class SanPhamDAO {
         return sanPhamList;
     }
 
-    public List<SanPham> findByNCC(int maNCC) throws SQLException {
+    public List<SanPham> findBySupplier(int maNCC) throws SQLException {
         List<SanPham> sanPhamList = new ArrayList<>();
 
         String query = "SELECT * FROM SANPHAM WHERE MANCC = ? ORDER BY FLAG ASC, MASP";

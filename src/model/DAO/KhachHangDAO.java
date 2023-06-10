@@ -12,12 +12,10 @@ public class KhachHangDAO {
 
     private Connection connection;
 
-    // Constructor
     public KhachHangDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // Methods for CRUD operations
     public void insert(KhachHang khachHang) throws SQLException {
         String query = "INSERT INTO KHACHHANG (TENKHACH, DIACHI, SDT) VALUES (?, ?, ?)";
 
@@ -111,7 +109,7 @@ public class KhachHangDAO {
         return khachHangList;
     }
 
-    public String getTenKhachByID(int maKhach) throws SQLException {
+    public String getNameByID(int maKhach) throws SQLException {
         String query = "SELECT TENKHACH FROM KHACHHANG WHERE MAKHACH = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

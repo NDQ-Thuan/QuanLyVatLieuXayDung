@@ -12,12 +12,10 @@ public class KhoHangDAO {
 
     private Connection connection;
 
-    // Constructor
     public KhoHangDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // Methods for CRUD operations
     public void insert(KhoHang khoHang) throws SQLException {
         String query = "INSERT INTO KHOHANG (DIACHI, SDTQUANLY) VALUES (?, ?)";
 

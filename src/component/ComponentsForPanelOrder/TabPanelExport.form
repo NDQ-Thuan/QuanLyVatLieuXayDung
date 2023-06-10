@@ -87,7 +87,8 @@
                               <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="lblExportOrderDetail" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnSuccess" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -117,6 +118,7 @@
                       <Component id="lblExportOrderID" alignment="3" max="32767" attributes="0"/>
                       <Component id="lbExportDate" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="txtExportDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSuccess" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -691,6 +693,17 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSuccess">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="SUCCESSIFY"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuccessActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

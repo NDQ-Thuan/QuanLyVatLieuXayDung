@@ -225,7 +225,7 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
             int maKho = this.pnlExport.getCurrentWarehouseID();
             kho = khoDAO.findById(maKho);
 
-            List<KhoHangChiTiet> khctList = khctDAO.findByMaKhoWithoutFlaggedProduct(maKho);
+            List<KhoHangChiTiet> khctList = khctDAO.findByWarehouseIDWithoutFlagged(maKho);
             List<SanPhamDatHang> spdhList = this.pnlExport.getSanPhamDatHangHienTai();
 
             SanPham sp;
@@ -303,7 +303,7 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
             String tenSp = (String) modelTblProduct.getValueAt(row, 1);
             int soLuongDatHang = retriveSoLuongDatHang(row);
 
-            KhoHangChiTiet khct = khctDAO.findOneByMaKhoAndMaSp(kho.getMaKho(), maSp);
+            KhoHangChiTiet khct = khctDAO.findOneByWarehouseAndProductID(kho.getMaKho(), maSp);
             int soLuongTonKho = khct.getSoLuong();
 
             if (soLuongDatHang > soLuongTonKho) {

@@ -530,7 +530,7 @@ public final class PanelSupplier extends ConnectionPanel {
         try {
             modelTblSuppProduct.setRowCount(0);
 
-            List<SanPham> spList = spDAO.findByNCC(id_ncc);
+            List<SanPham> spList = spDAO.findBySupplier(id_ncc);
 
             for (SanPham sp : spList) {
                 int maSp = sp.getMaSp();

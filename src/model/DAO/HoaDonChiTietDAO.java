@@ -16,7 +16,7 @@ public class HoaDonChiTietDAO {
         this.connection = connection;
     }
 
-    public void add(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
+    public void insert(HoaDonChiTiet hoaDonChiTiet) throws SQLException {
         String query = "INSERT INTO HOADONCHITIET (MASP, MAHD, SOLUONG) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -51,7 +51,7 @@ public class HoaDonChiTietDAO {
         }
     }
 
-    public void deleteByMaHD(int maHd) throws SQLException {
+    public void deleteByOrderID(int maHd) throws SQLException {
         String query = "DELETE FROM HOADONCHITIET WHERE MAHD = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -61,7 +61,7 @@ public class HoaDonChiTietDAO {
         }
     }
 
-    public List<HoaDonChiTiet> findByMaHd(int maHd) throws SQLException {
+    public List<HoaDonChiTiet> findByOrderID(int maHd) throws SQLException {
         List<HoaDonChiTiet> hoaDonChiTietList = new ArrayList<>();
 
         String query = "SELECT * FROM HOADONCHITIET WHERE MAHD = ? ORDER BY MASP ASC";
@@ -82,7 +82,7 @@ public class HoaDonChiTietDAO {
         return hoaDonChiTietList;
     }
 
-    public HoaDonChiTiet findByMaHdAndMaSp(int maSp, int maHd) throws SQLException {
+    public HoaDonChiTiet findByProductAndOrderID(int maSp, int maHd) throws SQLException {
         String query = "SELECT * FROM HOADONCHITIET WHERE MAHD = ? AND MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

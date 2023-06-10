@@ -45,7 +45,7 @@ public final class PanelProduct extends ConnectionPanel {
         TableColumnModel columnModelTblProduct = tblProduct.getColumnModel();
 
         columnModelTblProduct.getColumn(0).setPreferredWidth(30);
-        columnModelTblProduct.getColumn(1).setPreferredWidth(140);
+        columnModelTblProduct.getColumn(1).setPreferredWidth(130);
         columnModelTblProduct.getColumn(2).setPreferredWidth(80);
         columnModelTblProduct.getColumn(3).setPreferredWidth(60);
 
@@ -328,10 +328,12 @@ public final class PanelProduct extends ConnectionPanel {
 
         cboFilterType.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         cboFilterType.setForeground(new java.awt.Color(0, 0, 102));
+        cboFilterType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cboFilterType.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loại Hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
         cboFilterDVT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         cboFilterDVT.setForeground(new java.awt.Color(153, 102, 0));
+        cboFilterDVT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cboFilterDVT.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đơn Vị Tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
         cboFilterPrice.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -432,7 +434,7 @@ public final class PanelProduct extends ConnectionPanel {
 
     private void cboTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTypeItemStateChanged
         try {
-            String dvt = loaiHangDAO.getDVTByLoaiHang((String) cboType.getSelectedItem());
+            String dvt = loaiHangDAO.getDVTByProductType((String) cboType.getSelectedItem());
             if (dvt == null) {
                 txtDVT.setText("");
             } else {
@@ -528,7 +530,7 @@ public final class PanelProduct extends ConnectionPanel {
             txtDVT.setText(lh.getDvt());
             txtPrice.setText(sp.getGia() + "");
 
-            List<KhoHangChiTiet> khctList = khctDAO.findAllByMaSP(maSp);
+            List<KhoHangChiTiet> khctList = khctDAO.findAllByProductID(maSp);
             modelTblWarehouse.setRowCount(0);
 
             for (KhoHangChiTiet khct : khctList) {
@@ -690,14 +692,14 @@ public final class PanelProduct extends ConnectionPanel {
 
             cboType.removeAllItems();
 
-            System.out.println(lhList.size());
-
             for (LoaiHang lh : lhList) {
                 cboType.addItem(lh.getTenLoai());
 
                 int cboFilterTypeFilterCount = cboFilterType.getItemCount();
 
-                cboFilterType.addItem(lh.getTenLoai());
+                if (cboFilterTypeFilterCount != lhList.size()) {
+                    cboFilterType.addItem(lh.getTenLoai());
+                }
 
                 int cboFilterDVTFilterCount = cboFilterDVT.getItemCount();
 

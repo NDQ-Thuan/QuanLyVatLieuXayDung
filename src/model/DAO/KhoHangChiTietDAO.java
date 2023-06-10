@@ -17,7 +17,7 @@ public class KhoHangChiTietDAO {
         this.connection = connection;
     }
 
-    public void addKhoHangChiTiet(KhoHangChiTiet khoHangChiTiet) throws SQLException {
+    public void insert(KhoHangChiTiet khoHangChiTiet) throws SQLException {
         String query = "INSERT INTO KHOHANGCHITIET (MAKHO, MASP, SOLUONG) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -29,7 +29,7 @@ public class KhoHangChiTietDAO {
         }
     }
 
-    public void updateKhoHangChiTiet(KhoHangChiTiet khoHangChiTiet) throws SQLException {
+    public void update(KhoHangChiTiet khoHangChiTiet) throws SQLException {
         String query = "UPDATE KHOHANGCHITIET SET SOLUONG = ? WHERE MAKHO = ? AND MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -41,7 +41,7 @@ public class KhoHangChiTietDAO {
         }
     }
 
-    public void deleteKhoHangChiTiet(int maKho, int maSp) throws SQLException {
+    public void delete(int maKho, int maSp) throws SQLException {
         String query = "DELETE FROM KHOHANGCHITIET WHERE MAKHO = ? AND MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -52,7 +52,7 @@ public class KhoHangChiTietDAO {
         }
     }
 
-    public List<KhoHangChiTiet> findByMaKho(int maKho) throws SQLException {
+    public List<KhoHangChiTiet> findByWarehouseID(int maKho) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
         String query = """
@@ -75,7 +75,7 @@ public class KhoHangChiTietDAO {
         return khoHangChiTietList;
     }
 
-    public List<KhoHangChiTiet> findByMaKhoWithoutFlaggedProduct(int maKho) throws SQLException {
+    public List<KhoHangChiTiet> findByWarehouseIDWithoutFlagged(int maKho) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
         String query = """
@@ -98,7 +98,7 @@ public class KhoHangChiTietDAO {
         return khoHangChiTietList;
     }
 
-    public List<KhoHangChiTiet> findAllByMaSP(int maSp) throws SQLException {
+    public List<KhoHangChiTiet> findAllByProductID(int maSp) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
         String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ? ORDER BY MAKHO ASC";
@@ -119,7 +119,7 @@ public class KhoHangChiTietDAO {
         return khoHangChiTietList;
     }
 
-    public List<KhoHangChiTiet> findAllBySanPhamList(List<SanPham> spList) throws SQLException {
+    public List<KhoHangChiTiet> findAllByProductList(List<SanPham> spList) throws SQLException {
         List<KhoHangChiTiet> khoHangChiTietList = new ArrayList<>();
 
         String query = "SELECT * FROM KHOHANGCHITIET WHERE MASP = ? ORDER BY MASP ASC";
@@ -142,7 +142,7 @@ public class KhoHangChiTietDAO {
         return khoHangChiTietList;
     }
 
-    public KhoHangChiTiet findOneByMaKhoAndMaSp(int maKho, int maSp) throws SQLException {
+    public KhoHangChiTiet findOneByWarehouseAndProductID(int maKho, int maSp) throws SQLException {
         String query = "SELECT * FROM KHOHANGCHITIET WHERE MAKHO = ? AND MASP = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

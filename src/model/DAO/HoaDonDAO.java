@@ -21,7 +21,7 @@ public class HoaDonDAO {
         this.connection = connection;
     }
 
-    public void addHoaDon(HoaDon hoaDon) throws SQLException {
+    public void insert(HoaDon hoaDon) throws SQLException {
         String query = "INSERT INTO HOADON (MAKHACH, MAKHO, NGAYLAPHOADON, LOAIHOADON, TRANGTHAI) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -35,7 +35,7 @@ public class HoaDonDAO {
         }
     }
 
-    public void updateHoaDon(HoaDon hoaDon) throws SQLException {
+    public void update(HoaDon hoaDon) throws SQLException {
         String query = "UPDATE HOADON SET MAKHACH = ?, MAKHO = ?, NGAYLAPHOADON = ?, LOAIHOADON = ?, TRANGTHAI = ? WHERE MAHD = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -50,7 +50,7 @@ public class HoaDonDAO {
         }
     }
 
-    public void deleteHoaDon(int maHd) throws SQLException {
+    public void delete(int maHd) throws SQLException {
         String query = "DELETE FROM HOADON WHERE MAHD = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

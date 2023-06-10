@@ -83,7 +83,6 @@
                                   <Component id="lblImportOrderDetail" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnSuccess" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -628,6 +627,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="SUCCESSIFY"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuccessActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

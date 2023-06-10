@@ -241,7 +241,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
 
             for (SanPham sp : sanPhamDAO.findAll()) {
                 loaiHang = loaiHangDAO.findById(sp.getMaLh());
-                KhoHangChiTiet khct = khctDAO.findOneByMaKhoAndMaSp(maKho, sp.getMaSp());
+                KhoHangChiTiet khct = khctDAO.findOneByWarehouseAndProductID(maKho, sp.getMaSp());
 
                 int maSp = sp.getMaSp();
                 String tenSp = sp.getTenSp();

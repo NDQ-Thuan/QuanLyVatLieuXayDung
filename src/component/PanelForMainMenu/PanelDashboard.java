@@ -339,7 +339,7 @@ public class PanelDashboard extends ConnectionPanel {
 
             for (HoaDon hd : hoaDonList) {
                 int id = hd.getMaHd();
-                String tenKhach = khachHangDAO.getTenKhachByID(hd.getMaKhach());
+                String tenKhach = khachHangDAO.getNameByID(hd.getMaKhach());
                 String ngayLap = hd.getNgayLapHoaDon();
                 String loaiHD = hd.getLoaiHoaDon();
                 String trangThai = hd.getTrangThai();

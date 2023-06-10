@@ -106,7 +106,7 @@ public class LoaiHangDAO {
 
         String query = "SELECT * FROM LOAIHANG ORDER BY MALH";
 
-        try (PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 int maLh = resultSet.getInt("MALH");
                 String tenLoai = resultSet.getString("TENLOAI");
@@ -114,8 +114,6 @@ public class LoaiHangDAO {
 
                 loaiHangList.add(new LoaiHang(maLh, tenLoai, dvt));
             }
-
-            resultSet.beforeFirst();
         } catch (SQLException ex) {
             Logger.getLogger(LoaiHangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,7 +121,7 @@ public class LoaiHangDAO {
         return loaiHangList;
     }
 
-    public String getDVTByLoaiHang(String str) throws SQLException {
+    public String getDVTByProductType(String str) throws SQLException {
         String query = "SELECT DVT FROM LOAIHANG WHERE TENLOAI LIKE N'" + str + "'";
 
         try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {

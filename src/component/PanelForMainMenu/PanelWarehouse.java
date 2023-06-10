@@ -2,6 +2,7 @@ package component.PanelForMainMenu;
 
 import customTable.TableCustom;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +24,7 @@ import swing.MainMenu;
 public class PanelWarehouse extends ConnectionPanel {
 
     private int index = -1;
-    private String warehouseName;
+    private String warehouseName = "";
     private DefaultTableModel modelTblProduct;
 
     private KhoHangDAO khoHangDAO;
@@ -176,11 +177,10 @@ public class PanelWarehouse extends ConnectionPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cboWarehouseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboWarehouseItemStateChanged
-        warehouseName = (String) cboWarehouse.getSelectedItem();
-        if (warehouseName == null) {
-            warehouseName = "Kho Hồ Chí Minh 1";
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            warehouseName = (String) cboWarehouse.getSelectedItem();
+            loadDataToTblAndFormByTenKho(warehouseName);
         }
-        loadDataToTblAndFormByTenKho(warehouseName);
     }//GEN-LAST:event_cboWarehouseItemStateChanged
 
     private void tblProductMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMousePressed
@@ -255,7 +255,6 @@ public class PanelWarehouse extends ConnectionPanel {
     @Override
     public void resetPanelData() {
         loadDataToCboSupplier();
-
         loadDataToTblAndFormByTenKho(warehouseName);
 
         if (index != -1) {
@@ -272,13 +271,16 @@ public class PanelWarehouse extends ConnectionPanel {
 
     public void loadDataToCboSupplier() {
         try {
+            String originalWarehouse = warehouseName;
+
             cboWarehouse.removeAllItems();
             List<KhoHang> khoHangList = khoHangDAO.findAll();
 
             for (KhoHang kh : khoHangList) {
                 cboWarehouse.addItem(kh.getTenKho());
             }
-            warehouseName = (String) cboWarehouse.getSelectedItem();
+
+            cboWarehouse.setSelectedItem(originalWarehouse);
         } catch (SQLException ex) {
             Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -293,7 +295,7 @@ public class PanelWarehouse extends ConnectionPanel {
             lblAddress.setText(kho.getDiaChi());
             lblPhone.setText(kho.getSdtQuanLy());
 
-            List<KhoHangChiTiet> khctList = khctDAO.findByMaKho(maKho);
+            List<KhoHangChiTiet> khctList = khctDAO.findByWarehouseID(maKho);
 
             for (KhoHangChiTiet khct : khctList) {
                 SanPham sp = spDAO.findById(khct.getMaSp());
@@ -354,7 +356,7 @@ public class PanelWarehouse extends ConnectionPanel {
             boolean confirm = customConfirmDialog("Tiếp tục xóa sản phẩm khỏi kho hàng?");
 
             if (confirm) {
-                khctDAO.deleteKhoHangChiTiet(maKho, maSp);
+                khctDAO.delete(maKho, maSp);
                 index = 0;
                 this.mainMenu.restartForm();
                 JOptionPane.showMessageDialog(null, "Xóa sản phẩm khỏi kho hàng thành công!");
