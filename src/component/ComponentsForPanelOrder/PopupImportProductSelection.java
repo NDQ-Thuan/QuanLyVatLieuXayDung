@@ -26,7 +26,7 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import model.Object.SanPhamDatHang;
 
-public class PopupProductSelection extends javax.swing.JFrame {
+public class PopupImportProductSelection extends javax.swing.JFrame {
 
     private int index = -1;
     private int originalOrderedNumber = 0;
@@ -42,7 +42,7 @@ public class PopupProductSelection extends javax.swing.JFrame {
 
     private KhoHang kho;
 
-    public PopupProductSelection(TabPanelExport pnlExport) {
+    public PopupImportProductSelection(TabPanelExport pnlExport) {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -64,7 +64,6 @@ public class PopupProductSelection extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduct = new javax.swing.JTable();
         lblProductMenu = new javax.swing.JLabel();
-        lblWarehouseName = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
@@ -100,10 +99,7 @@ public class PopupProductSelection extends javax.swing.JFrame {
         }
 
         lblProductMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblProductMenu.setText("DANH SÁCH SẢN PHẨM THUỘC");
-
-        lblWarehouseName.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblWarehouseName.setForeground(new java.awt.Color(0, 0, 153));
+        lblProductMenu.setText("DANH SÁCH SẢN PHẨM ");
 
         btnConfirm.setBackground(new java.awt.Color(0, 153, 0));
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -133,10 +129,8 @@ public class PopupProductSelection extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblProductMenu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblWarehouseName, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 239, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -152,9 +146,7 @@ public class PopupProductSelection extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblProductMenu)
-                            .addComponent(lblWarehouseName))
+                        .addComponent(lblProductMenu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -248,10 +240,8 @@ public class PopupProductSelection extends javax.swing.JFrame {
                     TableCustom.setCellColor(tblProduct, (tblProduct.getRowCount() - 1), 6, new Color(204, 102, 0));
                 }
             }
-
-            lblWarehouseName.setText(kho.getTenKho().toUpperCase());
         } catch (SQLException ex) {
-            Logger.getLogger(PopupProductSelection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopupImportProductSelection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -305,7 +295,7 @@ public class PopupProductSelection extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(PopupProductSelection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopupImportProductSelection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return true;
@@ -366,20 +356,13 @@ public class PopupProductSelection extends javax.swing.JFrame {
                     int oldSoLuongDatHang = originalOrderedNumber;
                     int newSoLuongDatHang = retriveSoLuongDatHang(row);
 
-                    int soLuongTonKho = (int) tblProduct.getValueAt(row, 5);
-
                     if (oldSoLuongDatHang != newSoLuongDatHang) {
                         TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 153, 0));
                     }
 
-                    if (newSoLuongDatHang == 0) {
+                    if (newSoLuongDatHang == 0 && oldSoLuongDatHang != 0) {
                         TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 0, 0));
                     }
-
-                    int n = oldSoLuongDatHang - newSoLuongDatHang;
-                    soLuongTonKho += n;
-
-                    tblProduct.setValueAt(soLuongTonKho, row, 5);
                 }
             }
 
@@ -397,7 +380,6 @@ public class PopupProductSelection extends javax.swing.JFrame {
     private javax.swing.JButton btnConfirm;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblProductMenu;
-    private javax.swing.JLabel lblWarehouseName;
     private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables
 }

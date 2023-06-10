@@ -92,6 +92,25 @@ public class KhachHangDAO {
         return khachHangList;
     }
 
+    public List<KhachHang> findWarehouse() throws SQLException {
+        List<KhachHang> khachHangList = new ArrayList<>();
+
+        String query = "SELECT TOP 10 * FROM KHACHHANG ORDER BY MAKHACH ASC";
+
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int maKhach = resultSet.getInt("MAKHACH");
+                String tenKhach = resultSet.getString("TENKHACH");
+                String diaChi = resultSet.getString("DIACHI");
+                String sdt = resultSet.getString("SDT");
+
+                khachHangList.add(new KhachHang(maKhach, tenKhach, diaChi, sdt));
+            }
+        }
+
+        return khachHangList;
+    }
+
     public String getTenKhachByID(int maKhach) throws SQLException {
         String query = "SELECT TENKHACH FROM KHACHHANG WHERE MAKHACH = ?";
 

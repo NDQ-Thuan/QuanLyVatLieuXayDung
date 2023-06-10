@@ -13,18 +13,19 @@ import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import model.Object.KhachHang;
 import model.DAO.KhachHangDAO;
+import model.DAO.KhoHangDAO;
 
-public class PopupOldCustomer extends javax.swing.JFrame {
+public class PopupWarehouse extends javax.swing.JFrame {
 
     private int index = -1;
 
-    private TabPanelExport pnlExport;
+    private TabPanelImport panelImport;
     private DefaultTableModel modelTblCustomer;
 
     private Connection connection;
     private KhachHangDAO khachDAO;
 
-    public PopupOldCustomer(TabPanelExport panelExport) {
+    public PopupWarehouse(TabPanelImport panelImport) {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -33,7 +34,7 @@ public class PopupOldCustomer extends javax.swing.JFrame {
         modelTblCustomer = (DefaultTableModel) tblCustomer.getModel();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
 
-        this.pnlExport = panelExport;
+        this.panelImport = panelImport;
         getConnection();
     }
 
@@ -140,7 +141,7 @@ public class PopupOldCustomer extends javax.swing.JFrame {
     }
 
     public void getConnection() {
-        this.connection = pnlExport.getPnlConnection();
+        this.connection = panelImport.getPnlConnection();
 
         khachDAO = new KhachHangDAO(this.connection);
 
@@ -151,7 +152,7 @@ public class PopupOldCustomer extends javax.swing.JFrame {
         try {
             modelTblCustomer.setRowCount(0);
 
-            List<KhachHang> khachList = khachDAO.findAll();
+            List<KhachHang> khachList = khachDAO.findWarehouse();
 
             for (KhachHang khach : khachList) {
                 int maKhach = khach.getMaKhach();
@@ -161,7 +162,7 @@ public class PopupOldCustomer extends javax.swing.JFrame {
                 modelTblCustomer.addRow(new Object[]{maKhach, tenKhach, sdt, diachi});
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PopupOldCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopupWarehouse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -169,10 +170,10 @@ public class PopupOldCustomer extends javax.swing.JFrame {
         try {
             int maKhach = (int) modelTblCustomer.getValueAt(index, 0);
             KhachHang khach = khachDAO.findById(maKhach);
-            pnlExport.addCustomerInfo(khach);
+            panelImport.addWarehouseInfo(khach);
             this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(PopupOldCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopupWarehouse.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

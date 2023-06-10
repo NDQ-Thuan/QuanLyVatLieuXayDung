@@ -15,9 +15,11 @@ public final class PanelOrder extends ConnectionPanel {
 
         tabbedPane = new javax.swing.JTabbedPane();
         tabPanelExport = new component.ComponentsForPanelOrder.TabPanelExport();
+        tabPanelImport = new component.ComponentsForPanelOrder.TabPanelImport();
 
         tabbedPane.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         tabbedPane.addTab("XUẤT HÀNG", tabPanelExport);
+        tabbedPane.addTab("NHẬP HÀNG", tabPanelImport);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -38,6 +40,7 @@ public final class PanelOrder extends ConnectionPanel {
     public void setConnection(Connection connection) {
         this.connection = connection;
         tabPanelExport.getConnection(this.connection, this);
+        tabPanelImport.getConnection(this.connection, this);
     }
 
     @Override
@@ -49,6 +52,7 @@ public final class PanelOrder extends ConnectionPanel {
     @Override
     public void resetPanelData() {
         tabPanelExport.resetPanel();
+        tabPanelImport.resetPanel();
     }
 
     public String getUserRole() {
@@ -64,6 +68,7 @@ public final class PanelOrder extends ConnectionPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private component.ComponentsForPanelOrder.TabPanelExport tabPanelExport;
+    private component.ComponentsForPanelOrder.TabPanelImport tabPanelImport;
     private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 

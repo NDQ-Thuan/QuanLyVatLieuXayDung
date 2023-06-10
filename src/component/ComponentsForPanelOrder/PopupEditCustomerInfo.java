@@ -23,6 +23,7 @@ public class PopupEditCustomerInfo extends javax.swing.JFrame {
 
     public PopupEditCustomerInfo(TabPanelExport panelExport) {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
