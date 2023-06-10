@@ -1,9 +1,14 @@
 package component.PanelForMainMenu;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import model.DAO.KhachHangDAO;
+import model.Object.KhachHang;
 import swing.MainMenu;
 
 public final class PanelOrder extends ConnectionPanel {
+
+    private KhachHangDAO khachHangDAO;
 
     public PanelOrder() {
         initComponents();
@@ -39,6 +44,8 @@ public final class PanelOrder extends ConnectionPanel {
     @Override
     public void setConnection(Connection connection) {
         this.connection = connection;
+        khachHangDAO = new KhachHangDAO(this.connection);
+
         tabPanelExport.getConnection(this.connection, this);
         tabPanelImport.getConnection(this.connection, this);
     }
@@ -63,8 +70,19 @@ public final class PanelOrder extends ConnectionPanel {
         this.mainMenu.restartForm();
     }
 
-    public void exportDragTableToID(int id) {
-        this.tabPanelExport.dragTableToID(id);
+    public void exportTab() {
+        tabbedPane.setSelectedIndex(0);
+    }
+
+    public void importTab() {
+        tabbedPane.setSelectedIndex(1);
+    }
+
+    public void importTab(int maKho) throws SQLException {
+        tabbedPane.setSelectedIndex(1);
+
+        KhachHang khach = khachHangDAO.findById(maKho);
+        tabPanelImport.addWarehouseInfo(khach);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private component.ComponentsForPanelOrder.TabPanelExport tabPanelExport;

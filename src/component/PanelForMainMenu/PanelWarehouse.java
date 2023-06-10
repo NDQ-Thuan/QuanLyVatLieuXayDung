@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.DAO.KhoHangDAO;
 import model.Object.KhoHang;
@@ -184,12 +185,41 @@ public class PanelWarehouse extends ConnectionPanel {
     }//GEN-LAST:event_tblProductMousePressed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        try {
+            deleteSanPham(index);
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        int maKho = 0;
+
+        try {
+            maKho = khoHangDAO.findIdByName(warehouseName);
+        } catch (NumberFormatException | SQLException ex) {
+            Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            this.mainMenu.switchCardImportOrder(maKho);
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
+    ////////////////////////////////////////////////////////////////////////////
+
+    public void errorMessage(String str) {
+        JOptionPane.showMessageDialog(null, str, "LỖI", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public boolean customConfirmDialog(String str) {
+        int i = JOptionPane.showConfirmDialog(null, str, "Xác nhận",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        return i == JOptionPane.YES_OPTION;
+    }
+    ////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void setConnection(Connection connection) {
@@ -222,23 +252,12 @@ public class PanelWarehouse extends ConnectionPanel {
             dragTableToIndex(index);
         }
     }
+    ////////////////////////////////////////////////////////////////////////////
 
     public void dragTableToIndex(int i) {
         tblProduct.requestFocus();
         tblProduct.changeSelection(i, 0, false, false);
         tblProduct.setRowSelectionInterval(i, i);
-    }
-
-    public void dragTableToID(String kho, int maSp) {
-        int count = tblProduct.getColumnCount();
-        cboWarehouse.setSelectedItem(kho);
-
-        for (int i = 0; i < count; i++) {
-            if ((int) tblProduct.getValueAt(i, 0) == maSp) {
-                dragTableToIndex(i);
-                break;
-            }
-        }
     }
 
     public void loadDataToCboSupplier() {
@@ -290,6 +309,31 @@ public class PanelWarehouse extends ConnectionPanel {
             Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    ////////////////////////////////////////////////////////////////////////////
+
+    public void deleteSanPham(int index) throws SQLException {
+        if (index != -1) {
+            int maSp = (int) tblProduct.getValueAt(index, 0);
+            int maKho = 0;
+
+            try {
+                maKho = khoHangDAO.findIdByName(warehouseName);
+            } catch (NumberFormatException | SQLException ex) {
+                Logger.getLogger(PanelWarehouse.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            boolean confirm = customConfirmDialog("Tiếp tục xóa sản phẩm khỏi kho hàng?");
+
+            if (confirm) {
+                khctDAO.deleteKhoHangChiTiet(maKho, maSp);
+                index = 0;
+                this.mainMenu.restartForm();
+                JOptionPane.showMessageDialog(null, "Xóa sản phẩm khỏi kho hàng thành công!");
+            }
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;

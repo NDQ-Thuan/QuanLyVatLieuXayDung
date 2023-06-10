@@ -311,7 +311,8 @@ public class TabPanelImport extends javax.swing.JPanel {
             }
         });
 
-        btnSuccess.setText("jButton1");
+        btnSuccess.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSuccess.setText("SUCCESSIFY");
 
         javax.swing.GroupLayout pnlImportLayout = new javax.swing.GroupLayout(pnlImport);
         pnlImport.setLayout(pnlImportLayout);
@@ -347,7 +348,7 @@ public class TabPanelImport extends javax.swing.JPanel {
                             .addGroup(pnlImportLayout.createSequentialGroup()
                                 .addComponent(lblImportOrderDetail)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSuccess, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSuccess)
                                 .addGap(17, 17, 17))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlImportLayout.createSequentialGroup()
@@ -430,7 +431,14 @@ public class TabPanelImport extends javax.swing.JPanel {
     }//GEN-LAST:event_tblImportOrderMousePressed
 
     private void btnImportProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportProductActionPerformed
-
+        if (lblWarehouseName.getText().isBlank()
+                || lblWarehouseID.getText().isBlank()
+                || lblWarehousePhone.getText().isBlank() || lblWarehouseAddress.getText().isBlank()) {
+            errorMessage("Vui lòng cung cấp thông tin kho nhập hàng trước khi chọn sản phẩm");
+        } else {
+            PopupImportProductSelection popup = new PopupImportProductSelection(this);
+            popup.setVisible(true);
+        }
     }//GEN-LAST:event_btnImportProductActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -551,9 +559,6 @@ public class TabPanelImport extends javax.swing.JPanel {
             }
 
             List<KhoHang> khoHangList = khoHangDAO.findAll();
-
-            btnImportProduct.setEnabled(false);
-
             txtImportDate.setText(getTodayDate());
         } catch (SQLException ex) {
         }
@@ -640,11 +645,9 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         String ngayLapDon = DateUtils.convertToSQLDate(txtImportDate.getText());
 
-        int maKho = khoHangDAO.findIdByName(lblWarehouseID.getText());
-
         int maKhach = Integer.parseInt(lblWarehouseID.getText());
 
-        return new HoaDon(maHd, maKhach, maKho, ngayLapDon, "Nhập", "Pending");
+        return new HoaDon(maHd, maKhach, maKhach, ngayLapDon, "Nhập", "Pending");
     }
 
     public List<HoaDonChiTiet> returnHDCT() {
@@ -707,7 +710,7 @@ public class TabPanelImport extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < oldHDCTList.size(); i++) {
-            if (oldHDCTList.get(i).equals(newHDCTList.get(i))) {
+            if (!oldHDCTList.get(i).equals(newHDCTList.get(i))) {
                 return false;
             }
         }
@@ -729,13 +732,6 @@ public class TabPanelImport extends javax.swing.JPanel {
 
                 for (HoaDonChiTiet hdct : hdctList) {
                     hdctDAO.add(hdct);
-
-                    khct = (KhoHangChiTiet) khctDAO.findOneByMaKhoAndMaSp(hoaDon.getMaKho(), hdct.getMaSp());
-
-                    int newSoLuongTonKho = khct.getSoLuong() - hdct.getSoLuong();
-
-                    khct.setSoLuong(newSoLuongTonKho);
-                    khctDAO.updateKhoHangChiTiet(khct);
                 }
 
                 index = 0;
@@ -753,6 +749,8 @@ public class TabPanelImport extends javax.swing.JPanel {
         int maHd = Integer.parseInt(txtImportID.getText());
 
         HoaDon oldHoaDon = hoaDonDAO.findById(maHd);
+
+        System.out.println("");
 
         HoaDon newHoaDon = returnHoaDon();
         List<HoaDonChiTiet> newHDCT = returnHDCT();
@@ -802,25 +800,8 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         if (hoaDon.getTrangThai().equals("Pending")) {
             boolean confirm = customConfirmDialog("Đơn hàng đang chờ được giao\n"
-                    + "Nếu xóa đơn, sản phẩm đặt hàng sẽ được trả về kho");
+                    + "Tiếp tục xóa đơn hàng này");
             if (confirm) {
-                List<HoaDonChiTiet> hdctList = hdctDAO.findByMaHd(maHd);
-                KhoHangChiTiet khct = new KhoHangChiTiet();
-                int maKho = khoHangDAO.findById(hoaDon.getMaKho()).getMaKho();
-
-                for (HoaDonChiTiet hdct : hdctList) {
-                    int maSp = hdct.getMaSp();
-                    int traHang = hdct.getSoLuong();
-
-                    khct = khctDAO.findOneByMaKhoAndMaSp(maKho, maSp);
-
-                    int tonKho = khct.getSoLuong();
-                    int realTonKho = tonKho + traHang;
-
-                    khct.setSoLuong(realTonKho);
-                    khctDAO.updateKhoHangChiTiet(khct);
-                }
-
                 hoaDonDAO.deleteHoaDon(maHd);
                 index = -1;
                 this.pnlOrder.askMainMenuToRestart();
@@ -860,6 +841,10 @@ public class TabPanelImport extends javax.swing.JPanel {
 
     public List<SanPhamDatHang> getSanPhamDatHangHienTai() {
         return this.sanPhamDatHangList;
+    }
+
+    public int getCurrentWarehouseID() {
+        return Integer.parseInt(lblWarehouseID.getText());
     }
 
     public String getTodayDate() {

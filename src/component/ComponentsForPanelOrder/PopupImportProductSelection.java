@@ -31,7 +31,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
     private int index = -1;
     private int originalOrderedNumber = 0;
 
-    private TabPanelExport pnlExport;
+    private TabPanelImport pnlImport;
     private DefaultTableModel modelTblProduct;
 
     private Connection connection;
@@ -42,7 +42,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
 
     private KhoHang kho;
 
-    public PopupImportProductSelection(TabPanelExport pnlExport) {
+    public PopupImportProductSelection(TabPanelImport pnlImport) {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -52,7 +52,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
 
         TableCustom.apply(jScrollPane1, TableCustom.TableType.DEFAULT);
         TableCustom.setBlueColumn(tblProduct, 6);
-        this.pnlExport = pnlExport;
+        this.pnlImport = pnlImport;
 
         getConnection();
     }
@@ -66,6 +66,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         lblProductMenu = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        lblImporting = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +76,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
 
             },
             new String [] {
-                "MÃ", "TÊN", "LOẠI", "ĐVT", "GIÁ", "TỒN KHO", "SỐ LƯỢNG ĐẶT HÀNG"
+                "MÃ", "TÊN", "LOẠI", "ĐVT", "GIÁ", "TỒN KHO HIỆN TẠI", "SỐ LƯỢNG ĐẶT HÀNG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -121,16 +122,20 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
             }
         });
 
+        lblImporting.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblImporting.setText("CỬA SỔ NHẬP HÀNG CHO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblProductMenu)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblImporting)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +151,9 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblProductMenu)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblProductMenu)
+                            .addComponent(lblImporting))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -194,7 +201,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
     ////////////////////////////////////////////////////////////////////////////
 
     public void getConnection() {
-        this.connection = pnlExport.getPnlConnection();
+        this.connection = pnlImport.getPnlConnection();
 
         sanPhamDAO = new SanPhamDAO(this.connection);
         khoDAO = new KhoHangDAO(this.connection);
@@ -207,25 +214,30 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
 
     public void loadDataToTblProduct() {
         try {
-            int maKho = this.pnlExport.getCurrentWarehouseID();
+            int maKho = this.pnlImport.getCurrentWarehouseID();
             kho = khoDAO.findById(maKho);
 
-            List<KhoHangChiTiet> khctList = khctDAO.findByMaKhoWithoutFlaggedProduct(maKho);
-            List<SanPhamDatHang> spdhList = this.pnlExport.getSanPhamDatHangHienTai();
+            List<SanPhamDatHang> spdhList = this.pnlImport.getSanPhamDatHangHienTai();
 
-            SanPham sp;
             LoaiHang loaiHang;
 
-            for (KhoHangChiTiet khct : khctList) {
-                sp = sanPhamDAO.findById(khct.getMaSp());
+            for (SanPham sp : sanPhamDAO.findAll()) {
                 loaiHang = loaiHangDAO.findById(sp.getMaLh());
+                KhoHangChiTiet khct = khctDAO.findOneByMaKhoAndMaSp(maKho, sp.getMaSp());
 
                 int maSp = sp.getMaSp();
                 String tenSp = sp.getTenSp();
                 String loai = loaiHang.getTenLoai();
                 String dvt = loaiHang.getDvt();
+
+                int tonKho = 0;
+
+                try {
+                    tonKho = khct.getSoLuong();
+                } catch (NullPointerException e) {
+                }
+
                 int gia = sp.getGia();
-                int soLuong = khct.getSoLuong();
                 int soLuongDatHang = 0;
 
                 for (SanPhamDatHang spdh : spdhList) {
@@ -234,12 +246,15 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
                     }
                 }
 
-                modelTblProduct.addRow(new Object[]{maSp, tenSp, loai, dvt, gia, soLuong, soLuongDatHang});
+                modelTblProduct.addRow(new Object[]{maSp, tenSp, loai, dvt, gia, tonKho, soLuongDatHang});
 
                 if (soLuongDatHang > 0) {
                     TableCustom.setCellColor(tblProduct, (tblProduct.getRowCount() - 1), 6, new Color(204, 102, 0));
                 }
+
+                lblImporting.setText("CỬA SỐ NHẬP HÀNG CHO " + kho.getTenKho().toUpperCase());
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(PopupImportProductSelection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -280,67 +295,29 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
         return orderedRow;
     }
 
-    public boolean orderProductValidation(int row) {
-        try {
-            int maSp = (int) modelTblProduct.getValueAt(row, 0);
-            String tenSp = (String) modelTblProduct.getValueAt(row, 1);
-            int soLuongDatHang = retriveSoLuongDatHang(row);
-
-            KhoHangChiTiet khct = khctDAO.findOneByMaKhoAndMaSp(kho.getMaKho(), maSp);
-            int soLuongTonKho = khct.getSoLuong();
-
-            if (soLuongDatHang > soLuongTonKho) {
-                errorMessage("Sản phẩm đặt hàng " + tenSp + " có số lượng đặt LỚN HƠN số lượng tồn kho!");
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PopupImportProductSelection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return true;
-    }
-
-    public boolean validateInfo() {
-        boolean flag = true;
-
-        List<Integer> orderedRows = getOrderProductRows();
-
-        for (Integer row : orderedRows) {
-            if (!orderProductValidation(row)) {
-                flag = false;
-            }
-        }
-
-        return flag;
-    }
-
     public void returnOrderedProducts() {
         List<SanPhamDatHang> spdhList = new ArrayList<>();
 
-        if (validateInfo()) {
-            List<Integer> orderedRow = getOrderProductRows();
+        List<Integer> orderedRow = getOrderProductRows();
 
-            if (!orderedRow.isEmpty()) {
-                for (Integer row : orderedRow) {
-                    int maSp = (int) modelTblProduct.getValueAt(row, 0);
-                    String tenSp = (String) modelTblProduct.getValueAt(row, 1);
-                    int soLuong = retriveSoLuongDatHang(row);
+        if (!orderedRow.isEmpty()) {
+            for (Integer row : orderedRow) {
+                int maSp = (int) modelTblProduct.getValueAt(row, 0);
+                String tenSp = (String) modelTblProduct.getValueAt(row, 1);
+                int soLuong = retriveSoLuongDatHang(row);
 
-                    spdhList.add(new SanPhamDatHang(maSp, tenSp, soLuong));
-                }
-                this.pnlExport.addDetailProduct(spdhList);
+                spdhList.add(new SanPhamDatHang(maSp, tenSp, soLuong));
+            }
+            this.pnlImport.addDetailProduct(spdhList);
+            this.dispose();
+
+        } else {
+            boolean confirm = customConfirmDialog("Bạn dường như vẫn chưa chọn sản phẩm nào cả!\n "
+                    + "Nếu xác nhận sẽ trả về thông tin đơn hàng cũ");
+            if (confirm) {
                 this.dispose();
-
-            } else {
-                boolean confirm = customConfirmDialog("Bạn dường như vẫn chưa chọn sản phẩm nào cả!\n "
-                        + "Nếu xác nhận sẽ trả về thông tin đơn hàng cũ");
-                if (confirm) {
-                    this.dispose();
-                }
             }
         }
-
     }
     ////////////////////////////////////////////////////////////////////////////
 
@@ -379,6 +356,7 @@ public class PopupImportProductSelection extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImporting;
     private javax.swing.JLabel lblProductMenu;
     private javax.swing.JTable tblProduct;
     // End of variables declaration//GEN-END:variables

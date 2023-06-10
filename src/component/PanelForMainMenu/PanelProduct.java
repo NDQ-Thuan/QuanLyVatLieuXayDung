@@ -610,17 +610,6 @@ public final class PanelProduct extends ConnectionPanel {
         writeForm((int) modelTblProduct.getValueAt(i, 0));
     }
 
-    public void dragTableToID(int id) {
-        int count = tblProduct.getColumnCount();
-
-        for (int i = 0; i < count; i++) {
-            if ((int) tblProduct.getValueAt(i, 0) == id) {
-                dragTableToIndex(i);
-                break;
-            }
-        }
-    }
-
     public void loadDataToTblProduct() {
         try {
             modelTblProduct.setRowCount(0);

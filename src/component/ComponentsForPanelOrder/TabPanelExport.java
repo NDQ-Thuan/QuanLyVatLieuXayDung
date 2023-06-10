@@ -287,11 +287,11 @@ public class TabPanelExport extends javax.swing.JPanel {
             pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinKhachHangLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOldCustomer)
+                .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnOldCustomer))
                 .addGap(18, 18, 18)
                 .addGroup(pnlThongTinKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNewCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -763,7 +763,8 @@ public class TabPanelExport extends javax.swing.JPanel {
 
         if (lblCustomerName.getText().isBlank()
                 || lblCustomerAddress.getText().isBlank()
-                || lblCustomerPhone.getText().isBlank()) {
+                || lblCustomerPhone.getText().isBlank()
+                || lblCustomerID.getText().isBlank()) {
             errorMessage("Vui lòng cung cấp thông tin khách hàng");
             return false;
         }
@@ -778,7 +779,7 @@ public class TabPanelExport extends javax.swing.JPanel {
         List<HoaDonChiTiet> oldHDCTList = hdctDAO.findByMaHd(oldHoaDon.getMaHd());
 
         HoaDon newHoaDon = returnHoaDon();
-        List<HoaDonChiTiet> newHDCTList = hdctDAO.findByMaHd(newHoaDon.getMaHd());
+        List<HoaDonChiTiet> newHDCTList = returnHDCT();
 
         if (!oldHoaDon.equals(newHoaDon)) {
             return false;
@@ -789,10 +790,13 @@ public class TabPanelExport extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < oldHDCTList.size(); i++) {
-            if (oldHDCTList.get(i).equals(newHDCTList.get(i))) {
+            if (!oldHDCTList.get(i).equals(newHDCTList.get(i))) {
+                System.out.println("2 hoa don co san pham khac nhau");
                 return false;
             }
         }
+
+        System.out.println("2 hoa don giong nhau");
 
         return true;
     }

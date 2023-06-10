@@ -321,8 +321,8 @@ public class MainMenu extends javax.swing.JFrame {
             this.connection = DriverManager.getConnection(url, "sa", "123");
 
             for (ConnectionPanel conPnl : componentPanel) {
-                conPnl.setConnection(connection);
                 conPnl.connectMainMenu(this);
+                conPnl.setConnection(connection);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -367,7 +367,6 @@ public class MainMenu extends javax.swing.JFrame {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Product.setBackground(new Color(0, 0, 55));
-        panelProduct.dragTableToID(i);
     }
 
     public void switchCardWarehouse(String kho, int i) {
@@ -377,7 +376,6 @@ public class MainMenu extends javax.swing.JFrame {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Warehouse.setBackground(new Color(0, 0, 55));
-        panelWarehouse.dragTableToID(kho, i);
     }
 
     public void switchCardExportOrder(int i) {
@@ -387,7 +385,22 @@ public class MainMenu extends javax.swing.JFrame {
             label.setBackground(new Color(0, 0, 102));
         }
         lblMenu_Order.setBackground(new Color(0, 0, 55));
-        panelOrder.exportDragTableToID(i);
+        panelOrder.exportTab();
+    }
+
+    public void switchCardImportOrder(int maKho) throws SQLException {
+        cardLayout.show(pnlCardLayout, "cardOrder");
+
+        for (JLabel label : lblMenuList) {
+            label.setBackground(new Color(0, 0, 102));
+        }
+        lblMenu_Order.setBackground(new Color(0, 0, 55));
+
+        if (maKho == 0) {
+            panelOrder.importTab();
+        } else {
+            panelOrder.importTab(maKho);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblInfo_Company;

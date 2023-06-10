@@ -25,11 +25,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" pref="789" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="lblProductMenu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblImporting" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="789" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -50,7 +51,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="lblProductMenu" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblProductMenu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblImporting" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="320" max="-2" attributes="0"/>
                   </Group>
@@ -86,7 +90,7 @@
                 <Column editable="false" title="LO&#x1ea0;I" type="java.lang.Object"/>
                 <Column editable="false" title="&#x110;VT" type="java.lang.Object"/>
                 <Column editable="false" title="GI&#xc1;" type="java.lang.Object"/>
-                <Column editable="false" title="T&#x1ed2;N KHO" type="java.lang.Object"/>
+                <Column editable="false" title="T&#x1ed2;N KHO HI&#x1ec6;N T&#x1ea0;I" type="java.lang.Object"/>
                 <Column editable="true" title="S&#x1ed0; L&#x1af;&#x1ee2;NG &#x110;&#x1eb6;T H&#xc0;NG" type="java.lang.Object"/>
               </Table>
             </Property>
@@ -181,6 +185,14 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblImporting">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="C&#x1eec;A S&#x1ed4; NH&#x1eac;P H&#xc0;NG CHO"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
