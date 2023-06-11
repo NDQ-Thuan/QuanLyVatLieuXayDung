@@ -1,5 +1,6 @@
 package component.PanelForMainMenu;
 
+import component.ComponentsForDashboard.chart.PopupChart;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -70,6 +71,12 @@ public class PanelDashboard extends ConnectionPanel {
         pnl_Dashboard_Grid.setLayout(new java.awt.GridLayout(1, 0, 30, 3));
 
         pnl_Revenue.setBackground(new java.awt.Color(0, 153, 51));
+        pnl_Revenue.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnl_Revenue.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnl_RevenueMousePressed(evt);
+            }
+        });
 
         lbl_Revenue_Icon.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Revenue_Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MainMenuIcon/revenue.png"))); // NOI18N
@@ -310,6 +317,11 @@ public class PanelDashboard extends ConnectionPanel {
         }
     }//GEN-LAST:event_tblPendingOrderMousePressed
 
+    private void pnl_RevenueMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_RevenueMousePressed
+        PopupChart popup = new PopupChart(this.connection);
+        popup.setVisible(true);
+    }//GEN-LAST:event_pnl_RevenueMousePressed
+
     @Override
     public void setConnection(Connection connection) {
         this.connection = connection;
@@ -329,6 +341,9 @@ public class PanelDashboard extends ConnectionPanel {
 
     @Override
     public void resetPanelData() {
+        loadDataRevenuePanel();
+        loadDataOrderPanel();
+        loadDataToTblPendingOrder();
     }
 
     public void loadDataToTblPendingOrder() {
@@ -356,19 +371,17 @@ public class PanelDashboard extends ConnectionPanel {
     public void loadDataRevenuePanel() {
         try {
             LocalDate currentDate = LocalDate.now();
+            int thisMonth = currentDate.getMonthValue();
             int lastMonth = currentDate.getMonthValue() - 1;
-            int lastTwoMonth = currentDate.getMonthValue() - 2;
 
+            int revenueThisMonth = hoaDonDAO.totalRevenueByMonth(thisMonth);
             int revenueLastMonth = hoaDonDAO.totalRevenueByMonth(lastMonth);
-            int revenueLastTwoMonth = hoaDonDAO.totalRevenueByMonth(lastTwoMonth);
 
-            lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng " + lastMonth + ")");
+            lbl_RevenueName.setText("Doanh Số Bán Hàng 2023 (Tháng " + thisMonth + ")");
 
-            String tongTienThangTruoc = formatMoneyString(revenueLastMonth);
-            lbl_Revenue_Money.setText(tongTienThangTruoc);
+            lbl_Revenue_Money.setText(formatMoneyString(revenueThisMonth));
 
-            String tongTienHaiThangTruoc = formatMoneyString(revenueLastTwoMonth);
-            lbl_Revenue_LastTwoMonth.setText("Tháng " + lastTwoMonth + ": VNĐ " + tongTienHaiThangTruoc);
+            lbl_Revenue_LastTwoMonth.setText("Tháng " + lastMonth + ": VNĐ " + formatMoneyString(revenueLastMonth));
         } catch (SQLException ex) {
             Logger.getLogger(PanelDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }

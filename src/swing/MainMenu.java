@@ -31,6 +31,7 @@ public class MainMenu extends javax.swing.JFrame {
     public MainMenu() {
         initComponents();
 
+        setTitle("Quản Lý Vật Liệu Xây Dựng");
         setLocationRelativeTo(null);
 
         componentPanel = new ConnectionPanel[]{panelDashboard, panelSupplier, panelWarehouse, panelProduct, panelOrder};

@@ -39,9 +39,9 @@ public class PanelWarehouse extends ConnectionPanel {
         TableColumnModel columnModelTblProduct = tblProduct.getColumnModel();
 
         columnModelTblProduct.getColumn(0).setPreferredWidth(25);
-        columnModelTblProduct.getColumn(1).setPreferredWidth(300);
+        columnModelTblProduct.getColumn(1).setPreferredWidth(200);
         columnModelTblProduct.getColumn(2).setPreferredWidth(50);
-        columnModelTblProduct.getColumn(3).setPreferredWidth(60);
+        columnModelTblProduct.getColumn(3).setPreferredWidth(80);
         columnModelTblProduct.getColumn(4).setPreferredWidth(60);
         columnModelTblProduct.getColumn(5).setPreferredWidth(60);
 

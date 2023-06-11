@@ -45,9 +45,10 @@ public final class PanelProduct extends ConnectionPanel {
         TableColumnModel columnModelTblProduct = tblProduct.getColumnModel();
 
         columnModelTblProduct.getColumn(0).setPreferredWidth(30);
-        columnModelTblProduct.getColumn(1).setPreferredWidth(130);
-        columnModelTblProduct.getColumn(2).setPreferredWidth(80);
-        columnModelTblProduct.getColumn(3).setPreferredWidth(60);
+        columnModelTblProduct.getColumn(1).setPreferredWidth(170);
+        columnModelTblProduct.getColumn(2).setPreferredWidth(70);
+        columnModelTblProduct.getColumn(3).setPreferredWidth(50);
+        columnModelTblProduct.getColumn(4).setPreferredWidth(50);
 
         TableColumnModel columnModelTblWarehouse = tblWarehouse.getColumnModel();
 
@@ -89,10 +90,14 @@ public final class PanelProduct extends ConnectionPanel {
         cboFilterDVT = new javax.swing.JComboBox<>();
         cboFilterPrice = new javax.swing.JComboBox<>();
         lblClearTypeFilter = new javax.swing.JLabel();
+        lblClearDVTFilter = new javax.swing.JLabel();
+        lblClearPriceFilter = new javax.swing.JLabel();
+        txtFilterProductName = new javax.swing.JTextField();
+        btnClearFilter = new javax.swing.JButton();
 
         pnlProductInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblSuppID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblSuppID.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblSuppID.setText("MÃ SẢN PHẨM");
 
         txtID.setEditable(false);
@@ -100,20 +105,20 @@ public final class PanelProduct extends ConnectionPanel {
         txtID.setText("TỰ ĐỘNG TẠO MÃ SỐ");
         txtID.setFocusable(false);
 
-        lblName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblName.setText("LOẠI HÀNG");
 
-        lblAddress.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAddress.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblAddress.setText("NHÀ CUNG CẤP");
 
-        lblPhone.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPhone.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblPhone.setText("ĐƠN VỊ TÍNH");
 
         txtDVT.setEditable(false);
         txtDVT.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtDVT.setFocusable(false);
 
-        lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblSuppProduct.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblSuppProduct.setText("GIÁ");
 
         btnAdd.setBackground(new java.awt.Color(0, 153, 0));
@@ -207,7 +212,7 @@ public final class PanelProduct extends ConnectionPanel {
         });
         jScrollPane2.setViewportView(tblWarehouse);
 
-        lblProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblProductName.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblProductName.setText("TÊN SẢN PHẨM");
 
         txtProductName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -227,29 +232,32 @@ public final class PanelProduct extends ConnectionPanel {
                             .addComponent(lblSuppID)
                             .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSuppProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSuppProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblProductName))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtID)
-                            .addComponent(txtDVT)
-                            .addComponent(txtPrice)
-                            .addComponent(cboType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtProductName)
                             .addComponent(cboSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtProductName)))
-                    .addGroup(pnlProductInfoLayout.createSequentialGroup()
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDVT)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(pnlProductInfoLayout.createSequentialGroup()
                         .addComponent(lblSuppProduct1)
                         .addGap(18, 18, 18)
                         .addComponent(lblFlag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(pnlProductInfoLayout.createSequentialGroup()
+                        .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlProductInfoLayout.createSequentialGroup()
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlProductInfoLayout.setVerticalGroup(
@@ -287,7 +295,7 @@ public final class PanelProduct extends ConnectionPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(pnlProductInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,16 +350,67 @@ public final class PanelProduct extends ConnectionPanel {
         cboFilterPrice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tăng dần", "Giảm dần", " " }));
         cboFilterPrice.setSelectedIndex(2);
         cboFilterPrice.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giá", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
-        cboFilterPrice.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboFilterPriceItemStateChanged(evt);
-            }
-        });
 
         lblClearTypeFilter.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblClearTypeFilter.setForeground(new java.awt.Color(153, 0, 0));
         lblClearTypeFilter.setText("x");
         lblClearTypeFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblClearTypeFilter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblClearTypeFilterMousePressed(evt);
+            }
+        });
+
+        lblClearDVTFilter.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblClearDVTFilter.setForeground(new java.awt.Color(153, 0, 0));
+        lblClearDVTFilter.setText("x");
+        lblClearDVTFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblClearDVTFilter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblClearDVTFilterMousePressed(evt);
+            }
+        });
+
+        lblClearPriceFilter.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblClearPriceFilter.setForeground(new java.awt.Color(153, 0, 0));
+        lblClearPriceFilter.setText("x");
+        lblClearPriceFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblClearPriceFilter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblClearPriceFilterMousePressed(evt);
+            }
+        });
+
+        txtFilterProductName.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        txtFilterProductName.setForeground(new java.awt.Color(153, 153, 153));
+        txtFilterProductName.setText("Tên sản phẩm");
+        txtFilterProductName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFilterProductNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFilterProductNameFocusLost(evt);
+            }
+        });
+        txtFilterProductName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFilterProductNameKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFilterProductNameKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFilterProductNameKeyTyped(evt);
+            }
+        });
+
+        btnClearFilter.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        btnClearFilter.setText("CLEAR");
+        btnClearFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearFilterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -359,27 +418,47 @@ public final class PanelProduct extends ConnectionPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblClearTypeFilter)
-                .addGap(47, 47, 47)
-                .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblClearTypeFilter)
+                        .addGap(41, 41, 41)
+                        .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblClearDVTFilter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblClearPriceFilter)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtFilterProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClearFilter)
+                        .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblClearTypeFilter)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtFilterProductName)
+                        .addGap(2, 2, 2))
+                    .addComponent(btnClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblClearTypeFilter)
+                        .addComponent(cboFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboFilterDVT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblClearDVTFilter))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblClearPriceFilter)
+                        .addComponent(cboFilterPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -387,11 +466,11 @@ public final class PanelProduct extends ConnectionPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addComponent(pnlProductInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
@@ -470,9 +549,55 @@ public final class PanelProduct extends ConnectionPanel {
         }
     }//GEN-LAST:event_tblWarehouseMousePressed
 
-    private void cboFilterPriceItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFilterPriceItemStateChanged
+    private void lblClearTypeFilterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClearTypeFilterMousePressed
+        cboFilterType.setSelectedItem(" ");
+    }//GEN-LAST:event_lblClearTypeFilterMousePressed
 
-    }//GEN-LAST:event_cboFilterPriceItemStateChanged
+    private void lblClearDVTFilterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClearDVTFilterMousePressed
+        cboFilterDVT.setSelectedItem(" ");
+    }//GEN-LAST:event_lblClearDVTFilterMousePressed
+
+    private void lblClearPriceFilterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClearPriceFilterMousePressed
+        cboFilterPrice.setSelectedItem(" ");
+    }//GEN-LAST:event_lblClearPriceFilterMousePressed
+
+    private void txtFilterProductNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFilterProductNameFocusGained
+        if (txtFilterProductName.getText().trim().equalsIgnoreCase("Tên sản phẩm")) {
+            txtFilterProductName.setText("");
+            txtFilterProductName.setForeground(Color.BLACK);
+            txtFilterProductName.setBackground(Color.WHITE);
+        }
+    }//GEN-LAST:event_txtFilterProductNameFocusGained
+
+    private void txtFilterProductNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFilterProductNameFocusLost
+        if (txtFilterProductName.getText().trim().isEmpty()) {
+            txtFilterProductName.setText("Tên sản phẩm");
+            txtFilterProductName.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtFilterProductNameFocusLost
+
+    private void txtFilterProductNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterProductNameKeyTyped
+
+    }//GEN-LAST:event_txtFilterProductNameKeyTyped
+
+    private void btnClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFilterActionPerformed
+        txtFilterProductName.setText("Tên sản phẩm");
+        txtFilterProductName.setForeground(new Color(153, 153, 153));
+        cboFilterType.setSelectedItem(" ");
+        cboFilterDVT.setSelectedItem(" ");
+        cboFilterPrice.setSelectedItem(" ");
+    }//GEN-LAST:event_btnClearFilterActionPerformed
+
+    private void txtFilterProductNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterProductNameKeyPressed
+    }//GEN-LAST:event_txtFilterProductNameKeyPressed
+
+    private void txtFilterProductNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterProductNameKeyReleased
+        try {
+            filterSanPham();
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtFilterProductNameKeyReleased
 
     ////////////////////////////////////////////////////////////////////////////
     public void errorMessage(String str) {
@@ -853,6 +978,11 @@ public final class PanelProduct extends ConnectionPanel {
     }
 
     public void filterSanPham() throws SQLException {
+        String tenSp = txtFilterProductName.getText().trim();
+        if (tenSp == null || tenSp.equalsIgnoreCase("Tên sản phẩm")) {
+            tenSp = "";
+        }
+
         String loaiHang = (String) cboFilterType.getSelectedItem();
         if (loaiHang == null) {
             loaiHang = "";
@@ -869,7 +999,7 @@ public final class PanelProduct extends ConnectionPanel {
 
         String customQuery = "SELECT * FROM SANPHAM sp JOIN LOAIHANG lh ON sp.MALH = lh.MALH";
 
-        if (loaiHang.isBlank() && dvt.isBlank() && giaCondition.isBlank()) {
+        if (tenSp.isBlank() && loaiHang.isBlank() && dvt.isBlank() && giaCondition.isBlank()) {
             List<SanPham> spList = sanPhamDAO.findAll();
 
             index = -1;
@@ -877,9 +1007,19 @@ public final class PanelProduct extends ConnectionPanel {
             loadDataToTblProduct();
 
         } else {
+            if (!tenSp.isBlank()) {
+                customQuery += " WHERE sp.TENSP LIKE N'%" + tenSp + "%'";
+            }
+
             if (!loaiHang.isBlank()) {
                 int maLh = loaiHangDAO.findIDByName(loaiHang);
-                customQuery += " WHERE sp.MALH = " + maLh + "";
+
+                if (customQuery.contains("WHERE")) {
+                    customQuery += " AND sp.MALH = " + maLh + "";
+                } else {
+                    customQuery += " WHERE sp.MALH = " + maLh + "";
+                }
+
             }
 
             if (!dvt.isBlank()) {
@@ -948,6 +1088,7 @@ public final class PanelProduct extends ConnectionPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClearFilter;
     private javax.swing.JButton btnFlag;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cboFilterDVT;
@@ -959,6 +1100,8 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAddress;
+    private javax.swing.JLabel lblClearDVTFilter;
+    private javax.swing.JLabel lblClearPriceFilter;
     private javax.swing.JLabel lblClearTypeFilter;
     private javax.swing.JLabel lblFlag;
     private javax.swing.JLabel lblName;
@@ -971,6 +1114,7 @@ public final class PanelProduct extends ConnectionPanel {
     private javax.swing.JTable tblProduct;
     private javax.swing.JTable tblWarehouse;
     private javax.swing.JTextField txtDVT;
+    private javax.swing.JTextField txtFilterProductName;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductName;

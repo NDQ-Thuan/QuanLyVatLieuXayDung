@@ -247,4 +247,24 @@ public class HoaDonDAO {
         return total;
     }
 
+    public int totalOrderByMonth(int month) throws SQLException {
+        String query = """
+                       SELECT COUNT(MAHD) AS TotalOrder
+                       FROM HOADON
+                       WHERE MONTH(hoadon.NGAYLAPHOADON) = ?
+                       AND YEAR(hoadon.NGAYLAPHOADON) = YEAR(GETDATE())
+                       AND hoadon.LOAIHOADON LIKE N'Xuất' AND hoadon.TRANGTHAI LIKE 'Success'""";
+        int total = 0;
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, month);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    total = resultSet.getInt("TotalOrder");
+                }
+            }
+        }
+        return total;
+    }
 }

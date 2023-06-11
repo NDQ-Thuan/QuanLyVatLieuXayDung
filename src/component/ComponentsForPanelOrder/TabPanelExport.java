@@ -1023,7 +1023,7 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void successifyHoaDon() throws SQLException {
-        int maHd = (int) tblExportDetail.getValueAt(index, 0);
+        int maHd = (int) tblExportOrder.getValueAt(index, 0);
 
         if (maHd != 0) {
 
@@ -1047,7 +1047,7 @@ public class TabPanelExport extends javax.swing.JPanel {
     }
 
     public void cancelHoaDon() throws SQLException {
-        int maHd = (int) tblExportDetail.getValueAt(index, 0);
+        int maHd = (int) tblExportOrder.getValueAt(index, 0);
 
         if (maHd != 0) {
 
@@ -1060,7 +1060,6 @@ public class TabPanelExport extends javax.swing.JPanel {
                 if (confirm) {
                     hoaDon.setTrangThai("Cancelled");
 
-                    System.out.println(hoaDon.getTrangThai());
                     hoaDonDAO.update(hoaDon);
 
                     this.pnlOrder.askMainMenuToRestart();
