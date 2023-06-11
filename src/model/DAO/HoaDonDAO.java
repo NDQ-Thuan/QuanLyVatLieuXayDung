@@ -44,6 +44,9 @@ public class HoaDonDAO {
             statement.setString(3, hoaDon.getNgayLapHoaDon());
             statement.setString(4, hoaDon.getLoaiHoaDon());
             statement.setString(5, hoaDon.getTrangThai());
+
+            System.out.println(hoaDon.getTrangThai());
+
             statement.setInt(6, hoaDon.getMaHd());
 
             statement.executeUpdate();

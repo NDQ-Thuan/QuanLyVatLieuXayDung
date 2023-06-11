@@ -249,6 +249,8 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
                     }
                 }
 
+                soLuong -= soLuongDatHang;
+
                 modelTblProduct.addRow(new Object[]{maSp, tenSp, loai, dvt, gia, soLuong, soLuongDatHang});
 
                 if (soLuongDatHang > 0) {
@@ -374,19 +376,30 @@ public class PopupExportProductSelection extends javax.swing.JFrame {
                     int newSoLuongDatHang = retriveSoLuongDatHang(row);
 
                     int soLuongTonKho = (int) tblProduct.getValueAt(row, 5);
+                    int realSoLuongTonKho = (soLuongTonKho + oldSoLuongDatHang);
 
-                    if (oldSoLuongDatHang != newSoLuongDatHang) {
-                        TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 153, 0));
+                    if (realSoLuongTonKho < newSoLuongDatHang) {
+                        SanPham sp = null;
+                        try {
+                            sp = sanPhamDAO.findById((int) tblProduct.getValueAt(row, 0));
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PopupExportProductSelection.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        String tenSp = sp.getTenSp();
+
+                        errorMessage("Sản phẩm đặt hàng " + tenSp + " có số lượng đặt LỚN HƠN số lượng tồn kho!");
+                        tblProduct.setValueAt(oldSoLuongDatHang, row, 6);
+                    } else {
+                        if (oldSoLuongDatHang != newSoLuongDatHang) {
+                            TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 153, 0));
+                        }
+
+                        if (newSoLuongDatHang == 0 && oldSoLuongDatHang != 0) {
+                            TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 0, 0));
+                        }
+
+                        tblProduct.setValueAt((realSoLuongTonKho - newSoLuongDatHang), row, 5);
                     }
-
-                    if (newSoLuongDatHang == 0 && oldSoLuongDatHang != 0) {
-                        TableCustom.setCellColor(tblProduct, row, 6, new Color(0, 0, 0));
-                    }
-
-                    int n = oldSoLuongDatHang - newSoLuongDatHang;
-                    soLuongTonKho += n;
-
-                    tblProduct.setValueAt(soLuongTonKho, row, 5);
                 }
             }
 

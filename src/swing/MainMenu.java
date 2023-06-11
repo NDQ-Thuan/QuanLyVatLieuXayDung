@@ -11,9 +11,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import util.ImageUtils;
 
 public class MainMenu extends javax.swing.JFrame {
 
@@ -87,12 +89,10 @@ public class MainMenu extends javax.swing.JFrame {
         lblInfo_Img.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblInfo_Img.setForeground(new java.awt.Color(255, 255, 255));
         lblInfo_Img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblInfo_Img.setText("ẢNH");
-        lblInfo_Img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         lblInfo_UserName.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblInfo_UserName.setForeground(new java.awt.Color(255, 255, 255));
-        lblInfo_UserName.setText("Tên user: Thuận Đẹp Trai");
+        lblInfo_UserName.setText("Tên: Thuận Đẹp Trai");
 
         lblInfo_Job.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblInfo_Job.setForeground(new java.awt.Color(255, 255, 255));
@@ -123,11 +123,11 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(pnlUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlUserInfoLayout.createSequentialGroup()
                         .addComponent(lblInfo_UserName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(14, 14, 14)
+                        .addComponent(lblInfo_Job)
+                        .addGap(14, 14, 14)
                         .addComponent(lblInfo_Company))
-                    .addGroup(pnlUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblInfo_Img, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblInfo_Job)))
+                    .addComponent(lblInfo_Img, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -327,8 +327,6 @@ public class MainMenu extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        System.out.println(this.role);
     }
 
     public void addMouseEffectForPnlMenu() {
@@ -354,6 +352,21 @@ public class MainMenu extends javax.swing.JFrame {
 
     public void setUserRole(String role) {
         this.role = role;
+
+        ImageIcon icon = null;
+
+        if (role.equals("QL")) {
+            icon = new ImageIcon("src/img/thing/logo-no-background.png");
+            lblInfo_UserName.setText("Tên: Thuận Sọ Dừa");
+            lblInfo_Job.setText("Chức vụ: Quản Lý");
+        } else {
+            icon = new ImageIcon("src/img/thing/logo-white.png");
+            lblInfo_UserName.setText("Tên: Thuận Sọ Khỉ");
+            lblInfo_Job.setText("Chức vụ: Nhân Viên");
+        }
+
+        ImageUtils.setImageIcon(lblInfo_Img, icon);
+
     }
 
     public String getUserRole() {

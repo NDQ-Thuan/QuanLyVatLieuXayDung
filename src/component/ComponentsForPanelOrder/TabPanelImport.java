@@ -99,7 +99,6 @@ public class TabPanelImport extends javax.swing.JPanel {
         lblWarehousePhone = new javax.swing.JLabel();
         lblDiaChi = new javax.swing.JLabel();
         lblWarehouseAddress = new javax.swing.JLabel();
-        btnFilter = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
         btnImportProduct = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -281,12 +280,6 @@ public class TabPanelImport extends javax.swing.JPanel {
                 .addComponent(lblWarehouseID))
         );
 
-        btnFilter.setBackground(new java.awt.Color(204, 102, 0));
-        btnFilter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnFilter.setForeground(new java.awt.Color(0, 0, 0));
-        btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ButtonIcon/filter.png"))); // NOI18N
-        btnFilter.setFocusable(false);
-
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStatus.setText("Đang tạo");
 
@@ -370,7 +363,6 @@ public class TabPanelImport extends javax.swing.JPanel {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                             .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                             .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
@@ -410,13 +402,11 @@ public class TabPanelImport extends javax.swing.JPanel {
                 .addGroup(pnlImportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlImportLayout.createSequentialGroup()
                         .addComponent(btnClear)
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdd)
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnFilter)
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
@@ -660,7 +650,13 @@ public class TabPanelImport extends javax.swing.JPanel {
 
         int maKhach = Integer.parseInt(lblWarehouseID.getText());
 
-        return new HoaDon(maHd, maKhach, maKhach, ngayLapDon, "Nhập", "Pending");
+        String trangThai = "Pending";
+
+        if (maHd != 0) {
+            trangThai = lblStatus.getText();
+        }
+
+        return new HoaDon(maHd, maKhach, maKhach, ngayLapDon, "Nhập", trangThai);
     }
 
     public List<HoaDonChiTiet> returnHDCT() {
@@ -837,8 +833,6 @@ public class TabPanelImport extends javax.swing.JPanel {
 
             HoaDon hoaDon = returnHoaDon();
 
-            System.out.println(hoaDon.getNgayLapHoaDon());
-
             if (hoaDon.getTrangThai().equals("Pending")
                     || hoaDon.getTrangThai().equals("Delivering")) {
                 boolean confirm = customConfirmDialog("Cập nhật tình trạng đơn hàng này thành 'Success'?");
@@ -846,27 +840,6 @@ public class TabPanelImport extends javax.swing.JPanel {
                 if (confirm) {
                     hoaDon.setTrangThai("Success");
                     hoaDonDAO.update(hoaDon);
-                    List<HoaDonChiTiet> hdctList = hdctDAO.findByOrderID(maHd);
-
-                    KhoHang kho = khoHangDAO.findById(hoaDon.getMaKho());
-                    KhoHangChiTiet khct;
-
-                    for (HoaDonChiTiet hdct : hdctList) {
-                        khct = khctDAO.findOneByWarehouseAndProductID(kho.getMaKho(), hdct.getMaSp());
-
-                        if (khct != null) {
-                            int tonKho = khct.getSoLuong();
-                            int nhapHang = hdct.getSoLuong();
-                            int tongKho = tonKho + nhapHang;
-
-                            khct.setSoLuong(tongKho);
-                            khctDAO.update(khct);
-                        } else {
-                            khct = new KhoHangChiTiet(kho.getMaKho(), hdct.getMaSp(), hdct.getSoLuong());
-                            khctDAO.insert(khct);
-                        }
-                    }
-
                     this.pnlOrder.askMainMenuToRestart();
                     JOptionPane.showMessageDialog(null, "Hóa đơn giao hàng thành công!");
                 }
@@ -929,7 +902,6 @@ public class TabPanelImport extends javax.swing.JPanel {
     public javax.swing.JButton btnAdd;
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnDelete;
-    public javax.swing.JButton btnFilter;
     public javax.swing.JButton btnImportProduct;
     public javax.swing.JButton btnSave;
     private javax.swing.JButton btnSuccess;
